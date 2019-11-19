@@ -27,3 +27,4 @@ dependencies:
   - pysam
   - nextgenmap
   - sourmash
+  - freetype

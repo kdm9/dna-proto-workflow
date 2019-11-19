@@ -30,7 +30,8 @@ rule pca_mash:
     input:
         rules.mash.input, 
     output:
-        "output/plots/denovo/mash/pca.pdf", 
+        "output/plots/denovo/mash/pca.pdf",
+#	"output/plots/denovo/mash/pca.svg", 
     script:
         "../scripts/pca_mash.R"
 
@@ -39,6 +40,7 @@ rule pca_kwip:
         rules.kwip.input,
     output:
         "output/plots/denovo/kwip/pca.pdf",
+#	"output/plots/denovo/kwip/pca.svg",
     script:
         "../scripts/pca_kwip.R"
 
@@ -59,7 +61,7 @@ rule mashsketch:
         lambda wc: expand("output/reads/samples/{sample}.fastq.gz",
                           sample=SAMPLESETS[wc.set]),
     output:
-        temp("output/denovo/mash/k{ksize}-s{sketchsize}/{set}.msh"),
+        "output/denovo/mash/k{ksize}-s{sketchsize}/{set}.msh",
     log:
         "output/log/denovo/mash/sketch/k{ksize}-s{sketchsize}-{set}.log"
     threads: 27
@@ -93,7 +95,7 @@ rule countsketch:
     input:
         "output/reads/samples/{sample}.fastq.gz",
     output:
-        ct=temp("output/denovo/kwip/sketch/k{ksize}-s{sketchsize}/{sample}.ct.gz"),
+        ct="output/denovo/kwip/sketch/k{ksize}-s{sketchsize}/{sample}.ct.gz",
         info="output/denovo/kwip/sketch/k{ksize}-s{sketchsize}/{sample}.ct.gz.info",
         tsv="output/denovo/kwip/sketch/k{ksize}-s{sketchsize}/{sample}.ct.gz.info.tsv",
     log:
@@ -158,7 +160,7 @@ rule sourmash_sketch:
     input:
         "output/reads/samples/{sample}.fastq.gz",
     output:
-        temp("output/denovo/sourmash/sketch/k{ksize}-s{sketchsize}/{sample}.smh"),
+        "output/denovo/sourmash/sketch/k{ksize}-s{sketchsize}/{sample}.smh",
     log:
         "output/log/denovo/sourmash/sketch/k{ksize}-s{sketchsize}-{sample}.log"
     shell:

@@ -11,5 +11,5 @@ print ('PCA done!')
 plot3d(pca$x[,c(1,2,3)], size=10)
 text3d(pca$x[,c(1,2,3)], text=labels)
 rgl.postscript(snakemake@output[[1]],"pdf")
-rgl.postscript(snakemake@output[[1]],"svg")
+#rgl.postscript(snakemake@output[[1]],"svg")
 
