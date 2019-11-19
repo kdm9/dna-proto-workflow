@@ -7,6 +7,7 @@ channels:
   - r
 dependencies:
   - qualimap
-  - r-rgl
   - r-devtools
   - r-vcfr
+  - r-extrafont 
+  - r-rgl
