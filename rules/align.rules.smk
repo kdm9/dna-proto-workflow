@@ -65,7 +65,7 @@ rule bwamem:
 
     log: "output/log/align/bwa/{ref}/{run}/{lib}.log"
     threads:
-        8
+        3
     params:
         sample=lambda wc: RUNLIB2SAMP.get((wc.run, wc.lib), "{}~{}".format(wc.run, wc.lib)),
     shell:
@@ -109,14 +109,14 @@ rule abra2:
         "   --tmpdir {params.abra_temp}"
         ") >{log} 2>&1"
 
-
+ #"   -T ${{TMPDIR:-/mnt/norman/tmp}}/{wildcards.run}_{wildcards.lib}_markdup_$RANDOM"
 rule bam_markdups_sort:
     input:
         bam="output/alignments/byrun.raw/{aligner}/{ref}/{run}/{lib}.bam",
         ref=lambda wc: config['refs'][wc.ref],
     output:
         bam=temp("output/alignments/byrun/{aligner}/{ref}/{run}/{lib}.bam"),
-    threads: 4
+    threads: 9
     log: "output/log/align/markdup/{aligner}/{ref}/{run}/{lib}.log"
     shell:
         "( samtools fixmate "
@@ -126,13 +126,13 @@ rule bam_markdups_sort:
         "   {input.bam}"
         "   -"
         " | samtools sort"
-        "   -T ${{TMPDIR:-/tmp}}/{wildcards.run}_{wildcards.lib}_sort_$RANDOM"
+        "   -T {config[abra2][temp]}/{wildcards.run}_{wildcards.lib}_sort_$RANDOM"
         "   --output-fmt bam,level=0"
         "   -@ {threads}"
         "   -m 1g"
         "   -"
         " | samtools markdup"
-        "   -T ${{TMPDIR:-/tmp}}/{wildcards.run}_{wildcards.lib}_markdup_$RANDOM"
+        "   -T {config[abra2][temp]}/{wildcards.run}_{wildcards.lib}_markdup_$RANDOM"
         "   -s" # report stats
         "   -@ {threads}"
         "   --output-fmt bam,level=3"
@@ -150,7 +150,7 @@ rule mergebam_samp:
         bam="output/alignments/samples/{aligner}/{ref}/{sample}.bam",
     log:
         "output/log/align/mergesamplebam/{aligner}/{ref}/{sample}.log"
-    threads: 8
+    threads: 3
     priority: 1 # so the temps get cleaned sooner
     shell:
         "( samtools merge"
@@ -168,7 +168,7 @@ rule qualimap_samp:
         directory("output/alignments/qualimap/samples/{aligner}~{ref}~{sample}/"),
     log:
         "output/log/align/qualimap_sample/{aligner}~{ref}~{sample}.log"
-    threads: 4
+    threads: 2
     shell:
         "( unset DISPLAY; qualimap bamqc"
         "   --java-mem-size=4G"
@@ -290,7 +290,7 @@ rule ngmap:
     log:
         "output/log/align/ngm/{ref}/{run}/{lib}.log"
     threads:
-        8
+        3
     params:
         sample=lambda wc: RUNLIB2SAMP.get((wc.run, wc.lib), "{}~{}".format(wc.run, wc.lib)),
         sensitivity=config["mapping"]["ngm"]["sensitivity"],

@@ -14,9 +14,9 @@ include: "rules/snpeff.rules.smk"
 
 rule all:
     input:
-        rules.denovo.input,
-        rules.readqc.input,
-        rules.align.input,
+#        rules.denovo.input,
+#        rules.readqc.input,
+#        rules.align.input,
         rules.varcall.input,
-        rules.stats.input,
+#        rules.stats.input,
 #        rules.snpeff.output,

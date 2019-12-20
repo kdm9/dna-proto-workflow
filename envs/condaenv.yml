@@ -1,4 +1,4 @@
-#name: paneuc
+#name: dna-proto
 channels:
   - defaults
   - bioconda
@@ -11,7 +11,7 @@ dependencies:
   - bwa
   - freebayes
   - vt
-  - samtools
+  - samtools=1.9
   - bcftools
   - bedops
   - AdapterRemoval
