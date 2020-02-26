@@ -38,7 +38,7 @@ rule qcreads:
         log="output/log/adapterremoval/{run}/{lib}.log",
         settings="output/stats/adapterremoval/{run}/{lib}.txt",
     threads:
-        7
+        3
     params:
         adp1=lambda wc: config["qc"].get(wc.run, config["qc"]["_DEFAULT_"])["adapter1"],
         adp2=lambda wc: config["qc"].get(wc.run, config["qc"]["_DEFAULT_"])["adapter2"],
@@ -75,7 +75,7 @@ rule qcreads_il:
         log="output/log/adapterremoval/{run}/{lib}.log",
         settings="output/stats/adapterremoval/{run}/{lib}.txt",
     threads:
-        7
+        3
     params:
         adp1=lambda wc: config["qc"].get(wc.run, config["qc"]["_DEFAULT_"])["adapter1"],
         adp2=lambda wc: config["qc"].get(wc.run, config["qc"]["_DEFAULT_"])["adapter2"],
@@ -117,7 +117,7 @@ rule read_count_librun:
     output:
         "output/stats/reads/readnum_librun.tsv",
     threads:
-        28
+        6
     log:
         "output/log/readstats/seqhax-stats-librun.log",
     shell:
@@ -134,7 +134,7 @@ rule read_count_sample:
     output:
         "output/stats/reads/readnum_samples.tsv",
     threads:
-        27
+        6
     log:
         "output/log/readstats/seqhax-stats-sample.log",
     shell:

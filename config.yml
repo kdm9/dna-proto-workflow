@@ -8,36 +8,53 @@ sample_sets: []
 #   c = cohort
 mode: s
 
-refs:
-  Sorghum_bicolor_NCBIv3.42: genomes_and_annotations/Sorghum_bicolor_NCBIv3.42/Sorghum_bicolor_NCBIv3.42.fa
-  Sorghum: genomes_and_annotations/Sorghum/Sorghum.fa
 
+refs:
+  my_reference_genome_1: genomes_and_annotations/my_reference_genome_1/genome_1.fa
+  my_reference_genome_2: genomes_and_annotations/my_reference_genome_2/genome_2.fa
+
+  
 snpeff:
-  name: Sorghum_bicolor_NCBIv3.42
-  #Sorghum_bicolor_NCBIv3.42: genomes_and_annotations/Sorghum/Sorghum_bicolor.Sorghum_bicolor_NCBIv3.42.gtf.gz
+  name: my_reference_genome_1
   filter: strict
 
-# Path to any database of known variants, ideally as it is provided by the GATK bundle.
-# known-variants: genomes_and_annotations/Sorghum/Sbicolor_Patterson_454.vcf.gz
+  #TODO: change so that more than one reference genome can be used
+  #TODO: add a rule that prepares the reference genome and annotation for SNPEFF
+  #  my_reference_genome_1: genomes_and_annotations/my_reference_genome_1/genome_1.gff_or_gtf
+
+
+known_variants: 
+  # Optional: Path to a VCF file of known variants. Variant IDs from this file will be transferred to the new VCF file
+  # known-variants: genomes_and_annotations/my_reference_genome_1/known_variants.vcf.gz
+
+  # TODO implement "vcf annotate rule", ideally for more than one reference genome
+
 
 qc:
   _DEFAULT_:
     adapter1: CTGTCTCTTATACACATCTCCGAGCCCACGAGACNNNNNNNNATCTCGTATGCCGTCTTCTGCTTG
     adapter2: CTGTCTCTTATACACATCTGACGCTGCCGACGANNNNNNNNGTGTAGATCTCGGTGGTCGCCGTATCATT
     minqual: 25
+  Truseq:
+    adapter1: AGATCGGAAGAGCACACGTCTGAACTCCAGTCACNNNNNNATCTCGTATGCCGTCTTCTGCTTG
+    adapter2: AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGTAGATCTCGGTGGTCGCCGTATCATT
+    minqual: 25
   LBEmel:
     adapter1: CTGTCTCTTATACACATCTCCGAGCCCACGAGACNNNNNNNNATCTCGTATGCCGTCTTCTGCTTG
     adapter2: CTGTCTCTTATACACATCTGACGCTGCCGACGANNNNNNNNGTGTAGATCTCGGTGGTCGCCGTATCATT
     minqual: 25
+
+
   extra: "--combined-output --interleaved --interleaved-output --trimns --trimqualities --trimwindows 10"
 
 
 mapping:
   aligners:
     - bwa
-    - ngm
+#    - ngm
   refs:
-    - Sorghum_bicolor_NCBIv3.42
+    - my_reference_genome_1
+#    - my_reference_genome_2
   samplesets:
     - all_samples
   ngm:
@@ -45,11 +62,13 @@ mapping:
 
 abra2:
   memory:
-    - Xmx6g
+    - Xmx24g
   release:
     - envs/abra2.jar
   temp:
-    - /tmp
+    - /mnt/norman/tmp/
+  #TODO move temp variable because other tools are using it as well!
+
   threads:
     - 10
   regions:
@@ -63,6 +82,7 @@ LB-impute:
   extra: "-readerr  0.05 -genotypeerr 0.05 -recombdist 1000000 -window 5 -offspringimpute "
   parents: "D2,con"
 
+
 denovodist:
   kwip_sketchsize: 1e9
   mash_sketchsize: 1e5
@@ -74,21 +94,23 @@ denovodist:
     - all_samples
   sourmash_sets: []
 
+
 varcall:
   minmapq:
     bwa: 30
     ngm: 10
   minbq: 15
-  theta_prior: 0.1 # approx 10% of sites vary, it seems. Crazy!
-  chunksize: 1000000
+  theta_prior: 0.001 # default for freebayes is 0.001, make sure you read the respective manuals
+  chunksize: 10000000 # it is in these-sized-chunks that freebayes runs. This is implemented for better parallelisation
   aligners:
     - bwa
-    - ngm
+#    - ngm
   callers:
     #- mpileup
     - freebayes
   refs:
-    - Sorghum_bicolor_NCBIv3.42
+    - my_reference_genome_1
+#    - my_reference_genome_2
   samplesets:
     - all_samples
   filters:
