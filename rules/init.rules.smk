@@ -29,8 +29,9 @@ units = pd.read_csv(config['samples'], dtype=str).set_index(["run", "library"], 
 units.index = units.index.set_levels([i.astype(str) for i in units.index.levels])  # enforce str in index
 #print (units)
 
-with open("output/samplelists/cohort.txt", "w") as text_file:
-    text_file.write("mutant\ncon\n")
+## TODO: Read cohort from metadata/sample2runlib file and use:
+#with open("output/samplelists/cohort.txt", "w") as text_file:
+#    text_file.write("mutant\ncon\n")
 
 def get_il_fastq(wildcards):
     """Get fastq files of given metadata."""

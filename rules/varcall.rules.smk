@@ -79,8 +79,8 @@ rule freebayes:
         "   --fasta-reference {input.ref}"
         "   {input.bam}"
         " | bcftools view"
-        "   -O b  -o {output.bcf}"
-        " ) >{log} 2>&1"
+        "   -O b  -o '{output.bcf}'"
+        " ) >'{log}' 2>&1"
 
 
 rule mpileup:
@@ -119,7 +119,7 @@ rule mpileup:
         "   --prior {params.theta}"
         "   -O b"
         "   -o {output.bcf}"
-        " ) >{log} 2>&1"
+        " ) >'{log}' 2>&1"
 
 
 rule bcffilter:
@@ -136,9 +136,9 @@ rule bcffilter:
     shell:
         "( bcftools view"
         "   {params.filtarg}"
-        "   {input.bcf}"
-        "   -O b  -o {output.bcf}"
-        " ) >{log} 2>&1"
+        "   '{input.bcf}'"
+        "   -O b  -o '{output.bcf}'"
+        " ) >'{log}' 2>&1"
 
 
 localrules: bcfmerge_fofn
@@ -171,7 +171,7 @@ rule bcfmerge:
         "   -O b"
         "   -o {output.bcf}"
         "   --file-list {input.fofn}"
-        " ) >{log} 2>&1"
+        " ) >'{log}' 2>&1"
 
 
 rule bcf2vcfgz:
@@ -188,7 +188,7 @@ rule bcf2vcfgz:
         "   -O z"
         "   --threads {threads}"
         "   -o {output.vcf}"
-        " ) >{log} 2>&1"
+        " ) >'{log}' 2>&1"
 
 rule bcf2vcf:
     input:
@@ -204,7 +204,7 @@ rule bcf2vcf:
         "   -O v"
         "   --threads {threads}"
         "   -o {output.vcf}"
-        " ) >{log} 2>&1"
+        " ) >'{log}' 2>&1"
 
 rule variantidx:
     input:

@@ -66,7 +66,7 @@ rule lb_impute:
         "   -parents {params.parents}"
         "   {params.extra}"
         "   -o {output}"
-        ") >{log} 2>&1"
+        ") >'{log}' 2>&1"
 
 
 rule allele_plot:

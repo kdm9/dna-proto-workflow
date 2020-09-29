@@ -12,7 +12,7 @@ output/*
 # rawdata (size problem)
 genomes_and_annotations/*
 !genomes_and_annotations/readme
-
+!genomes_and_annotations/readme2
 
 # Notes and experiments
 todo

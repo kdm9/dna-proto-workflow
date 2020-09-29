@@ -17,6 +17,6 @@ rule all:
 #        rules.denovo.input,
 #        rules.readqc.input,
 #        rules.align.input,
-        rules.varcall.input,
+#        rules.varcall.input,
 #        rules.stats.input,
-#        rules.snpeff.output,
+        rules.snpeff.output,

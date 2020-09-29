@@ -28,3 +28,4 @@ dependencies:
   - nextgenmap
   - sourmash
   - freetype
+  - snpeff =4.5covid19

@@ -10,12 +10,12 @@ mode: s
 
 
 refs:
-  my_reference_genome_1: genomes_and_annotations/my_reference_genome_1/genome_1.fa
-  my_reference_genome_2: genomes_and_annotations/my_reference_genome_2/genome_2.fa
+  GCF_004118075.1_ASM411807v1: genomes_and_annotations/GCF_004118075.1_ASM411807v1/GCF_004118075.1_ASM411807v1_genomic.fna
+#  my_reference_genome_2:
 
   
 snpeff:
-  name: my_reference_genome_1
+  name: GCF_004118075.1_ASM411807v1_snpeff
   filter: strict
 
   #TODO: change so that more than one reference genome can be used
@@ -66,7 +66,7 @@ abra2:
   release:
     - envs/abra2.jar
   temp:
-    - /mnt/norman/tmp/
+    - /data/norman/tmp/
   #TODO move temp variable because other tools are using it as well!
 
   threads:
@@ -109,7 +109,7 @@ varcall:
     #- mpileup
     - freebayes
   refs:
-    - my_reference_genome_1
+    - GCF_004118075.1_ASM411807v1
 #    - my_reference_genome_2
   samplesets:
     - all_samples
