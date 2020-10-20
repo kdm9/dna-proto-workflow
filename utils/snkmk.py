@@ -19,7 +19,7 @@ def create_contigs_file():
 
 def create_fai():
     ''' Index reference (fai)'''
-    files = glob('genomes_and_annotations/*/*.fa')
+    files = glob('genomes_and_annotations/*/*.fa') + glob('genomes_and_annotations/*/*.fna')
     for reference in files:
         is_fai = os.path.exists('{}.fai'.format(reference))
         if not is_fai:
