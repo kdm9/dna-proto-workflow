@@ -1,11 +1,16 @@
 
-# it is very imporant to specify a large enough tmp file in the abra2 options below.
-# Note that on many servers the user's home directory is too small to be suitable for the tmp file.
-# Note also that it is used by other rules as well, not only abra2
+# This is the configuration file for the individual rules. Adjust to your needs.
+# Note that the tmp/ directory is used extensively. On many servers the user's home directory is too small to be suitable for hosting the tmp/ directory .
+# Specify the tmp/ directory in the abra2 options below. (This tmp/ directory will be used by all other rules as well)
 
-#this CSV file specifies run+library to fastq file relation and other metadata
+# Input fastq files and sample metadata are specified in metadata/sample2runlib.csv. Edit this file accordingly.
+# Note that entries in columns "run" + "library" together make up the primary key for fastq file location and each combination has to be unique.
+# The paths to interleaved fastq input files are specified in column "il_fastq", otherwise in columns fq1 and fq2.
+# Separate run/library combinations are joined into samples by identical entries in the "sample" column.
 samples: "metadata/sample2runlib.csv"
-sample_sets: []
+
+# sample sets are specified as *.txt files in metadata/samplesets.
+# There can be several, the placeholder "all_samples" will trigger the respective rule to run on all samples from all files together.
 
 # the mode feature is not yet implemented
 # mode: s or c
@@ -13,7 +18,9 @@ sample_sets: []
 #   c = cohort
 mode: s
 
-# specify the path(s) to your reference genome(s) and give them each a name
+# Specify the path(s) to your reference genome(s) and give them each a name.
+# The workflow will look for the required associated files (i.e., .fai, .amb, .ann, .bwt, .pac, .sa) in same directory of the specified fasta file.
+# softlinks are possible and we recommend to softlink the parent directory. (See genomes_and_annotations/readme).
 refs:
   GCF_004118075.1_ASM411807v1: genomes_and_annotations/GCF_004118075.1_ASM411807v1/GCF_004118075.1_ASM411807v1_genomic.fna
 #  my_reference_genome_2:
@@ -72,7 +79,7 @@ varcall:
   minbq: 15
   theta_prior: 0.001 # default for freebayes is 0.001, make sure you read the respective manuals
   chunksize: 10000000 # it is in these-sized-chunks that freebayes runs. This is implemented for better parallelisation
-# Variant Filters
+# Variant Filters. Adjust to your requirements and/or add new ones.
   filters:
     default: >
       -i 'QUAL >= 10 &&
@@ -85,10 +92,13 @@ varcall:
           INFO/DP >= 20 &&
           ((INFO/AN / N_SAMPLES)*2) > 0.20 &&
           MAF >= 0.01'
-    # Above strict requires a presence rate of >20%, which isn't ideal when running on more than 1 mutant. Read the respective manual (bcftools view)
+    # Above strict requires a presence rate of >20%, which isn't ideal when running on more than 1 mutant vs wild-type. Read the respective manual (bcftools view) and ajust
 
 # configuration options for the snpEff rule:
-# specify the name of your snpeff directory. it is expeted to reside as snpeffdata in genomes_and_annotations. (see genomes_and_annotations/readme), currently only one reference genome can be used. 'filter' refers to the input vcf file and hence defines the desired variant filter to use upstream of snpeff.
+# specify the name of your snpeff directory. It is expected to reside in genomes_and_annotations/snpeffdata, but can be changed in snpEff.config.
+# Prior to running the workflow, create/place the snpEff database (snpEffectPredictor.bin) in the same directory. For our suggestion see genomes_and_annotations/readme.
+# Currently only one reference genome can be used at a time.
+# 'filter' refers to the input vcf file and hence defines the desired variant filter to use upstream of snpeff (compare varcall:filters:).
 snpeff:
   name: GCF_004118075.1_ASM411807v1_snpeff
   filter: strict
@@ -110,7 +120,8 @@ denovodist:
   sourmash_sets: []
 
 ##############################################################################
-
+#EXPERT options
+###
 # configuration options for hte mapping rule. using those will only have an effect when runnign the mapping rule separately, which is not a recommended use case.
 #When invoking the mapping rules through the varcall rule, the parameter specified in the varcall rule above take precedence.
 mapping:
@@ -125,8 +136,13 @@ mapping:
   ngm:
     sensitivity: 0.5
 
+# alignment rule
+#additional samples for alignment rule only (in addition to samplesets)
+align:
+    sample_sets: []
+
 ################################################################################
-#below is not implemented yet
+#below is not yet implemented 
 known_variants:
   # Optional: Path to a VCF file of known variants. Variant IDs from this file will be transferred to the new VCF file
   # known-variants: genomes_and_annotations/my_reference_genome_1/known_variants.vcf.gz

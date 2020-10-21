@@ -255,7 +255,7 @@ rule sam2bam:
 allsets = set(
     list(config["mapping"]["samplesets"]) +
     list(config["varcall"]["samplesets"]) +
-    list(config["sample_sets"])
+    list(config["align"]["sample_sets"])
 )
 
 rule align_librun:
