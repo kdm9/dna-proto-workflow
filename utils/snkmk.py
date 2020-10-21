@@ -1,3 +1,5 @@
+# this script defines functions and specifica variables. It uses information from the config file.
+
 import csv
 from collections import defaultdict
 from glob import glob
@@ -6,8 +8,23 @@ import os
 from sys import stderr
 from utils.check_config import readconfig, pconfig
 
-config = readconfig('config.yml')
+import yaml
+import yamlordereddictloader
 
+def readconfig (myfile):
+    with open(myfile) as f:
+        yaml_data = yaml.load(f, Loader=yamlordereddictloader.Loader)
+        return dict(yaml_data)
+
+def pconfig (myconfig):
+    try:
+        for key, value in myconfig.items():
+            print ('\n> ',key,'\n',value)
+    except AttributeError:
+        print ('Invalid config. NOT dictionary')
+
+
+config = readconfig('config.yml')
 
 def create_contigs_file():
     ''' Prepare contigs of interest (bed)'''
