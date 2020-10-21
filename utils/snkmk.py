@@ -6,7 +6,7 @@ from glob import glob
 from os.path import basename, splitext
 import os
 from sys import stderr
-from utils.check_config import readconfig, pconfig
+#from utils.check_config import readconfig, pconfig
 
 import yaml
 import yamlordereddictloader
