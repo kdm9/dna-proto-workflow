@@ -1,5 +1,4 @@
 import snkmk
-#from check_config import *
 
 print ('\nMetadata ...\n')
 
