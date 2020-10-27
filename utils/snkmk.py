@@ -1,4 +1,6 @@
-# this script defines functions and specifica variables. It uses information from the config file.
+# this script defines functions and sets variables.
+# It uses information from the config file.
+# Note: it always runs upon execution of snakemake
 
 import csv
 from collections import defaultdict
@@ -6,7 +8,6 @@ from glob import glob
 from os.path import basename, splitext
 import os
 from sys import stderr
-#from utils.check_config import readconfig, pconfig
 
 import yaml
 import yamlordereddictloader
