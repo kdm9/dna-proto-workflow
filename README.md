@@ -60,7 +60,7 @@ snakemake --dag -npr -j -1 | dot -Tsvg > dag.svg
 eog dag.svg
 ```
 
-### Pretend a run of the complete Workflow**
+### Pretend a run of the complete workflow
 
 ```
 snakemake  -npr

@@ -212,7 +212,7 @@ rule variantidx:
     output:
         "{path}.csi"
     shell:
-        "bcftools index -f {input}"
+        "bcftools index -c -f {input} && bcftools index -t -f {input}"
 
 rule varstats:
     input:
