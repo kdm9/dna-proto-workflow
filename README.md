@@ -67,7 +67,7 @@ snakemake  -npr
 ```
 ### Check config and metadata
 
-utils/ contains scrips to check your metadata and configuration parameters.
+We provide scripts to check your metadata and configuration parameters in ```utils/```.
 
 ```
 python utils/check_metadata.py
