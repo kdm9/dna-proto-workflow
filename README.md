@@ -67,20 +67,11 @@ snakemake  -npr
 ```
 ### Check config and metadata
 
-```utils/check_config.py``` allows you to read and print the config files:
-
-```
-from utils.snkmk import *
-config = readconfig('config.yml')
-pconfig(config)
-config['qc']
-```
-
-
-```utils/check_metadata.py``` allows you to print the metadata generated from your configuration settings and other inputs:
+utils/ contains scrips to check your metadata and configuration parameters.
 
 ```
 python utils/check_metadata.py
+python utils/check_config.py
 ```
 
 
