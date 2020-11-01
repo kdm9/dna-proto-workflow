@@ -1,13 +1,31 @@
+# this script defines functions and sets variables.
+# It uses information from the config file.
+# Note: it always runs upon execution of snakemake
+
 import csv
 from collections import defaultdict
 from glob import glob
 from os.path import basename, splitext
 import os
 from sys import stderr
-from utils.check_config import readconfig, pconfig
+
+import yaml
+import yamlordereddictloader
+
+def readconfig (myfile):
+    with open(myfile) as f:
+        yaml_data = yaml.load(f, Loader=yamlordereddictloader.Loader)
+        return dict(yaml_data)
+
+def pconfig (myconfig):
+    try:
+        for key, value in myconfig.items():
+            print ('\n> ',key,'\n',value)
+    except AttributeError:
+        print ('Invalid config. NOT dictionary')
+
 
 config = readconfig('config.yml')
-
 
 def create_contigs_file():
     ''' Prepare contigs of interest (bed)'''
@@ -19,7 +37,7 @@ def create_contigs_file():
 
 def create_fai():
     ''' Index reference (fai)'''
-    files = glob('genomes_and_annotations/*/*.fa')
+    files = glob('genomes_and_annotations/*/*.fa') + glob('genomes_and_annotations/*/*.fna')
     for reference in files:
         is_fai = os.path.exists('{}.fai'.format(reference))
         if not is_fai:

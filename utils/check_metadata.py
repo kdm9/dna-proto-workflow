@@ -1,9 +1,8 @@
 import snkmk
-from check_config import *
 
 print ('\nMetadata ...\n')
 
-config = readconfig('config.yml')
+config = snkmk.readconfig('config.yml')
 
 RUNLIB2SAMP, SAMP2RUNLIB = snkmk.make_runlib2samp("metadata/sample2runlib.csv")
 
@@ -16,4 +15,3 @@ print ('\nSAMPLESETS\n',SAMPLESETS)
 
 VARCALL_REGIONS = snkmk.make_regions(config["refs"], window=config["varcall"]["chunksize"])
 print ('\nVARCALL_REGIONS\n',VARCALL_REGIONS,'\n')
-
