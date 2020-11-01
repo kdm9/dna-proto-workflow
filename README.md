@@ -102,8 +102,8 @@ You will need to configure the workflow for your specific project. For details s
 Below files and directories will need editing:
 
 - **Snakefile**
-- **genomes_and_annotations**
-- **metadata**
+- **genomes_and_annotations/**
+- **metadata/**
 - **config.yml**
 - **snpEff.config**
 
@@ -120,10 +120,9 @@ You can download example data for testing the workflow. [click here to download]
 Fork this repository by clicking on the fork button on the top of this page.
 This will create a copy of this repository in your GitHub account (not in your computer).
 
+<br>
 
 ### Clone the repository
-
-<br>
 
 <img align="right" width="300" src="https://i.ibb.co/yVWsByF/Screenshot-from-2019-12-18-10-38-25.png" alt="clone this repository" />
 
@@ -138,7 +137,7 @@ git clone https://github.com/your-username/dna-proto-workflow.git
 
 <img align="right" width="300" src="https://github.com/firstcontributions/first-contributions/raw/master/assets/copy-to-clipboard.png" alt="copy URL to clipboard" />
 
-Once you've cloned your fork, you can edit your local copy. However, if you want to contribute, you'll need to create a new branch as follows.
+Once you've cloned your fork, you can edit your local copy. However, if you want to contribute, you'll need to create a new branch.
 
 ### Create a branch
 
@@ -164,16 +163,14 @@ For example:
 git checkout -b development
 ```
 
-From this point, you are in the new branch and edits only affect your branch.
-
-If things go wrong, simply remove your branch using
+From this point, you are in the new branch and edits only affect your branch. If things go wrong, simply remove your branch using
 ```
-git branch -d name-of-the-branch.
+git branch -d name-of-the-branch
 ```
 
 Or revert back to the `master`-branch using
 ```
-git checkout master.
+git checkout master
 ```
 
 ### Make changes and commit
@@ -195,7 +192,7 @@ git commit -m "write a message"
 
 ### Push changes to GitHub
 
-Push the changes in your local copy (on your machine) to your remote repository on Github with `git push`:
+Push the changes in your local copy (on your machine) to your remote repository on GitHub with `git push`:
 ```
 git push origin your-branch-name
 ```
