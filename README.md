@@ -2,7 +2,7 @@
 
 <img src="https://divingintogeneticsandgenomics.rbind.io/img/snakemake.png" alt="Girl in a jacket" width="200" height="150">  
 
-This workflow is for analysing genome re-sequencing experiments. It features 2 modes. The **de-novo** mode is used to confirm sample relationships from the raw sequencing reads with [kwip](https://github.com/kdmurray91/kWIP) and [mash](https://github.com/marbl/Mash). The **varcall** mode performs read alignments to one or several reference genomes followed by variant detection. Alignments can be performed with [bwa](http://bio-bwa.sourceforge.net/bwa.shtml) and/or [NextGenMap](https://github.com/Cibiv/NextGenMap/wiki) and  variant calling with [Freebayes](https://github.com/ekg/freebayes) and/or [bcftools mpileup](https://samtools.github.io/bcftools/howtos/variant-calling.html). If a genome annotation is available, variants are annotated with [snpEff](https://pcingola.github.io/SnpEff/).
+This workflow is for analysing genome re-sequencing experiments. It features 2 modes. The **de-novo** mode is used to confirm sample relationships from the raw sequencing reads with [kwip](https://github.com/kdmurray91/kWIP) and [mash](https://github.com/marbl/Mash). The **varcall** mode performs read alignments to one or several reference genomes followed by variant detection. Read alignments can be performed with [bwa](http://bio-bwa.sourceforge.net/bwa.shtml) and/or [NextGenMap](https://github.com/Cibiv/NextGenMap/wiki) and  variant calling with [Freebayes](https://github.com/ekg/freebayes) and/or [bcftools mpileup](https://samtools.github.io/bcftools/howtos/variant-calling.html). If a genome annotation is available, variants are annotated with [snpEff](https://pcingola.github.io/SnpEff/).
 
 ## Authors
 
@@ -50,7 +50,7 @@ $ conda env create --name dna-proto --file envs/condaenv.yml
 $ conda activate dna-proto
 ```
 
-Check this [conda cheatsheet](https://gist.github.com/mv-lab/62318ff0023bd626f1e05ed9c0155fd5)
+Additional useful conda commands are [here](https://gist.github.com/mv-lab/62318ff0023bd626f1e05ed9c0155fd5).
 
 <br>
 
