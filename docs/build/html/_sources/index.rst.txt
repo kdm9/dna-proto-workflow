@@ -20,17 +20,26 @@ Mutant-Analysis-workflow - Documentation
 Overview PBGL's Mutant-Analysis-workflow
 ----------------------------------------
 
-This collection of rules constitutes a workflow for the analysis of high-throughput sequencing data. We use it mostly for data produced with Illumina sequencing instruments. For this particular workflow we distinguish two main use cases: denovo and varcall.
+This collection of Snakemake rules constitutes a workflow for the analysis of high-throughput sequencing data. We use it mostly for genome re-sequencing data produced with Illumina-type sequencing instruments.
+For this particular workflow we distinguish two main use cases: **de-novo** and **varcall**. The workflow is designed to run the entire analyses automatically.
 
-Different Use Cases
-^^^^^^^^^^^^^^^^^^^
 
-In Snakemake, calling a rule will invoke all upstream rules. A rule will be run if:
+The (brief) principle of Snakemake
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+In Snakemake, analysis workflows are defined as a series of rules. In our case, rules define the analysis steps. Each rule has input and output files. Calling a rule will invoke all upstream rules. It is hence generally sufficient to request the desired output file(s) and entire workflow is executed.
+In practice, users will provide input files, configure project meta information, adjust configuration parameters, and execute 'snakemake'. The workflow will automatically perform all the (necessary) analysis steps tp produce the desired output.
+
+ A rule will be run if:
 
 * Snakemake realizes that the expected ``output`` files of a rule are not (yet) present or,
 * Snakemake realizes that the expected input files or configuration parameters of a rule have changed since the last run.
 
 For details, please consult the `Snakemake <https://snakemake.readthedocs.io/en/stable/index.html#>`_ documentation. For the differente use cases in this workflow, invoke the rule that produces the desired output:
+
+
+Mutant-Analysis-workflow Use Cases
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 1 - "De-Novo"
 ~~~~~~~~~~~~~
@@ -59,37 +68,15 @@ Choosing this option will run a full re-sequencing analysis. It detects variants
 
 The full workflow for this use case consists of the following steps:
 
-
-+---+-----------------------------------------+---------+--------------------------+
-| # |                 Task                    |  Rule   |        Software          |
-+===+=========================================+=========+==========================+
-| 1 | Prepare/clip the raw reads              | readQC  | AdapterRemoval           |
-+---+-----------------------------------------+---------+--------------------------+
-| 2 | Align the reads to the reference genome | align   | bwa and/or ngm           |
-+---+-----------------------------------------+---------+--------------------------+
-| 3 | Mark duplicates                         | align   | samtools fixmate |br|    |
-|   |                                         |         | samtools sort    |br|    |
-|   |                                         |         | samtools markdup         |
-+---+-----------------------------------------+---------+--------------------------+
-| 4 | Realign indels                          | align   | samtools merge  |br|     |
-|   |                                         |         | abra2                    |
-+---+-----------------------------------------+---------+--------------------------+
-| 5 | Call variants                           | varcall | freebayes and/or mpileup |
-+---+-----------------------------------------+---------+--------------------------+
-| 6 | Filter variants                         | varcall | bcftools view            |
-+---+-----------------------------------------+---------+--------------------------+
-| 7 | Annotate variants                       | snpeff  | snpeff                   |
-+---+-----------------------------------------+---------+--------------------------+
-
 ===== ======================================= ======= ========================
  #                     Task                    Rule          Software
 ===== ======================================= ======= ========================
 1     Prepare/clip the raw reads              readQC  AdapterRemoval
 2     Align the reads to the reference genome align   bwa and/or ngm
 3     Mark duplicates                         align   samtools fixmate |br|
-                                                      samtools sort |br|
+                                                      samtools sort    |br|
                                                       samtools markdup
-4     Realign indels                          align   samtools merge |br|
+4     Realign indels                          align   samtools merge   |br|
                                                       abra2
 5     Call variants                           varcall freebayes and/or mpileup
 6     Filter variants                         varcall bcftools view
@@ -114,14 +101,7 @@ Choosing this option will attempt to annotate vcf files provided in **output/var
 | 1 | Annotate variants | snpeff | snpEff   |
 +---+-------------------+--------+----------+
 
-===== ================= ====== ========
- #          Task         Rule  Software
-===== ================= ====== ========
-1     Annotate variants snpeff snpEff
-===== ================= ====== ========
-
-Typical use case is to run ``snpEff`` after a completed run of rule ``varcall``. A snpEff run
-will complete within a matter of minutes.
+Typical use case is running ``snpEff`` after a completed run of rule ``varcall``. A snpEff run will complete within a matter of minutes.
 
 Hardware Requirements
 ^^^^^^^^^^^^^^^^^^^^^
@@ -141,21 +121,19 @@ Workflow Use in a Nutshell
 Steps
 ^^^^^
 
-1. Git clone the workflow
-2. Create and activate the conda environment
-3. Provide reference genome(s) and annotation(s) in ``/genomes and annotation/``
-4. Specify location of input files and their meta data in ``/metadata/sample2runlib.csv``
-5. Provide lists of samples to analyse in ``/metadata/samplesets/``
-6. Uncomment the respective workflow option for your use case in the ``/Snakefile``
-7. Configure software parameters in ``/config.yml``
-8. In case the ``snpeff`` rule will be called, adapt ``/snpeff.config``
-9. Run snakemake
+1. Create a new github repository in your github account using this workflow [as a template](https://help.github.com/en/articles/creating-a-repository-from-a-template).
+2. [Clone](https://help.github.com/en/articles/cloning-a-repository) your newly created repository to your local system where you want to perform the analysis.
+3. Create and activate the conda environment
+4. Provide reference genome(s) and annotation(s) in ``/genomes and annotation/``
+5. Specify location of input files and their meta data in ``/metadata/sample2runlib.csv``
+6. Provide lists of samples to analyse in ``metadata/samplesets/``
+7. Uncomment the respective workflow option for your use case in the ``Snakefile``
+8. Configure software parameters in ``config.yml``
+9. In case the ``snpeff`` rule will be called, adapt ``snpeff.config``
+10. Run snakemake
 
-For standard applications no additional files need to be edited. The rules ``(*.smk)`` reside in
-``rules/``. Most rules have explicit shell commands with transparent flag settings. Expert users
-can change these for additional control. Note that, in snakemake, calling a rule will trigger run
-of the upstream rules. It is therefore important to only configure the most downstream rule
-``(/config.yml)``; these settings will be propagated to the upstream rules.
+For standard applications no additional edits are necessary. The rules ``(*.smk)`` reside in ``rules/``. Most rules have explicit shell commands with transparent flag settings. Expert users can change these for additional control. Note that, in snakemake, calling a rule will trigger run
+of the upstream rules. It is therefore important to only configure the most downstream rule ``(/config.yml)``; these settings will be propagated to the upstream rules.
 
 Workflow Use in Detail
 ----------------------
@@ -163,9 +141,7 @@ Workflow Use in Detail
 Creating the Conda Environment
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-We recommend running the workflow in its own conda environment on a Linux Server. The
-files ``envs/condaenv.yml`` and ``envs/additional.yml`` can directly be used to create the
-environment and install dependencies like so:
+We recommend running the workflow in its own conda environment on a Linux Server. The files ``envs/condaenv.yml`` and ``envs/additional.yml`` can directly be used to create the environment and install dependencies like so:
 
 ::
 
@@ -173,7 +149,7 @@ environment and install dependencies like so:
    $ conda env update --name dna-proto --file condaenv.yml
    $ conda env update --name dna-proto --file additional.yml
 
-If env update does not work as intended or fails, then please ``conda install`` the programs individually specifying the correct channel and the version where required. Below we give examples, but please consult the `conda <https://docs.conda.io/projects/conda/en/latest/user-guide/getting-started.html>`_ (and `bioconda <https://bioconda.github.io/>`_) documentation.
+If ``env update`` does not work as intended or fails, then ``conda install`` the programs individually specifying the correct channel and software version where required. Below we give examples, but please consult the `conda <https://docs.conda.io/projects/conda/en/latest/user-guide/getting-started.html>`_ (and `bioconda <https://bioconda.github.io/>`_) documentation.
 
 Example:
 

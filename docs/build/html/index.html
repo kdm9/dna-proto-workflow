@@ -82,7 +82,8 @@
               <div class="local-toc"><ul>
 <li><a class="reference internal" href="#">Mutant-Analysis-workflow - Documentation</a><ul>
 <li><a class="reference internal" href="#overview-pbgl-s-mutant-analysis-workflow">Overview PBGL’s Mutant-Analysis-workflow</a><ul>
-<li><a class="reference internal" href="#different-use-cases">Different Use Cases</a><ul>
+<li><a class="reference internal" href="#the-brief-principle-of-snakemake">The (brief) principle of Snakemake</a></li>
+<li><a class="reference internal" href="#mutant-analysis-workflow-use-cases">Mutant-Analysis-workflow Use Cases</a><ul>
 <li><a class="reference internal" href="#de-novo">1 - “De-Novo”</a></li>
 <li><a class="reference internal" href="#variant-calling">2 - “Variant Calling”</a></li>
 <li><a class="reference internal" href="#id1">3 - “snpEff”</a></li>
@@ -200,15 +201,23 @@
 </div>
 <div class="section" id="overview-pbgl-s-mutant-analysis-workflow">
 <h2>Overview PBGL’s Mutant-Analysis-workflow<a class="headerlink" href="#overview-pbgl-s-mutant-analysis-workflow" title="Permalink to this headline">¶</a></h2>
-<p>This collection of rules constitutes a workflow for the analysis of high-throughput sequencing data. We use it mostly for data produced with Illumina sequencing instruments. For this particular workflow we distinguish two main use cases: denovo and varcall.</p>
-<div class="section" id="different-use-cases">
-<h3>Different Use Cases<a class="headerlink" href="#different-use-cases" title="Permalink to this headline">¶</a></h3>
-<p>In Snakemake, calling a rule will invoke all upstream rules. A rule will be run if:</p>
+<p>This collection of Snakemake rules constitutes a workflow for the analysis of high-throughput sequencing data. We use it mostly for genome re-sequencing data produced with Illumina-type sequencing instruments.
+For this particular workflow we distinguish two main use cases: <strong>de-novo</strong> and <strong>varcall</strong>. The workflow is designed to run the entire analyses automatically.</p>
+<div class="section" id="the-brief-principle-of-snakemake">
+<h3>The (brief) principle of Snakemake<a class="headerlink" href="#the-brief-principle-of-snakemake" title="Permalink to this headline">¶</a></h3>
+<p>In Snakemake, analysis workflows are defined as a series of rules. In our case, rules define the analysis steps. Each rule has input and output files. Calling a rule will invoke all upstream rules. It is hence generally sufficient to request the desired output file(s) and entire workflow is executed.
+In practice, users will provide input files, configure project meta information, adjust configuration parameters, and execute ‘snakemake’. The workflow will automatically perform all the (necessary) analysis steps tp produce the desired output.</p>
+<blockquote>
+<div><p>A rule will be run if:</p>
+</div></blockquote>
 <ul class="simple">
 <li><p>Snakemake realizes that the expected <code class="docutils literal notranslate"><span class="pre">output</span></code> files of a rule are not (yet) present or,</p></li>
 <li><p>Snakemake realizes that the expected input files or configuration parameters of a rule have changed since the last run.</p></li>
 </ul>
 <p>For details, please consult the <a class="reference external" href="https://snakemake.readthedocs.io/en/stable/index.html#">Snakemake</a> documentation. For the differente use cases in this workflow, invoke the rule that produces the desired output:</p>
+</div>
+<div class="section" id="mutant-analysis-workflow-use-cases">
+<h3>Mutant-Analysis-workflow Use Cases<a class="headerlink" href="#mutant-analysis-workflow-use-cases" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="de-novo">
 <h4>1 - “De-Novo”<a class="headerlink" href="#de-novo" title="Permalink to this headline">¶</a></h4>
 <p>Choosing this option will conduct a reference-free comparision of <em>samples</em> based on the raw sequencing reads using k-mers. The workflow invokes the software tools kWIP and/or mash and outputs distance matrices and PCA plots. The workflow for this use case consists of the following steps:</p>
@@ -255,10 +264,10 @@
 <p>The full workflow for this use case consists of the following steps:</p>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 4%" />
+<col style="width: 7%" />
 <col style="width: 52%" />
-<col style="width: 11%" />
-<col style="width: 33%" />
+<col style="width: 9%" />
+<col style="width: 32%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>#</p></th>
@@ -288,62 +297,7 @@ samtools markdup</p></td>
 <tr class="row-odd"><td><p>4</p></td>
 <td><p>Realign indels</p></td>
 <td><p>align</p></td>
-<td><p>samtools merge  <br/>
-abra2</p></td>
-</tr>
-<tr class="row-even"><td><p>5</p></td>
-<td><p>Call variants</p></td>
-<td><p>varcall</p></td>
-<td><p>freebayes and/or mpileup</p></td>
-</tr>
-<tr class="row-odd"><td><p>6</p></td>
-<td><p>Filter variants</p></td>
-<td><p>varcall</p></td>
-<td><p>bcftools view</p></td>
-</tr>
-<tr class="row-even"><td><p>7</p></td>
-<td><p>Annotate variants</p></td>
-<td><p>snpeff</p></td>
-<td><p>snpeff</p></td>
-</tr>
-</tbody>
-</table>
-<table class="docutils align-default">
-<colgroup>
-<col style="width: 7%" />
-<col style="width: 52%" />
-<col style="width: 9%" />
-<col style="width: 32%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>#</p></th>
-<th class="head"><p>Task</p></th>
-<th class="head"><p>Rule</p></th>
-<th class="head"><p>Software</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>1</p></td>
-<td><p>Prepare/clip the raw reads</p></td>
-<td><p>readQC</p></td>
-<td><p>AdapterRemoval</p></td>
-</tr>
-<tr class="row-odd"><td><p>2</p></td>
-<td><p>Align the reads to the reference genome</p></td>
-<td><p>align</p></td>
-<td><p>bwa and/or ngm</p></td>
-</tr>
-<tr class="row-even"><td><p>3</p></td>
-<td><p>Mark duplicates</p></td>
-<td><p>align</p></td>
-<td><p>samtools fixmate <br/>
-samtools sort <br/>
-samtools markdup</p></td>
-</tr>
-<tr class="row-odd"><td><p>4</p></td>
-<td><p>Realign indels</p></td>
-<td><p>align</p></td>
-<td><p>samtools merge <br/>
+<td><p>samtools merge   <br/>
 abra2</p></td>
 </tr>
 <tr class="row-even"><td><p>5</p></td>
@@ -395,30 +349,7 @@ abra2</p></td>
 </tr>
 </tbody>
 </table>
-<table class="docutils align-default">
-<colgroup>
-<col style="width: 14%" />
-<col style="width: 47%" />
-<col style="width: 17%" />
-<col style="width: 22%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>#</p></th>
-<th class="head"><p>Task</p></th>
-<th class="head"><p>Rule</p></th>
-<th class="head"><p>Software</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>1</p></td>
-<td><p>Annotate variants</p></td>
-<td><p>snpeff</p></td>
-<td><p>snpEff</p></td>
-</tr>
-</tbody>
-</table>
-<p>Typical use case is to run <code class="docutils literal notranslate"><span class="pre">snpEff</span></code> after a completed run of rule <code class="docutils literal notranslate"><span class="pre">varcall</span></code>. A snpEff run
-will complete within a matter of minutes.</p>
+<p>Typical use case is running <code class="docutils literal notranslate"><span class="pre">snpEff</span></code> after a completed run of rule <code class="docutils literal notranslate"><span class="pre">varcall</span></code>. A snpEff run will complete within a matter of minutes.</p>
 </div>
 </div>
 <div class="section" id="hardware-requirements">
@@ -436,36 +367,32 @@ will complete within a matter of minutes.</p>
 <div class="section" id="steps">
 <h3>Steps<a class="headerlink" href="#steps" title="Permalink to this headline">¶</a></h3>
 <ol class="arabic simple">
-<li><p>Git clone the workflow</p></li>
+<li><p>Create a new github repository in your github account using this workflow [as a template](<a class="reference external" href="https://help.github.com/en/articles/creating-a-repository-from-a-template">https://help.github.com/en/articles/creating-a-repository-from-a-template</a>).</p></li>
+<li><p>[Clone](<a class="reference external" href="https://help.github.com/en/articles/cloning-a-repository">https://help.github.com/en/articles/cloning-a-repository</a>) your newly created repository to your local system where you want to perform the analysis.</p></li>
 <li><p>Create and activate the conda environment</p></li>
 <li><p>Provide reference genome(s) and annotation(s) in <code class="docutils literal notranslate"><span class="pre">/genomes</span> <span class="pre">and</span> <span class="pre">annotation/</span></code></p></li>
 <li><p>Specify location of input files and their meta data in <code class="docutils literal notranslate"><span class="pre">/metadata/sample2runlib.csv</span></code></p></li>
-<li><p>Provide lists of samples to analyse in <code class="docutils literal notranslate"><span class="pre">/metadata/samplesets/</span></code></p></li>
-<li><p>Uncomment the respective workflow option for your use case in the <code class="docutils literal notranslate"><span class="pre">/Snakefile</span></code></p></li>
-<li><p>Configure software parameters in <code class="docutils literal notranslate"><span class="pre">/config.yml</span></code></p></li>
-<li><p>In case the <code class="docutils literal notranslate"><span class="pre">snpeff</span></code> rule will be called, adapt <code class="docutils literal notranslate"><span class="pre">/snpeff.config</span></code></p></li>
+<li><p>Provide lists of samples to analyse in <code class="docutils literal notranslate"><span class="pre">metadata/samplesets/</span></code></p></li>
+<li><p>Uncomment the respective workflow option for your use case in the <code class="docutils literal notranslate"><span class="pre">Snakefile</span></code></p></li>
+<li><p>Configure software parameters in <code class="docutils literal notranslate"><span class="pre">config.yml</span></code></p></li>
+<li><p>In case the <code class="docutils literal notranslate"><span class="pre">snpeff</span></code> rule will be called, adapt <code class="docutils literal notranslate"><span class="pre">snpeff.config</span></code></p></li>
 <li><p>Run snakemake</p></li>
 </ol>
-<p>For standard applications no additional files need to be edited. The rules <code class="docutils literal notranslate"><span class="pre">(*.smk)</span></code> reside in
-<code class="docutils literal notranslate"><span class="pre">rules/</span></code>. Most rules have explicit shell commands with transparent flag settings. Expert users
-can change these for additional control. Note that, in snakemake, calling a rule will trigger run
-of the upstream rules. It is therefore important to only configure the most downstream rule
-<code class="docutils literal notranslate"><span class="pre">(/config.yml)</span></code>; these settings will be propagated to the upstream rules.</p>
+<p>For standard applications no additional edits are necessary. The rules <code class="docutils literal notranslate"><span class="pre">(*.smk)</span></code> reside in <code class="docutils literal notranslate"><span class="pre">rules/</span></code>. Most rules have explicit shell commands with transparent flag settings. Expert users can change these for additional control. Note that, in snakemake, calling a rule will trigger run
+of the upstream rules. It is therefore important to only configure the most downstream rule <code class="docutils literal notranslate"><span class="pre">(/config.yml)</span></code>; these settings will be propagated to the upstream rules.</p>
 </div>
 </div>
 <div class="section" id="workflow-use-in-detail">
 <h2>Workflow Use in Detail<a class="headerlink" href="#workflow-use-in-detail" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="creating-the-conda-environment">
 <h3>Creating the Conda Environment<a class="headerlink" href="#creating-the-conda-environment" title="Permalink to this headline">¶</a></h3>
-<p>We recommend running the workflow in its own conda environment on a Linux Server. The
-files <code class="docutils literal notranslate"><span class="pre">envs/condaenv.yml</span></code> and <code class="docutils literal notranslate"><span class="pre">envs/additional.yml</span></code> can directly be used to create the
-environment and install dependencies like so:</p>
+<p>We recommend running the workflow in its own conda environment on a Linux Server. The files <code class="docutils literal notranslate"><span class="pre">envs/condaenv.yml</span></code> and <code class="docutils literal notranslate"><span class="pre">envs/additional.yml</span></code> can directly be used to create the environment and install dependencies like so:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ conda create --name dna-proto
 $ conda env update --name dna-proto --file condaenv.yml
 $ conda env update --name dna-proto --file additional.yml
 </pre></div>
 </div>
-<p>If env update does not work as intended or fails, then please <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span></code> the programs individually specifying the correct channel and the version where required. Below we give examples, but please consult the <a class="reference external" href="https://docs.conda.io/projects/conda/en/latest/user-guide/getting-started.html">conda</a> (and <a class="reference external" href="https://bioconda.github.io/">bioconda</a>) documentation.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">env</span> <span class="pre">update</span></code> does not work as intended or fails, then <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span></code> the programs individually specifying the correct channel and software version where required. Below we give examples, but please consult the <a class="reference external" href="https://docs.conda.io/projects/conda/en/latest/user-guide/getting-started.html">conda</a> (and <a class="reference external" href="https://bioconda.github.io/">bioconda</a>) documentation.</p>
 <p>Example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ conda install -c bioconda samtools=1.9
 </pre></div>
