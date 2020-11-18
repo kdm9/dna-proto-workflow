@@ -17,13 +17,6 @@ Mutant-Analysis-workflow - Documentation
   <br/>
 
 
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
-
 Overview PBGL's Mutant-Analysis-workflow
 ----------------------------------------
 
@@ -95,9 +88,9 @@ The full workflow for this use case consists of the following steps:
 2     Align the reads to the reference genome align   bwa and/or ngm
 3     Mark duplicates                         align   samtools fixmate |br|
                                                       samtools sort |br|
-                                                      samtools markdup 
+                                                      samtools markdup
 4     Realign indels                          align   samtools merge |br|
-                                                      abra2 
+                                                      abra2
 5     Call variants                           varcall freebayes and/or mpileup
 6     Filter variants                         varcall bcftools view
 7     Annotate variants                       snpeff  snpEff
@@ -184,7 +177,7 @@ If env update does not work as intended or fails, then please ``conda install`` 
 
 Example:
 
-:: 
+::
 
    $ conda install -c bioconda samtools=1.9
 
@@ -197,7 +190,7 @@ In case of manual installs, it is convenient to add all required channels to the
          - defaults
          - bioconda
          - conda-forge
-         - r   
+         - r
    $ conda config --add channels bioconda
    $ conda install samtools=1.9
 
@@ -272,7 +265,7 @@ The entries in columns “run” and “library” are together used as the prim
 +------+---------+--------+----------------+----------------+----------------+
 
 ==== ======= ====== ============== ============== ==============
-run  library sample      fq_1           fq_2          if_fq          
+run  library sample      fq_1           fq_2          if_fq
 ==== ======= ====== ============== ============== ==============
 Run1 A-500bp A      <path to file> <path to file>
 Run1 A-300bp A      <path to file> <path to file>
@@ -322,8 +315,8 @@ Running the Workflow
 
 To run the workflow, un-comment the respective rule in the ``Snakefile`` and run snakemake.
 
-:: 
-   
+::
+
    $ snakemake –npr
    $ snakemake –j 6 --no-temp -kpr
 
