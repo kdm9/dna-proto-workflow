@@ -21,7 +21,7 @@ Overview PBGL's Mutant-Analysis-workflow
 ----------------------------------------
 
 This collection of Snakemake rules constitutes a workflow for the analysis of high-throughput sequencing data. We use it mostly for genome re-sequencing data produced with Illumina-type sequencing instruments.
-For this particular workflow we distinguish two main use cases: **de-novo** and **varcall**. The workflow is designed to run the entire analyses automatically.
+For this particular workflow we distinguish two main use cases: **denovo** and **varcall**. The workflow is designed to run the entire analyses automatically.
 
 
 The (brief) principle of Snakemake
@@ -41,9 +41,8 @@ For details, please consult the `Snakemake <https://snakemake.readthedocs.io/en/
 Mutant-Analysis-workflow Use Cases
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-1 - "De-Novo"
-~~~~~~~~~~~~~
-
+"denovo"
+~~~~~~~~
 Choosing this option will conduct a reference-free comparision of *samples* based on the raw sequencing reads using k-mers. The workflow invokes the software tools kWIP and/or mash and outputs distance matrices and PCA plots. The workflow for this use case consists of the following steps:
 
 +---+----------------------------+--------+------------------+
@@ -61,10 +60,10 @@ Choosing this option will conduct a reference-free comparision of *samples* base
 
 Required input for ``rules.denovo.input`` are fastq files and the workflow will return distance matrices, produced by kWIP and/or mash.
 
-2 - "Variant Calling"
-~~~~~~~~~~~~~~~~~~~~~
 
-Choosing this option will run a full re-sequencing analysis. It detects variants and genotype *samples* based on the alignments of the sequencing reads against one or several user-defined reference genome(s). Reads can be mapped with bwa and/or nextgenmapper (ngm), and variants called with freebayes and/or mpileup. If reference genome annotation is available, the effects of variants on gene integrity can also be predicted using the software `snpEff <https://pcingola.github.io/SnpEff/se_introduction/>`_.
+"varcall"
+~~~~~~~~~
+Choosing this option will run a full re-sequencing analysis. It detects variants and genotype *samples* based on the alignments of the sequencing reads against one or several user-defined reference genome(s). Reads can be mapped with bwa and/or NextGenMap (ngm), and variants called with freebayes and/or mpileup. If reference genome annotation is provided, the effects of variants on gene integrity can also be predicted using the software `snpEff <https://pcingola.github.io/SnpEff/se_introduction/>`_.
 
 The full workflow for this use case consists of the following steps:
 
@@ -85,13 +84,13 @@ The full workflow for this use case consists of the following steps:
 
 This option can be invoked in 2 ways:
 
-* running the ``rules.varcall.input`` will result in **several filterd vcf files**, one for each specified filter.
-* running the rule ``rules.snpEff.output`` will result in **annotated vcf files for one chosen\filter** ``(config['snpeff']['filter'])`` and additional summaries; variants are filtered with the specified filter only and variant effects annotated against the provided snpEff database.
+* running ``rules.varcall.input`` will result in **several filterd vcf files**, one for each specified filter.
+* running the rule ``rules.snpEff.output`` will result in **annotated vcf files for one chosen filter** ``(config['snpeff']['filter'])`` and additional summaries; variants are filtered with the specified filter only and variant effects annotated against the provided snpEff database.
 
 Required input files are fastq files and a genome reference (fasta). The rule ``snpeff`` in addition depends on a genome annotation for the reference genome used. For maximum flexibility and ease of trouble shooting we recommend to first run the re-sequencing analysis by invoking ``rules.varcall.input``, and upon successful completion invoke the workflow again, uncommenting ``rules.snpEff.output``.
 
-3 - "snpEff"
-~~~~~~~~~~~~
+"snpEff"
+~~~~~~~~
 
 Choosing this option will attempt to annotate vcf files provided in **output/variants/final/** for a filter setting specified in the ``config.yml`` ``(config['snpeff']['filter'])`` and the chosen reference genome ``(config['snpeff']['name'])``. This workflow has only one step.
 
@@ -132,8 +131,7 @@ Steps
 9. In case the ``snpeff`` rule will be called, adapt ``snpeff.config``
 10. Run snakemake
 
-For standard applications no additional edits are necessary. The rules ``(*.smk)`` reside in ``rules/``. Most rules have explicit shell commands with transparent flag settings. Expert users can change these for additional control. Note that, in snakemake, calling a rule will trigger run
-of the upstream rules. It is therefore important to only configure the most downstream rule ``(/config.yml)``; these settings will be propagated to the upstream rules.
+For standard applications no additional edits are necessary. The rules ``(*.smk)`` reside in ``rules/``. Most rules have explicit shell commands with transparent flag settings. Expert users can change these for additional control.
 
 Workflow Use in Detail
 ----------------------
@@ -277,14 +275,19 @@ Workflow Configuration
 config.yml
 ~~~~~~~~~~~
 
-Central place for the configuration of workflow behavior and software parameters by the user is ``config.yml``. There are comments in the file that explain the configuration parameters and options.
+Central place for the configuration of workflow behaviour and software parameters by the user is ``config.yml``. There are comments in the file that explain the configuration parameters and options.
 
-An important configuration parameter is the location of a ``tmp/`` directory. Several rules make extensive use of the tmp/ directory to temporarily store large files. Oftentimes standard home directories on compute servers or cluster nodes are too small.
+Note that, in snakemake, calling a rule will trigger run
+of the upstream rules. When editing ``(/config.yml)`` it is therefore important to only configure the most downstream rule(s). (varcall, snpeff, denovo). These settings will be propagated to the upstream rules.
+
+An important configuration parameter is the location of a ``tmp/`` directory. Several rules make extensive use of the tmp/ directory to temporarily store large files. Oftentimes standard home directories on compute servers or cluster nodes are too small. It is currently under the abra2 confguration options (abra2:tmp:).
+
+
 
 Additional Configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-Expert users can change the rules themselves by editing ``rules/*.rules.smk``. Use caution! We have chosen reasonable defaults and recommend modifying rules only when you know what you are doing. When allocation more cores to rules, pay attention that a) some rules are very memory intensive b) some shell commands are piped and are in fact using more than 1 core per process.
+Expert users can change the rules themselves by editing ``rules/*.rules.smk``. Use caution! We have chosen reasonable defaults and recommend modifying rules only when you know what you are doing. When allocating more cores to rules, pay attention that some rules are very memory intensive and some shell commands are piped and are in fact using more than 1 core per process.
 
 Running the Workflow
 ~~~~~~~~~~~~~~~~~~~~

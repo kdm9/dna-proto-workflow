@@ -84,9 +84,9 @@
 <li><a class="reference internal" href="#overview-pbgl-s-mutant-analysis-workflow">Overview PBGL’s Mutant-Analysis-workflow</a><ul>
 <li><a class="reference internal" href="#the-brief-principle-of-snakemake">The (brief) principle of Snakemake</a></li>
 <li><a class="reference internal" href="#mutant-analysis-workflow-use-cases">Mutant-Analysis-workflow Use Cases</a><ul>
-<li><a class="reference internal" href="#de-novo">1 - “De-Novo”</a></li>
-<li><a class="reference internal" href="#variant-calling">2 - “Variant Calling”</a></li>
-<li><a class="reference internal" href="#id1">3 - “snpEff”</a></li>
+<li><a class="reference internal" href="#denovo">“denovo”</a></li>
+<li><a class="reference internal" href="#varcall">“varcall”</a></li>
+<li><a class="reference internal" href="#id1">“snpEff”</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#hardware-requirements">Hardware Requirements</a></li>
@@ -202,7 +202,7 @@
 <div class="section" id="overview-pbgl-s-mutant-analysis-workflow">
 <h2>Overview PBGL’s Mutant-Analysis-workflow<a class="headerlink" href="#overview-pbgl-s-mutant-analysis-workflow" title="Permalink to this headline">¶</a></h2>
 <p>This collection of Snakemake rules constitutes a workflow for the analysis of high-throughput sequencing data. We use it mostly for genome re-sequencing data produced with Illumina-type sequencing instruments.
-For this particular workflow we distinguish two main use cases: <strong>de-novo</strong> and <strong>varcall</strong>. The workflow is designed to run the entire analyses automatically.</p>
+For this particular workflow we distinguish two main use cases: <strong>denovo</strong> and <strong>varcall</strong>. The workflow is designed to run the entire analyses automatically.</p>
 <div class="section" id="the-brief-principle-of-snakemake">
 <h3>The (brief) principle of Snakemake<a class="headerlink" href="#the-brief-principle-of-snakemake" title="Permalink to this headline">¶</a></h3>
 <p>In Snakemake, analysis workflows are defined as a series of rules. In our case, rules define the analysis steps. Each rule has input and output files. Calling a rule will invoke all upstream rules. It is hence generally sufficient to request the desired output file(s) and entire workflow is executed.
@@ -218,8 +218,8 @@ In practice, users will provide input files, configure project meta information,
 </div>
 <div class="section" id="mutant-analysis-workflow-use-cases">
 <h3>Mutant-Analysis-workflow Use Cases<a class="headerlink" href="#mutant-analysis-workflow-use-cases" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="de-novo">
-<h4>1 - “De-Novo”<a class="headerlink" href="#de-novo" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="denovo">
+<h4>“denovo”<a class="headerlink" href="#denovo" title="Permalink to this headline">¶</a></h4>
 <p>Choosing this option will conduct a reference-free comparision of <em>samples</em> based on the raw sequencing reads using k-mers. The workflow invokes the software tools kWIP and/or mash and outputs distance matrices and PCA plots. The workflow for this use case consists of the following steps:</p>
 <table class="docutils align-default">
 <colgroup>
@@ -258,9 +258,9 @@ In practice, users will provide input files, configure project meta information,
 </ul>
 <p>Required input for <code class="docutils literal notranslate"><span class="pre">rules.denovo.input</span></code> are fastq files and the workflow will return distance matrices, produced by kWIP and/or mash.</p>
 </div>
-<div class="section" id="variant-calling">
-<h4>2 - “Variant Calling”<a class="headerlink" href="#variant-calling" title="Permalink to this headline">¶</a></h4>
-<p>Choosing this option will run a full re-sequencing analysis. It detects variants and genotype <em>samples</em> based on the alignments of the sequencing reads against one or several user-defined reference genome(s). Reads can be mapped with bwa and/or nextgenmapper (ngm), and variants called with freebayes and/or mpileup. If reference genome annotation is available, the effects of variants on gene integrity can also be predicted using the software <a class="reference external" href="https://pcingola.github.io/SnpEff/se_introduction/">snpEff</a>.</p>
+<div class="section" id="varcall">
+<h4>“varcall”<a class="headerlink" href="#varcall" title="Permalink to this headline">¶</a></h4>
+<p>Choosing this option will run a full re-sequencing analysis. It detects variants and genotype <em>samples</em> based on the alignments of the sequencing reads against one or several user-defined reference genome(s). Reads can be mapped with bwa and/or NextGenMap (ngm), and variants called with freebayes and/or mpileup. If reference genome annotation is provided, the effects of variants on gene integrity can also be predicted using the software <a class="reference external" href="https://pcingola.github.io/SnpEff/se_introduction/">snpEff</a>.</p>
 <p>The full workflow for this use case consists of the following steps:</p>
 <table class="docutils align-default">
 <colgroup>
@@ -319,13 +319,13 @@ abra2</p></td>
 </table>
 <p>This option can be invoked in 2 ways:</p>
 <ul class="simple">
-<li><p>running the <code class="docutils literal notranslate"><span class="pre">rules.varcall.input</span></code> will result in <strong>several filterd vcf files</strong>, one for each specified filter.</p></li>
-<li><p>running the rule <code class="docutils literal notranslate"><span class="pre">rules.snpEff.output</span></code> will result in <strong>annotated vcf files for one chosenfilter</strong> <code class="docutils literal notranslate"><span class="pre">(config['snpeff']['filter'])</span></code> and additional summaries; variants are filtered with the specified filter only and variant effects annotated against the provided snpEff database.</p></li>
+<li><p>running <code class="docutils literal notranslate"><span class="pre">rules.varcall.input</span></code> will result in <strong>several filterd vcf files</strong>, one for each specified filter.</p></li>
+<li><p>running the rule <code class="docutils literal notranslate"><span class="pre">rules.snpEff.output</span></code> will result in <strong>annotated vcf files for one chosen filter</strong> <code class="docutils literal notranslate"><span class="pre">(config['snpeff']['filter'])</span></code> and additional summaries; variants are filtered with the specified filter only and variant effects annotated against the provided snpEff database.</p></li>
 </ul>
 <p>Required input files are fastq files and a genome reference (fasta). The rule <code class="docutils literal notranslate"><span class="pre">snpeff</span></code> in addition depends on a genome annotation for the reference genome used. For maximum flexibility and ease of trouble shooting we recommend to first run the re-sequencing analysis by invoking <code class="docutils literal notranslate"><span class="pre">rules.varcall.input</span></code>, and upon successful completion invoke the workflow again, uncommenting <code class="docutils literal notranslate"><span class="pre">rules.snpEff.output</span></code>.</p>
 </div>
 <div class="section" id="id1">
-<h4>3 - “snpEff”<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h4>
+<h4>“snpEff”<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h4>
 <p>Choosing this option will attempt to annotate vcf files provided in <strong>output/variants/final/</strong> for a filter setting specified in the <code class="docutils literal notranslate"><span class="pre">config.yml</span></code> <code class="docutils literal notranslate"><span class="pre">(config['snpeff']['filter'])</span></code> and the chosen reference genome <code class="docutils literal notranslate"><span class="pre">(config['snpeff']['name'])</span></code>. This workflow has only one step.</p>
 <table class="docutils align-default">
 <colgroup>
@@ -378,8 +378,7 @@ abra2</p></td>
 <li><p>In case the <code class="docutils literal notranslate"><span class="pre">snpeff</span></code> rule will be called, adapt <code class="docutils literal notranslate"><span class="pre">snpeff.config</span></code></p></li>
 <li><p>Run snakemake</p></li>
 </ol>
-<p>For standard applications no additional edits are necessary. The rules <code class="docutils literal notranslate"><span class="pre">(*.smk)</span></code> reside in <code class="docutils literal notranslate"><span class="pre">rules/</span></code>. Most rules have explicit shell commands with transparent flag settings. Expert users can change these for additional control. Note that, in snakemake, calling a rule will trigger run
-of the upstream rules. It is therefore important to only configure the most downstream rule <code class="docutils literal notranslate"><span class="pre">(/config.yml)</span></code>; these settings will be propagated to the upstream rules.</p>
+<p>For standard applications no additional edits are necessary. The rules <code class="docutils literal notranslate"><span class="pre">(*.smk)</span></code> reside in <code class="docutils literal notranslate"><span class="pre">rules/</span></code>. Most rules have explicit shell commands with transparent flag settings. Expert users can change these for additional control.</p>
 </div>
 </div>
 <div class="section" id="workflow-use-in-detail">
@@ -600,12 +599,14 @@ $ ngm -r &lt;reference-genome.fa&gt;
 <h3>Workflow Configuration<a class="headerlink" href="#workflow-configuration" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="config-yml">
 <h4>config.yml<a class="headerlink" href="#config-yml" title="Permalink to this headline">¶</a></h4>
-<p>Central place for the configuration of workflow behavior and software parameters by the user is <code class="docutils literal notranslate"><span class="pre">config.yml</span></code>. There are comments in the file that explain the configuration parameters and options.</p>
-<p>An important configuration parameter is the location of a <code class="docutils literal notranslate"><span class="pre">tmp/</span></code> directory. Several rules make extensive use of the tmp/ directory to temporarily store large files. Oftentimes standard home directories on compute servers or cluster nodes are too small.</p>
+<p>Central place for the configuration of workflow behaviour and software parameters by the user is <code class="docutils literal notranslate"><span class="pre">config.yml</span></code>. There are comments in the file that explain the configuration parameters and options.</p>
+<p>Note that, in snakemake, calling a rule will trigger run
+of the upstream rules. When editing <code class="docutils literal notranslate"><span class="pre">(/config.yml)</span></code> it is therefore important to only configure the most downstream rule(s). (varcall, snpeff, denovo). These settings will be propagated to the upstream rules.</p>
+<p>An important configuration parameter is the location of a <code class="docutils literal notranslate"><span class="pre">tmp/</span></code> directory. Several rules make extensive use of the tmp/ directory to temporarily store large files. Oftentimes standard home directories on compute servers or cluster nodes are too small. It is currently under the abra2 confguration options (abra2:tmp:).</p>
 </div>
 <div class="section" id="additional-configuration">
 <h4>Additional Configuration<a class="headerlink" href="#additional-configuration" title="Permalink to this headline">¶</a></h4>
-<p>Expert users can change the rules themselves by editing <code class="docutils literal notranslate"><span class="pre">rules/*.rules.smk</span></code>. Use caution! We have chosen reasonable defaults and recommend modifying rules only when you know what you are doing. When allocation more cores to rules, pay attention that a) some rules are very memory intensive b) some shell commands are piped and are in fact using more than 1 core per process.</p>
+<p>Expert users can change the rules themselves by editing <code class="docutils literal notranslate"><span class="pre">rules/*.rules.smk</span></code>. Use caution! We have chosen reasonable defaults and recommend modifying rules only when you know what you are doing. When allocating more cores to rules, pay attention that some rules are very memory intensive and some shell commands are piped and are in fact using more than 1 core per process.</p>
 </div>
 <div class="section" id="running-the-workflow">
 <h4>Running the Workflow<a class="headerlink" href="#running-the-workflow" title="Permalink to this headline">¶</a></h4>
