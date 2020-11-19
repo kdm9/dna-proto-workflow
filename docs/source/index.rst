@@ -121,8 +121,8 @@ Workflow Use in a Nutshell
 
 Steps
 ^^^^^
-1. Create a new github repository in your github account using this workflow [as a template](https://help.github.com/en/articles/creating-a-repository-from-a-template).
-2. [Clone](https://help.github.com/en/articles/cloning-a-repository) your newly created repository to your local system where you want to perform the analysis.
+1. Create a new github repository in your github account using this workflow `as a template <https://help.github.com/en/articles/creating-a-repository-from-a-template>`_.
+2. `Clone <https://help.github.com/en/articles/cloning-a-repository>`_ your newly created repository to your local system where you want to perform the analysis.
 3. Create and activate the conda environment
 4. Provide reference genome(s) and annotation(s) in ``/genomes and annotation/``
 5. Specify location of input files and their meta data in ``/metadata/sample2runlib.csv``
