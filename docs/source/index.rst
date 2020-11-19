@@ -27,8 +27,8 @@ For this particular workflow we distinguish two main use cases: **denovo** and *
 The (brief) principle of Snakemake
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-In Snakemake, analysis workflows are defined as a series of rules. In our case, rules define the analysis steps. Each rule has input and output files. Calling a rule will invoke all upstream rules. It is hence generally sufficient to request the desired output file(s) and entire workflow is executed.
-In practice, users will provide input files, configure project meta information, adjust configuration parameters, and execute 'snakemake'. The workflow will automatically perform all the (necessary) analysis steps tp produce the desired output.
+In Snakemake, analysis workflows are defined as a series of rules. In our case, rules define the analysis steps. Each rule has input and output files. Calling a rule will invoke all upstream rules. It is hence generally sufficient to request the desired output file(s) of the downstream most rule and the entire workflow will be executed.
+In practice, users will provide input files, configure project meta information, adjust configuration parameters, and execute 'snakemake'. The workflow will automatically perform all the (necessary) analysis steps tp produce the defined output.
 
  A rule will be run if:
 
@@ -58,12 +58,13 @@ Choosing this option will conduct a reference-free comparision of *samples* base
 
 * Invoke this option by running the rule: ``rules.denovo.input``
 
-Required input for ``rules.denovo.input`` are fastq files and the workflow will return distance matrices, produced by kWIP and/or mash.
+Required input for ``rules.denovo.input`` are fastq files and the workflow will return distance matrices between *samples*, produced by kWIP and/or mash.
+> NOTE: We recommend performing such denovo analysis for every project. Clustering at the level of sequencing runs can be used to confirm metadata and detect mixups.
 
 
 "varcall"
 ~~~~~~~~~
-Choosing this option will run a full re-sequencing analysis. It detects variants and genotype *samples* based on the alignments of the sequencing reads against one or several user-defined reference genome(s). Reads can be mapped with bwa and/or NextGenMap (ngm), and variants called with freebayes and/or mpileup. If reference genome annotation is provided, the effects of variants on gene integrity can also be predicted using the software `snpEff <https://pcingola.github.io/SnpEff/se_introduction/>`_.
+Choosing this option will run a full re-sequencing analysis. It detects variants and genotypes *samples* based on the alignments of the sequencing reads against one or several user-defined reference genome(s). Reads can be aligned with bwa and/or NextGenMap (ngm), and variants can be called with freebayes and/or mpileup. If reference genome annotation is provided, the effects of variants on gene integrity can also be predicted using the software `snpEff <https://pcingola.github.io/SnpEff/se_introduction/>`_.
 
 The full workflow for this use case consists of the following steps:
 
@@ -84,15 +85,15 @@ The full workflow for this use case consists of the following steps:
 
 This option can be invoked in 2 ways:
 
-* running ``rules.varcall.input`` will result in **several filterd vcf files**, one for each specified filter.
-* running the rule ``rules.snpEff.output`` will result in **annotated vcf files for one chosen filter** ``(config['snpeff']['filter'])`` and additional summaries; variants are filtered with the specified filter only and variant effects annotated against the provided snpEff database.
+* selecting ``rules.varcall.input`` will result in **several filterd vcf files**, one for each specified filter.
+* selecting the rule ``rules.snpEff.output`` will result in **annotated vcf files for one chosen filter** ``(config['snpeff']['filter'])`` and additional summaries; variants are filtered with the specified filter only and variant effects annotated against the provided snpEff database.
 
-Required input files are fastq files and a genome reference (fasta). The rule ``snpeff`` in addition depends on a genome annotation for the reference genome used. For maximum flexibility and ease of trouble shooting we recommend to first run the re-sequencing analysis by invoking ``rules.varcall.input``, and upon successful completion invoke the workflow again, uncommenting ``rules.snpEff.output``.
+Required input files are fastq files and a genome reference (fasta). The rule ``snpeff`` in addition depends on a genome annotation for the reference genome used. For maximum flexibility and ease of trouble shooting we recommend to first run the re-sequencing analysis by invoking ``rules.varcall.input``, and upon successful completion invoke the workflow again, this time selecting/uncommenting ``rules.snpEff.output``.
 
 "snpEff"
 ~~~~~~~~
 
-Choosing this option will attempt to annotate vcf files provided in **output/variants/final/** for a filter setting specified in the ``config.yml`` ``(config['snpeff']['filter'])`` and the chosen reference genome ``(config['snpeff']['name'])``. This workflow has only one step.
+Choosing option ``rules.snpEff.output`` will attempt to annotate vcf files provided in **output/variants/final/** for a filter setting specified in the ``config.yml`` ``(config['snpeff']['filter'])`` and the chosen reference genome ``(config['snpeff']['name'])``. This workflow has only one step.
 
 +---+-------------------+--------+----------+
 | # |       Task        |  Rule  | Software |
@@ -102,24 +103,24 @@ Choosing this option will attempt to annotate vcf files provided in **output/var
 
 Typical use case is running ``snpEff`` after a completed run of rule ``varcall``. A snpEff run will complete within a matter of minutes.
 
+
 Hardware Requirements
 ^^^^^^^^^^^^^^^^^^^^^
-
 The workflow is parallelized and snakemake will make efficient use of available resources on local machines as well as on compute clusters. It will run faster the more resources are available, but it performs fine on smaller machines. For routine applications we have used the workflow on a budged workstation, HP Z820 with 32 cores, 64 GB RAM running Ubuntu 16.04, and on a Virtual Machine in the cloud, AZURE with 16 cores and 512 GB RAM running Ubuntu 18.04.
 
-Snakemake allows for fine-tuning resource allocation to the individual rules (number of processors and memory). We configured each rule with reasonable defaults, but they can be tailored to your particular size project and hardware. For details please consult the snakemake manual. In general though, if limited by memory, then do not parallelise too aggressively.
+Snakemake allows for fine-tuning resource allocation to the individual rules (number of processors and memory). We configured each rule with reasonable defaults, but they can be tailored to your particular size project and hardware. For details please consult the `Snakemake <https://snakemake.readthedocs.io/en/stable/index.html#>`_ documentation. In general though, if limited by memory, then do not parallelise too aggressively.
+
 
 Software Dependencies
 ^^^^^^^^^^^^^^^^^^^^^
-
 We recommend running the workflow in its own ``conda environment`` on a Linux Server. Dependencies are listed in ``envs/condaenv.yml`` and ``envs/additional.yml``. A brief explanation how to use these files to generate the conda environment is further below. For comprehensive explanation please consult the `conda <https://docs.conda.io/projects/conda/en/latest/user-guide/getting-started.html>`_ documentation. For software that was not available through conda at the time of development we make the specific binaries available in ``envs/``. Currently mainly ``abra2.jar``.
+
 
 Workflow Use in a Nutshell
 --------------------------
 
 Steps
 ^^^^^
-
 1. Create a new github repository in your github account using this workflow [as a template](https://help.github.com/en/articles/creating-a-repository-from-a-template).
 2. [Clone](https://help.github.com/en/articles/cloning-a-repository) your newly created repository to your local system where you want to perform the analysis.
 3. Create and activate the conda environment
@@ -299,7 +300,7 @@ To run the workflow, un-comment the respective rule in the ``Snakefile`` and run
    $ snakemake –npr
    $ snakemake –j 6 --no-temp -kpr
 
-For details on commandline options for snakemake please consult the snakemake manual. Un-comment only the one most downstream rule for your use case. Currently, these use case rules are
+For details on commandline options for snakemake please consult the `Snakemake <https://snakemake.readthedocs.io/en/stable/index.html#>`_ documentation. Un-comment only the one most downstream rule for your use case. Currently, these use case rules are
 
 ::
 

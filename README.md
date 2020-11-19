@@ -146,7 +146,7 @@ Once you've cloned your fork, you can edit your local copy. However, if you want
 ### Create a branch
 
 Change to the repository directory on your computer (if you are not already there):
-> NOTE: you can't change the name of the directory.
+> NOTE: Don't change the name of this directory!
 
 ```
 cd dna-proto-workflow

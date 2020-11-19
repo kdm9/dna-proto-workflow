@@ -205,8 +205,8 @@
 For this particular workflow we distinguish two main use cases: <strong>denovo</strong> and <strong>varcall</strong>. The workflow is designed to run the entire analyses automatically.</p>
 <div class="section" id="the-brief-principle-of-snakemake">
 <h3>The (brief) principle of Snakemake<a class="headerlink" href="#the-brief-principle-of-snakemake" title="Permalink to this headline">¶</a></h3>
-<p>In Snakemake, analysis workflows are defined as a series of rules. In our case, rules define the analysis steps. Each rule has input and output files. Calling a rule will invoke all upstream rules. It is hence generally sufficient to request the desired output file(s) and entire workflow is executed.
-In practice, users will provide input files, configure project meta information, adjust configuration parameters, and execute ‘snakemake’. The workflow will automatically perform all the (necessary) analysis steps tp produce the desired output.</p>
+<p>In Snakemake, analysis workflows are defined as a series of rules. In our case, rules define the analysis steps. Each rule has input and output files. Calling a rule will invoke all upstream rules. It is hence generally sufficient to request the desired output file(s) of the downstream most rule and the entire workflow will be executed.
+In practice, users will provide input files, configure project meta information, adjust configuration parameters, and execute ‘snakemake’. The workflow will automatically perform all the (necessary) analysis steps tp produce the defined output.</p>
 <blockquote>
 <div><p>A rule will be run if:</p>
 </div></blockquote>
@@ -256,11 +256,12 @@ In practice, users will provide input files, configure project meta information,
 <ul class="simple">
 <li><p>Invoke this option by running the rule: <code class="docutils literal notranslate"><span class="pre">rules.denovo.input</span></code></p></li>
 </ul>
-<p>Required input for <code class="docutils literal notranslate"><span class="pre">rules.denovo.input</span></code> are fastq files and the workflow will return distance matrices, produced by kWIP and/or mash.</p>
+<p>Required input for <code class="docutils literal notranslate"><span class="pre">rules.denovo.input</span></code> are fastq files and the workflow will return distance matrices between <em>samples</em>, produced by kWIP and/or mash.
+&gt; NOTE: We recommend performing such denovo analysis for every project. Clustering at the level of sequencing runs can be used to confirm metadata and detect mixups.</p>
 </div>
 <div class="section" id="varcall">
 <h4>“varcall”<a class="headerlink" href="#varcall" title="Permalink to this headline">¶</a></h4>
-<p>Choosing this option will run a full re-sequencing analysis. It detects variants and genotype <em>samples</em> based on the alignments of the sequencing reads against one or several user-defined reference genome(s). Reads can be mapped with bwa and/or NextGenMap (ngm), and variants called with freebayes and/or mpileup. If reference genome annotation is provided, the effects of variants on gene integrity can also be predicted using the software <a class="reference external" href="https://pcingola.github.io/SnpEff/se_introduction/">snpEff</a>.</p>
+<p>Choosing this option will run a full re-sequencing analysis. It detects variants and genotypes <em>samples</em> based on the alignments of the sequencing reads against one or several user-defined reference genome(s). Reads can be aligned with bwa and/or NextGenMap (ngm), and variants can be called with freebayes and/or mpileup. If reference genome annotation is provided, the effects of variants on gene integrity can also be predicted using the software <a class="reference external" href="https://pcingola.github.io/SnpEff/se_introduction/">snpEff</a>.</p>
 <p>The full workflow for this use case consists of the following steps:</p>
 <table class="docutils align-default">
 <colgroup>
@@ -319,14 +320,14 @@ abra2</p></td>
 </table>
 <p>This option can be invoked in 2 ways:</p>
 <ul class="simple">
-<li><p>running <code class="docutils literal notranslate"><span class="pre">rules.varcall.input</span></code> will result in <strong>several filterd vcf files</strong>, one for each specified filter.</p></li>
-<li><p>running the rule <code class="docutils literal notranslate"><span class="pre">rules.snpEff.output</span></code> will result in <strong>annotated vcf files for one chosen filter</strong> <code class="docutils literal notranslate"><span class="pre">(config['snpeff']['filter'])</span></code> and additional summaries; variants are filtered with the specified filter only and variant effects annotated against the provided snpEff database.</p></li>
+<li><p>selecting <code class="docutils literal notranslate"><span class="pre">rules.varcall.input</span></code> will result in <strong>several filterd vcf files</strong>, one for each specified filter.</p></li>
+<li><p>selecting the rule <code class="docutils literal notranslate"><span class="pre">rules.snpEff.output</span></code> will result in <strong>annotated vcf files for one chosen filter</strong> <code class="docutils literal notranslate"><span class="pre">(config['snpeff']['filter'])</span></code> and additional summaries; variants are filtered with the specified filter only and variant effects annotated against the provided snpEff database.</p></li>
 </ul>
-<p>Required input files are fastq files and a genome reference (fasta). The rule <code class="docutils literal notranslate"><span class="pre">snpeff</span></code> in addition depends on a genome annotation for the reference genome used. For maximum flexibility and ease of trouble shooting we recommend to first run the re-sequencing analysis by invoking <code class="docutils literal notranslate"><span class="pre">rules.varcall.input</span></code>, and upon successful completion invoke the workflow again, uncommenting <code class="docutils literal notranslate"><span class="pre">rules.snpEff.output</span></code>.</p>
+<p>Required input files are fastq files and a genome reference (fasta). The rule <code class="docutils literal notranslate"><span class="pre">snpeff</span></code> in addition depends on a genome annotation for the reference genome used. For maximum flexibility and ease of trouble shooting we recommend to first run the re-sequencing analysis by invoking <code class="docutils literal notranslate"><span class="pre">rules.varcall.input</span></code>, and upon successful completion invoke the workflow again, this time selecting/uncommenting <code class="docutils literal notranslate"><span class="pre">rules.snpEff.output</span></code>.</p>
 </div>
 <div class="section" id="id1">
 <h4>“snpEff”<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h4>
-<p>Choosing this option will attempt to annotate vcf files provided in <strong>output/variants/final/</strong> for a filter setting specified in the <code class="docutils literal notranslate"><span class="pre">config.yml</span></code> <code class="docutils literal notranslate"><span class="pre">(config['snpeff']['filter'])</span></code> and the chosen reference genome <code class="docutils literal notranslate"><span class="pre">(config['snpeff']['name'])</span></code>. This workflow has only one step.</p>
+<p>Choosing option <code class="docutils literal notranslate"><span class="pre">rules.snpEff.output</span></code> will attempt to annotate vcf files provided in <strong>output/variants/final/</strong> for a filter setting specified in the <code class="docutils literal notranslate"><span class="pre">config.yml</span></code> <code class="docutils literal notranslate"><span class="pre">(config['snpeff']['filter'])</span></code> and the chosen reference genome <code class="docutils literal notranslate"><span class="pre">(config['snpeff']['name'])</span></code>. This workflow has only one step.</p>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 8%" />
@@ -355,7 +356,7 @@ abra2</p></td>
 <div class="section" id="hardware-requirements">
 <h3>Hardware Requirements<a class="headerlink" href="#hardware-requirements" title="Permalink to this headline">¶</a></h3>
 <p>The workflow is parallelized and snakemake will make efficient use of available resources on local machines as well as on compute clusters. It will run faster the more resources are available, but it performs fine on smaller machines. For routine applications we have used the workflow on a budged workstation, HP Z820 with 32 cores, 64 GB RAM running Ubuntu 16.04, and on a Virtual Machine in the cloud, AZURE with 16 cores and 512 GB RAM running Ubuntu 18.04.</p>
-<p>Snakemake allows for fine-tuning resource allocation to the individual rules (number of processors and memory). We configured each rule with reasonable defaults, but they can be tailored to your particular size project and hardware. For details please consult the snakemake manual. In general though, if limited by memory, then do not parallelise too aggressively.</p>
+<p>Snakemake allows for fine-tuning resource allocation to the individual rules (number of processors and memory). We configured each rule with reasonable defaults, but they can be tailored to your particular size project and hardware. For details please consult the <a class="reference external" href="https://snakemake.readthedocs.io/en/stable/index.html#">Snakemake</a> documentation. In general though, if limited by memory, then do not parallelise too aggressively.</p>
 </div>
 <div class="section" id="software-dependencies">
 <h3>Software Dependencies<a class="headerlink" href="#software-dependencies" title="Permalink to this headline">¶</a></h3>
@@ -615,7 +616,7 @@ of the upstream rules. When editing <code class="docutils literal notranslate"><
 $ snakemake –j 6 --no-temp -kpr
 </pre></div>
 </div>
-<p>For details on commandline options for snakemake please consult the snakemake manual. Un-comment only the one most downstream rule for your use case. Currently, these use case rules are</p>
+<p>For details on commandline options for snakemake please consult the <a class="reference external" href="https://snakemake.readthedocs.io/en/stable/index.html#">Snakemake</a> documentation. Un-comment only the one most downstream rule for your use case. Currently, these use case rules are</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># USER OPTIONS</span>
 <span class="c1">#     rules.denovo.input,</span>
 <span class="c1">#     rules.varcall.input,</span>
