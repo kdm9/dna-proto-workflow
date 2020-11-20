@@ -3,25 +3,30 @@
 # Note that the tmp/ directory is used extensively. On many servers the user's home directory is too small to be suitable for hosting the tmp/ directory .
 # Specify the tmp/ directory in the abra2 options below. (This tmp/ directory will be used by all other rules as well)
 
+
+################# SAMPLES #############################################
+samples: "metadata/sample2runlib.csv"
+
 # Input fastq files and sample metadata are specified in metadata/sample2runlib.csv. Edit this file accordingly.
 # Note that entries in columns "run" + "library" together make up the primary key for fastq file location and each combination has to be unique.
 # The paths to interleaved fastq input files are specified in column "il_fastq", otherwise in columns fq1 and fq2.
 # Separate run/library combinations are joined into samples by identical entries in the "sample" column.
 
-samples: "metadata/sample2runlib.csv"
-
 # sample sets are specified as *.txt files in metadata/samplesets.
 # There can be several, the placeholder "all_samples" will trigger the respective rule to run on all samples from all files together.
 
-# Specify the path(s) to your reference genome(s) and give them each a name.
+########### REFERENCE GENOME FILE(S) locations ##########################
+# Specify the path(s) to your reference genome assembly file(s) (fasta: .fa or .fna) and give them each a name.
 # The workflow will look for the required associated files (i.e., .fai, .amb, .ann, .bwt, .pac, .sa) in same directory of the specified fasta file.
 # softlinks are possible and we recommend to softlink the parent directory. (See genomes_and_annotations/readme).
+
 refs:
   GCF_004118075.1_ASM411807v1: genomes_and_annotations/GCF_004118075.1_ASM411807v1/GCF_004118075.1_ASM411807v1_genomic.fna
 #  my_reference_genome_2:
 
-# configuration options for the QC rules:
+######### configuration options for the QC rule ##############################
 # Adapter "_DEFAULT_" will be used. Replace with your respective adapter sequences, don't remove output related options from "extra"!
+
 qc:
   _DEFAULT_:
     adapter1: CTGTCTCTTATACACATCTCCGAGCCCACGAGACNNNNNNNNATCTCGTATGCCGTCTTCTGCTTG
@@ -41,6 +46,7 @@ qc:
 
 ########## INDEL REALIGNMENT - ABRA2 ########################################
 # configuration options for the indel realigner abra2. this is also the place to specify the location of the tmp file.
+
 abra2:
   memory:
     - Xmx24g
@@ -58,6 +64,7 @@ abra2:
 ########## VARCALL ############################################################
 # configure options for the varcall rules: which aligners and callers to use as well as their parameters
 # this is also the place to configure the filters to run on the vcf file to produce filtered vcf file(s).
+
 varcall:
   aligners:
     - bwa
