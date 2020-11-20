@@ -62,7 +62,7 @@ rule qcreads:
         "   -l 20"
         "   -b >(pigz -p 5 >{output.reads})"
         "   /dev/stdin"
-        ") >{log.log} 2>&1"
+        ") >'{log.log}' 2>&1"
 
 
 #localrules: qcreads
@@ -95,7 +95,7 @@ rule qcreads_il:
         "   -l 20"
         "   -b >(pigz -p 5 >{output.reads})"
         "   /dev/stdin"
-        ") >{log.log} 2>&1"
+        ") >'{log.log}' 2>&1"
 
 
 localrules: samplefastq
@@ -125,7 +125,7 @@ rule read_count_librun:
         "    -t {threads}"
         "    {input}"
         "    >{output}"
-        " ) 2>{log}"
+        " ) 2>'{log}'"
 
 
 rule read_count_sample:
@@ -142,4 +142,4 @@ rule read_count_sample:
         "    -t {threads}"
         "    {input}"
         "    >{output}"
-        " ) 2>{log}"
+        " ) 2>''{log}'"

@@ -30,7 +30,7 @@ rule align_stats:
         "python3 scripts/tidybamstat.py"
         "   -o output/alnstats/everything"  # prefix
         "   {input}"
-        ">{log} 2>&1"
+        ">'{log}' 2>&1"
 
 
 rule align:
@@ -76,7 +76,7 @@ rule bwamem:
         "   {input.ref}"
         "   {input.reads}"
         "| samtools view -Suh - >{output.bam}"
-        " ) >{log} 2>&1"
+        " ) >'{log}' 2>&1"
 
 
 rule abra2:
@@ -107,7 +107,7 @@ rule abra2:
         "   --threads {params.threads}"
         "   --targets {params.region}"
         "   --tmpdir {params.abra_temp}"
-        ") >{log} 2>&1"
+        ") >'{log}' 2>&1"
 
  #"   -T ${{TMPDIR:-/mnt/norman/tmp}}/{wildcards.run}_{wildcards.lib}_markdup_$RANDOM"
 rule bam_markdups_sort:
@@ -138,7 +138,7 @@ rule bam_markdups_sort:
         "   --output-fmt bam,level=3"
         "   -"
         "   {output.bam}"
-        " ) >{log} 2>&1"
+        " ) >'{log}' 2>&1"
 
 
 rule mergebam_samp:
@@ -158,7 +158,7 @@ rule mergebam_samp:
         "   --output-fmt bam,level=4"
         "   {output.bam}"
         "   {input}"
-        " ) >{log} 2>&1"
+        " ) >'{log}' 2>&1"
 
 
 rule qualimap_samp:
@@ -177,7 +177,7 @@ rule qualimap_samp:
         "   -nt {threads}"
         "   -outdir {output}"
         "   {input}"
-        " ) >{log} 2>&1"
+        " ) >'{log}' 2>&1"
 
 
 #localrules: bamlist
@@ -213,7 +213,7 @@ rule mergebam_set:
         "   {input}"
         " | tee {output.bam}"
         " | samtools index - {output.bai}"  # indexing takes bloody ages, we may as well do this on the fly
-        " ) >{log} 2>&1"
+        " ) >'{log}' 2>&1"
 
 
 localrules: bamstat_samps
@@ -225,7 +225,7 @@ rule bamstat_samps:
     log:
         "output/log/align/bamstats_sample/{aligner}~{ref}~{sample}.tsv"
     shell:
-        "(samtools stats -i 5000 -x {input} >{output}) >{log}"
+        "(samtools stats -i 5000 -x {input} >{output}) >'{log}'"
 
 
 
@@ -304,4 +304,4 @@ rule ngmap:
         "   --rg-sm {params.sample}"
         "   --sensitivity {params.sensitivity}" # this is the mean from a bunch of different runs
         "| samtools view -Suh - >{output.bam}"
-        " ) >{log} 2>&1"
+        " ) >'{log}' 2>&1"

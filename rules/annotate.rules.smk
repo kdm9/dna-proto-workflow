@@ -19,7 +19,8 @@ rule annotate:
 
 rule snpeff:
     input:
-       "output/variants/final/{caller}~{aligner}~{ref}~{sampleset}~filtered-{filter}.vcf.gz"
+       vcf="output/variants/final/{caller}~{aligner}~{ref}~{sampleset}~filtered-{filter}.vcf.gz",
+       bed="metadata/contigs_of_interest.bed",
     output:
         vcf="output/annotated_variants/snpeff/{database}/{caller}~{aligner}~{ref}~{sampleset}~filtered-{filter}~snpEff.vcf.gz",
         csvstats="output/annotated_variants/snpeff/{database}/{caller}~{aligner}~{ref}~{sampleset}~filtered-{filter}.csv",
@@ -31,11 +32,12 @@ rule snpeff:
         extra="-Xmx6g -v"
     shell:
         "( snpEff ann"
+        " -filterInterval {input.bed}"
         " -csvStats {output.csvstats}"
         " -htmlStats {output.htmlStats}"
         " {params.extra}"
         " {params.database}"
-        " {input}"
+        " {input.vcf}"
         " > {output.vcf}"
         " ) >'{log}' 2>&1"
 

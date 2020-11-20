@@ -45,14 +45,14 @@ def get_fr_fastq(wildcards):
     return {"r1": fastqs.fq1, "r2": fastqs.fq2}
 
 
-rule align_prepare_reference:
-    input:
-        ref = lambda wc: config['refs'][wc.ref]
-    output:
-        "genomes_and_annotations/{ref}/{ref}.fa.amb",
-        "genomes_and_annotations/{ref}/{ref}.fa.ann",
-        "genomes_and_annotations/{ref}/{ref}.fa.bwt",
-        "genomes_and_annotations/{ref}/{ref}.fa.pac",
-        "genomes_and_annotations/{ref}/{ref}.fa.sa"
-    shell:
-        "bwa index -a bwtsw {input.ref}"
+#rule align_prepare_reference:
+#    input:
+#        ref = lambda wc: config['refs'][wc.ref]
+#    output:
+#        "genomes_and_annotations/{ref}/{ref}.fa.amb",
+#        "genomes_and_annotations/{ref}/{ref}.fa.ann",
+#        "genomes_and_annotations/{ref}/{ref}.fa.bwt",
+#        "genomes_and_annotations/{ref}/{ref}.fa.pac",
+#        "genomes_and_annotations/{ref}/{ref}.fa.sa"
+#    shell:
+#        "bwa index -a bwtsw {input.ref}"
