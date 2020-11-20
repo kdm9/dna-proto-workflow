@@ -8,7 +8,7 @@ include: "rules/readqc.rules.smk"
 include: "rules/align.rules.smk"
 include: "rules/varcall.rules.smk"
 include: "rules/stats.rules.smk"
-include: "rules/snpeff.rules.smk"
+include: "rules/annotate.rules.smk"
 
 ##### Target rules #####
 
@@ -17,7 +17,7 @@ rule all:
 # USER OPTIONS
 #        rules.denovo.input,
 #        rules.varcall.input,
-#        rules.snpeff.output,
+#        rules.annotate.input,
 # EXPERT OPTIONS
 #        rules.readqc.input,
 #        rules.align.input,

@@ -1,5 +1,5 @@
 
-# This is the configuration file for the individual rules. Adjust to your needs.
+# This is the configuration file for the workfow with sections for the individual rules. Adjust to your needs.
 # Note that the tmp/ directory is used extensively. On many servers the user's home directory is too small to be suitable for hosting the tmp/ directory .
 # Specify the tmp/ directory in the abra2 options below. (This tmp/ directory will be used by all other rules as well)
 
@@ -7,16 +7,11 @@
 # Note that entries in columns "run" + "library" together make up the primary key for fastq file location and each combination has to be unique.
 # The paths to interleaved fastq input files are specified in column "il_fastq", otherwise in columns fq1 and fq2.
 # Separate run/library combinations are joined into samples by identical entries in the "sample" column.
+
 samples: "metadata/sample2runlib.csv"
 
 # sample sets are specified as *.txt files in metadata/samplesets.
 # There can be several, the placeholder "all_samples" will trigger the respective rule to run on all samples from all files together.
-
-# the mode feature is not yet implemented
-# mode: s or c
-#   s = samples
-#   c = cohort
-mode: s
 
 # Specify the path(s) to your reference genome(s) and give them each a name.
 # The workflow will look for the required associated files (i.e., .fai, .amb, .ann, .bwt, .pac, .sa) in same directory of the specified fasta file.
@@ -43,6 +38,8 @@ qc:
 
   extra: "--combined-output --interleaved --interleaved-output --trimns --trimqualities --trimwindows 10"
 
+
+########## INDEL REALIGNMENT - ABRA2 ########################################
 # configuration options for the indel realigner abra2. this is also the place to specify the location of the tmp file.
 abra2:
   memory:
@@ -58,19 +55,22 @@ abra2:
 
 #TODO move temp variable because other tools are using it as well!
 
+########## VARCALL ############################################################
 # configure options for the varcall rules: which aligners and callers to use as well as their parameters
 # this is also the place to configure the filters to run on the vcf file to produce filtered vcf file(s).
 varcall:
   aligners:
     - bwa
-#    - ngm
+    - ngm
   callers:
-    #- mpileup
+  #- mpileup
     - freebayes
   refs:
     - GCF_004118075.1_ASM411807v1
 #    - my_reference_genome_2
   samplesets:
+#    - mutants
+#    - wild_type
     - all_samples
 # Paramters
   minmapq:
@@ -94,19 +94,34 @@ varcall:
           MAF >= 0.01'
     # Above strict requires a presence rate of >20%, which isn't ideal when running on more than 1 mutant vs wild-type. Read the respective manual (bcftools view) and ajust
 
+######## ANNOTATION #########################################################
 # configuration options for the snpEff rule:
-# specify the name of your snpeff directory. It is expected to reside in genomes_and_annotations/snpeffdata, but can be changed in snpEff.config.
-# Prior to running the workflow, create/place the snpEff database (snpEffectPredictor.bin) in the same directory. For our suggestion see genomes_and_annotations/readme.
-# Currently only one reference genome can be used at a time.
+# Your snpeff directory is expected to reside in genomes_and_annotations/snpeffdata, but can be changed in snpEff.config.
+# Prior to running the workflow, create/place the snpEff database (snpEffectPredictor.bin) in the same directory. An example is in genomes_and_annotations/readme.
+# Currently, only one reference genome can be used at a time. Obviously, the snpeff 'database' must match the reference genome ('ref').
 # 'filter' refers to the input vcf file and hence defines the desired variant filter to use upstream of snpeff (compare varcall:filters:).
+
 snpeff:
-  name: GCF_004118075.1_ASM411807v1_snpeff
-  filter: strict
+  ref: GCF_004118075.1_ASM411807v1
+  database: GCF_004118075.1_ASM411807v1_snpeff
+  samplesets:
+#    - mutants
+#    - wild_type
+    - all_samples
+  aligners:
+    - bwa
+#    - ngm
+  callers:
+    - freebayes
+#    - mpileup
+  filters:
+    - strict
 
-  #TODO: change so that more than one reference genome can be used
-  #TODO: add a rule that prepares the reference genome and annotation for SNPEFF
-  #  my_reference_genome_1: genomes_and_annotations/my_reference_genome_1/genome_1.gff_or_gtf
+#TODO: change so that more than one reference genome can be used (will require to jointly specify ref, database, contigs of interest)
+#TODO: add rule that prepares the reference genome and annotation for SNPEFF
 
+
+######## DE NOVO ############################################################
 # configure options when runnign the de-novo rule. This is unrelated to any mapping or varcalling. For normal application, leave as is.
 denovodist:
   kwip_sketchsize: 1e9
@@ -119,9 +134,10 @@ denovodist:
     - all_samples
   sourmash_sets: []
 
+
 ##############################################################################
-#EXPERT options
-###
+#EXPERT options below
+##############################################################################
 # configuration options for hte mapping rule. using those will only have an effect when runnign the mapping rule separately, which is not a recommended use case.
 #When invoking the mapping rules through the varcall rule, the parameter specified in the varcall rule above take precedence.
 mapping:
@@ -142,7 +158,14 @@ align:
     sample_sets: []
 
 ################################################################################
-#below is not yet implemented 
+#below is not yet implemented
+
+# the mode feature is not yet implemented
+# mode: s or c
+#   s = samples
+#   c = cohort
+mode: s
+
 known_variants:
   # Optional: Path to a VCF file of known variants. Variant IDs from this file will be transferred to the new VCF file
   # known-variants: genomes_and_annotations/my_reference_genome_1/known_variants.vcf.gz
