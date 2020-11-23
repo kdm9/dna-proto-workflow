@@ -2,10 +2,10 @@
 
 snpeffdata
     └── GCF_004118075.1_ASM411807v1_snpeff
-        ├── genes.gff -> /data/norman/resources/Cowpea/GCF_004118075.1_ASM411807v1/GCF_004118075.1_ASM411807v1_genomic.gff
-        ├── genes.gtf -> /data/norman/resources/Cowpea/GCF_004118075.1_ASM411807v1/GCF_004118075.1_ASM411807v1_genomic.gtf
-        ├── protein.fa -> /data/norman/resources/Cowpea/GCF_004118075.1_ASM411807v1/GCF_004118075.1_ASM411807v1_protein.faa
-        ├── sequences.fa -> /data/norman/resources/Cowpea/GCF_004118075.1_ASM411807v1/GCF_004118075.1_ASM411807v1_genomic.fna
+        ├── genes.gff -> ~/genomes/GCF_004118075.1_ASM411807v1/GCF_004118075.1_ASM411807v1_genomic.gff
+        ├── genes.gtf -> ~/genomes/GCF_004118075.1_ASM411807v1/GCF_004118075.1_ASM411807v1_genomic.gtf
+        ├── protein.fa -> ~/genomes/GCF_004118075.1_ASM411807v1/GCF_004118075.1_ASM411807v1_protein.faa
+        ├── sequences.fa -> ~/genomes/GCF_004118075.1_ASM411807v1/GCF_004118075.1_ASM411807v1_genomic.fna
         └── snpEffectPredictor.bin
 
 # under snpeffdata/ add directories corresponding to your genomes, append "_snpeff" to avoid confusion. You will have to have "sequence.fa" and "genes.gff" or "genes.gtf"; "protein.fa" is optional. They can/should be softlinks.

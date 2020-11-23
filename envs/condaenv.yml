@@ -17,9 +17,9 @@ dependencies:
   - AdapterRemoval
   - seqhax
   - pigz
-  - matplotlib =2.2
-  - pandas =0.23
-  - seaborn =0.8
+  - matplotlib=2.2
+  - pandas=0.23
+  - seaborn=0.8
   - rust
   - khmer
   - kwip
@@ -28,4 +28,4 @@ dependencies:
   - nextgenmap
   - sourmash
   - freetype
-  - snpeff =4.5covid19
+  - snpeff=4.5covid19

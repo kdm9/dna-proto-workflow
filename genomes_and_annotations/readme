@@ -1,7 +1,7 @@
 #required directory structure
 
 genomes_and_annotations/
-├── GCF_004118075.1_ASM411807v1 -> /data/norman/resources/Cowpea/GCF_004118075.1_ASM411807v1
+├── GCF_004118075.1_ASM411807v1 -> ~/genomes/GCF_004118075.1_ASM411807v1
 ├── readme
 └── snpeffdata
 
@@ -17,3 +17,21 @@ $ bwa index -a bwtsw <reference-genome.fa>
 $ ngm -r <reference-genome.fa>
 
 (reference assemblies suffix .fna can also be used)
+
+
+# directory tree of the reference genome directory when prepared
+
+~/genomes/
+├── GCF_004118075.1_ASM411807v1
+    ├── GCF_004118075.1_ASM411807v1_genomic.fna
+    ├── GCF_004118075.1_ASM411807v1_genomic.fna.amb
+    ├── GCF_004118075.1_ASM411807v1_genomic.fna.ann
+    ├── GCF_004118075.1_ASM411807v1_genomic.fna.bwt
+    ├── GCF_004118075.1_ASM411807v1_genomic.fna-enc.2.ngm
+    ├── GCF_004118075.1_ASM411807v1_genomic.fna.fai
+    ├── GCF_004118075.1_ASM411807v1_genomic.fna-ht-13-2.3.ngm
+    ├── GCF_004118075.1_ASM411807v1_genomic.fna.pac
+    ├── GCF_004118075.1_ASM411807v1_genomic.fna.sa
+    ├── GCF_004118075.1_ASM411807v1_genomic.gff
+    ├── GCF_004118075.1_ASM411807v1_genomic.gtf
+    └── GCF_004118075.1_ASM411807v1_protein.faa
