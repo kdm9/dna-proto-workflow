@@ -84,9 +84,9 @@
 <li><a class="reference internal" href="#overview-pbgl-s-mutant-analysis-workflow">Overview PBGL’s Mutant-Analysis-workflow</a><ul>
 <li><a class="reference internal" href="#the-brief-principle-of-snakemake">The (brief) principle of Snakemake</a></li>
 <li><a class="reference internal" href="#mutant-analysis-workflow-use-cases">Mutant-Analysis-workflow Use Cases</a><ul>
-<li><a class="reference internal" href="#denovo">“denovo”</a></li>
-<li><a class="reference internal" href="#varcall">“varcall”</a></li>
-<li><a class="reference internal" href="#annotate">“annotate”</a></li>
+<li><a class="reference internal" href="#denovo">1-“denovo”</a></li>
+<li><a class="reference internal" href="#varcall">2-“varcall”</a></li>
+<li><a class="reference internal" href="#annotate">3-“annotate”</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#hardware-requirements">Hardware Requirements</a></li>
@@ -125,6 +125,7 @@
 <li><a class="reference internal" href="#support">Support</a><ul>
 <li><a class="reference internal" href="#license">License</a></li>
 <li><a class="reference internal" href="#contributors">Contributors</a></li>
+<li><a class="reference internal" href="#citing">Citing</a></li>
 <li><a class="reference internal" href="#reproducibility">Reproducibility</a></li>
 <li><a class="reference internal" href="#getting-help">Getting Help</a></li>
 </ul>
@@ -206,19 +207,19 @@ For this particular workflow we distinguish two different use cases: <strong>den
 <div class="section" id="the-brief-principle-of-snakemake">
 <h3>The (brief) principle of Snakemake<a class="headerlink" href="#the-brief-principle-of-snakemake" title="Permalink to this headline">¶</a></h3>
 <p>In Snakemake, analysis workflows are defined as a series of rules. In our case, rules define the analysis steps. Each rule has input and output files. Calling a rule will invoke all necessary upstream rules. It is hence generally sufficient to request the desired output file(s) of the downstream most rule and the entire workflow will be executed.
-In practice, users will provide input files, configure project meta information, adjust configuration parameters, and execute ‘snakemake’. The workflow will then automatically perform all the (necessary) analysis steps tp produce the defined output.</p>
+In practice, users will provide input files, configure project meta information, adjust configuration parameters, and execute ‘snakemake’. The workflow will then automatically perform all the (necessary) analysis steps to produce the defined output.</p>
 <p>In general, a rule will be run if:</p>
 <ul class="simple">
 <li><p>Snakemake realizes that the expected <code class="docutils literal notranslate"><span class="pre">output</span></code> files of a rule are not (yet) present or,</p></li>
 <li><p>Snakemake realizes that the expected input files or configuration parameters of a rule have changed since the last run.</p></li>
 </ul>
 <p>Hence, when analyses are re-run, existing and valid intermediate output files from a previous run are re-used, saving precious time and resources.
-For details, please consult the <a class="reference external" href="https://snakemake.readthedocs.io/en/stable/index.html#">Snakemake</a> documentation. For the differente use cases in this workflow, invoke the rule that produces the desired output:</p>
+For details, please consult the <a class="reference external" href="https://snakemake.readthedocs.io/en/stable/index.html#">Snakemake</a> documentation. For the differente use cases in this workflow, invoke the rule that produces the desired output.</p>
 </div>
 <div class="section" id="mutant-analysis-workflow-use-cases">
 <h3>Mutant-Analysis-workflow Use Cases<a class="headerlink" href="#mutant-analysis-workflow-use-cases" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="denovo">
-<h4>“denovo”<a class="headerlink" href="#denovo" title="Permalink to this headline">¶</a></h4>
+<h4>1-“denovo”<a class="headerlink" href="#denovo" title="Permalink to this headline">¶</a></h4>
 <p>Choosing this option will conduct a reference-free comparison of <em>samples</em> based on the raw sequencing reads using k-mers. The workflow invokes the software tools kWIP and/or mash and outputs distance matrices and PCA plots. The workflow for this use case consists of the following steps:</p>
 <table class="docutils align-default">
 <colgroup>
@@ -259,7 +260,7 @@ For details, please consult the <a class="reference external" href="https://snak
 &gt; NOTE: We recommend performing such denovo analysis for every project. Clustering at the level of sequencing runs can be used to confirm metadata and detect mixups.</p>
 </div>
 <div class="section" id="varcall">
-<h4>“varcall”<a class="headerlink" href="#varcall" title="Permalink to this headline">¶</a></h4>
+<h4>2-“varcall”<a class="headerlink" href="#varcall" title="Permalink to this headline">¶</a></h4>
 <p>Choosing this option will run a full re-sequencing analysis ending in filtered bcf/vcf files. It detects variants and genotypes in <em>sets</em> of <em>samples</em> based on the alignments of the sequencing reads against one or several user-defined reference genome(s). Reads can be aligned with bwa and/or NextGenMap (ngm), and variants can be called with freebayes and/or mpileup. Between read alignments and variant calling, PCR duplicates are marked (with samtools markdup) and indels are realigned (using abra2). If reference genome annotation is provided, the effects of variants on gene integrity can also be predicted using the software <a class="reference external" href="https://pcingola.github.io/SnpEff/se_introduction/">snpEff</a>.</p>
 <p>The full workflow for this use case consists of the following steps:</p>
 <table class="docutils align-default">
@@ -325,7 +326,7 @@ abra2</p></td>
 <p>Required input files are fastq files and a genome reference sequence(s) (fasta). The rule <code class="docutils literal notranslate"><span class="pre">snpeff</span></code> in addition depends on a genome annotation in form of a snpEff database matching the reference genome. For maximum flexibility and ease of troubleshooting we recommend to first run the re-sequencing analysis by invoking <code class="docutils literal notranslate"><span class="pre">rules.varcall.input</span></code>, and upon successful completion invoke the workflow again, this time selecting/uncommenting <code class="docutils literal notranslate"><span class="pre">rules.annotate.input</span></code>.</p>
 </div>
 <div class="section" id="annotate">
-<h4>“annotate”<a class="headerlink" href="#annotate" title="Permalink to this headline">¶</a></h4>
+<h4>3-“annotate”<a class="headerlink" href="#annotate" title="Permalink to this headline">¶</a></h4>
 <p>Choosing the option <code class="docutils literal notranslate"><span class="pre">rules.annotate.input</span></code> will annotate bcf/vcf files found in <strong>output/variants/final/</strong> and write annotated vcf.gz files to <strong>output/variants_annotated/</strong>. This analysis has only one step:</p>
 <table class="docutils align-default">
 <colgroup>
@@ -351,8 +352,8 @@ abra2</p></td>
 </table>
 <p>Typically, <code class="docutils literal notranslate"><span class="pre">rules.annotate.input</span></code> is run after a completed run of <code class="docutils literal notranslate"><span class="pre">rules.varcall.input</span></code>. A snpEff run will complete within a matter of minutes. It will run on all files specified by entries in the <em>snpeff:</em> section of the <code class="docutils literal notranslate"><span class="pre">config.yml</span></code> file.</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">(config['snpeff']['ref'])</span></code> one chosen reference genome,</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">(config['snpeff']['database'])</span></code> one corresponding snpEff database,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">config['snpeff']['ref']</span></code> one chosen reference genome,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">config['snpeff']['database']</span></code> one corresponding snpEff database,</p></li>
 </ul>
 <p>and all combinations of specified sample-sets, read aligners, variant callers, and variant filter settings.</p>
 </div>
@@ -364,7 +365,7 @@ abra2</p></td>
 </div>
 <div class="section" id="software-dependencies">
 <h3>Software Dependencies<a class="headerlink" href="#software-dependencies" title="Permalink to this headline">¶</a></h3>
-<p>We recommend running the workflow in its own <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">environment</span></code> on a Linux Server. Dependencies are listed in <code class="docutils literal notranslate"><span class="pre">envs/condaenv.yml</span></code> and <code class="docutils literal notranslate"><span class="pre">envs/additional.yml</span></code>. A brief explanation how to use these files to generate the conda environment is further below. For comprehensive explanation please consult the <a class="reference external" href="https://docs.conda.io/projects/conda/en/latest/user-guide/getting-started.html">conda</a> documentation. For software that is not available through conda on some important platforms we make the specific binaries available in <code class="docutils literal notranslate"><span class="pre">envs/</span></code>. Currently mainly abra2.jar.</p>
+<p>We recommend running the workflow in its own <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">environment</span></code> on a Linux Server. Dependencies are listed in <code class="docutils literal notranslate"><span class="pre">envs/condaenv.yml</span></code> and <code class="docutils literal notranslate"><span class="pre">envs/additional.yml</span></code>. A brief explanation how to use these files to generate the conda environment is further below. For comprehensive explanation please consult the <a class="reference external" href="https://docs.conda.io/projects/conda/en/latest/user-guide/getting-started.html">conda</a> documentation. For software that is not available through conda on some important platforms we make the specific binaries available in <code class="docutils literal notranslate"><span class="pre">envs/</span></code>; currently mainly abra2.jar.</p>
 </div>
 </div>
 <div class="section" id="workflow-use-in-a-nutshell">
@@ -390,10 +391,11 @@ abra2</p></td>
 <h2>Workflow Use in Detail<a class="headerlink" href="#workflow-use-in-detail" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="creating-the-conda-environment">
 <h3>Creating the Conda Environment<a class="headerlink" href="#creating-the-conda-environment" title="Permalink to this headline">¶</a></h3>
-<p>We recommend running the workflow in its own conda environment on a Linux Server. The files <code class="docutils literal notranslate"><span class="pre">envs/condaenv.yml</span></code> and <code class="docutils literal notranslate"><span class="pre">envs/additional.yml</span></code> can directly be used to create the environment and install dependencies like so:</p>
+<p>We recommend running the workflow in its own conda environment on a Linux machine. The files <code class="docutils literal notranslate"><span class="pre">envs/condaenv.yml</span></code> and <code class="docutils literal notranslate"><span class="pre">envs/additional.yml</span></code> can directly be used to create the environment and install dependencies like so (“dna-proto” is an example, feel free to chose your own):</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ conda create --name dna-proto
 $ conda env update --name dna-proto --file condaenv.yml
 $ conda env update --name dna-proto --file additional.yml
+$ conda activate dna-proto
 </pre></div>
 </div>
 <p>If <code class="docutils literal notranslate"><span class="pre">env</span> <span class="pre">update</span></code> does not work as intended or fails, then <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span></code> the programs manually. Specify the correct channel and software version where required. Below we give examples, but please consult the <a class="reference external" href="https://docs.conda.io/projects/conda/en/latest/user-guide/getting-started.html">conda</a> (and <a class="reference external" href="https://bioconda.github.io/">bioconda</a>) documentation.</p>
@@ -416,16 +418,30 @@ $ conda install samtools=1.9
 </div>
 <div class="section" id="reference-genome-s">
 <h3>Reference Genome(s)<a class="headerlink" href="#reference-genome-s" title="Permalink to this headline">¶</a></h3>
-<p>The workflow will look for the reference genome(s) and associated files in <code class="docutils literal notranslate"><span class="pre">genomes_and_annotations/</span></code>. We provide an example directory tree in <code class="docutils literal notranslate"><span class="pre">genomes_annotatoins/readme</span></code>. We recommend creating one subdirectory for each reference genome. They can be softlinks. Each reference genome directory must contain the necessary assembly file (.fa/.fna) and the associated files needed by the aligners. Generate those files in this directory from the assembly file (fasta: .fa or .fna) like so:</p>
+<p>The workflow will look for the reference genome(s) and associated files in <code class="docutils literal notranslate"><span class="pre">genomes_and_annotations/</span></code>. We provide an example directory tree in <code class="docutils literal notranslate"><span class="pre">genomes_annotations/readme</span></code>. We recommend creating a separate directory for each reference genome. They can be softlinks. Each reference genome directory must contain the necessary assembly file (.fa or .fna) and the associated files required by the aligners. Generate those files in this directory from the assembly file (fasta: .fa or .fna) like so:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ samtools faidx &lt;reference-genome.fa&gt;
 $ bwa index -a bwtsw &lt;reference-genome.fa&gt;
 $ ngm -r &lt;reference-genome.fa&gt;
 </pre></div>
 </div>
+<p># directory tree of the reference genome directory when fully prepared</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>~/genomes_and_annotations/
+├── GCF_004118075.1_ASM411807v1
+   ├── GCF_004118075.1_ASM411807v1_genomic.fna
+   ├── GCF_004118075.1_ASM411807v1_genomic.fna.amb
+   ├── GCF_004118075.1_ASM411807v1_genomic.fna.ann
+   ├── GCF_004118075.1_ASM411807v1_genomic.fna.bwt
+   ├── GCF_004118075.1_ASM411807v1_genomic.fna-enc.2.ngm
+   ├── GCF_004118075.1_ASM411807v1_genomic.fna.fai
+   ├── GCF_004118075.1_ASM411807v1_genomic.fna-ht-13-2.3.ngm
+   ├── GCF_004118075.1_ASM411807v1_genomic.fna.pac
+   └── GCF_004118075.1_ASM411807v1_genomic.fna.sa
+</pre></div>
+</div>
 </div>
 <div class="section" id="reference-genome-annotation">
 <h3>Reference Genome Annotation<a class="headerlink" href="#reference-genome-annotation" title="Permalink to this headline">¶</a></h3>
-<p>In order to annotate variants effects using snpEff you will need a snpEff database (<code class="docutils literal notranslate"><span class="pre">snpEffectPredictor.bin</span></code>) for the relevant reference genome. The location of the <code class="docutils literal notranslate"><span class="pre">snpeff</span></code> database can be configured in <code class="docutils literal notranslate"><span class="pre">snpeff.config</span></code>. It is currently set to <code class="docutils literal notranslate"><span class="pre">genomes_and_annotations/snpeffdata/</span></code> and again, we recommend subdirectories for the reference genomes also in this directory. Appending <code class="docutils literal notranslate"><span class="pre">_snpeff</span></code> to these directory names will help avoid confusion. In order to create a <code class="docutils literal notranslate"><span class="pre">snpeff</span></code> database, this <code class="docutils literal notranslate"><span class="pre">&lt;reference_genome&gt;_snpeff</span></code> directory must contain the reference genome and the annotation in files named <code class="docutils literal notranslate"><span class="pre">sequences.fa</span></code> and <code class="docutils literal notranslate"><span class="pre">genes.gff</span></code>; they again can be softlinks.
+<p>In order to annotate variant effects using snpEff you will need a snpEff database (<code class="docutils literal notranslate"><span class="pre">snpEffectPredictor.bin</span></code>) for the relevant reference genome. The location of the <code class="docutils literal notranslate"><span class="pre">snpeff</span></code> database is configured in <code class="docutils literal notranslate"><span class="pre">snpeff.config</span></code>. It is currently set to <code class="docutils literal notranslate"><span class="pre">genomes_and_annotations/snpeffdata/</span></code> and again, we recommend separate subdirectories for the reference genomes also in this directory. Appending <code class="docutils literal notranslate"><span class="pre">_snpeff</span></code> to these directory names will help avoid confusion. In order to create a <code class="docutils literal notranslate"><span class="pre">snpeff</span></code> database, this <code class="docutils literal notranslate"><span class="pre">&lt;reference_genome&gt;_snpeff</span></code> directory must contain the reference genome and the annotation in files named <code class="docutils literal notranslate"><span class="pre">sequences.fa</span></code> and <code class="docutils literal notranslate"><span class="pre">genes.gff</span></code>; they again can be softlinks. (See <code class="docutils literal notranslate"><span class="pre">genomes_and_annotations/snpeffdata/readme</span></code>.)
 For building the database you will need to add the respective entry in <code class="docutils literal notranslate"><span class="pre">snpeff.config</span></code> and then, from the root directory of the workflow (the directory that contains the <code class="docutils literal notranslate"><span class="pre">snpeff.config</span></code> file), execute:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ snpEff build –gff3 genomes_and_annotations/snpeffdata/&lt;reference-genome&gt;_snpeff
 </pre></div>
@@ -449,11 +465,11 @@ For building the database you will need to add the respective entry in <code cla
 <h3>Providing Required Meta information<a class="headerlink" href="#providing-required-meta-information" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="samplesets">
 <h4>Samplesets<a class="headerlink" href="#samplesets" title="Permalink to this headline">¶</a></h4>
-<p>We use the term <em>sample</em> as the entity of interest. Our workflows call variants on <em>samples</em> within one set. Lists of sample names must be provided as text files (<code class="docutils literal notranslate"><span class="pre">.txt</span></code>) in <code class="docutils literal notranslate"><span class="pre">/metadata/samplesets/</span></code> and “samplesets” in <code class="docutils literal notranslate"><span class="pre">config.yml</span></code> refer to those files. There exists a glob: <em>all_samples</em>, which will have the effect of concatenating all <code class="docutils literal notranslate"><span class="pre">*.txt</span></code> files in <code class="docutils literal notranslate"><span class="pre">/metadata/samplesets/</span></code> into an additional set comprising all_samples. The intention is to enable easy addition or removal of samples to/from an existing analysis.</p>
+<p>We use the term <em>sample</em> as the entity of interest. Our workflows call variants on <em>samples</em> within one set. Lists of sample names must be provided as text files (<code class="docutils literal notranslate"><span class="pre">.txt</span></code>) in <code class="docutils literal notranslate"><span class="pre">/metadata/samplesets/</span></code> and “samplesets” in <code class="docutils literal notranslate"><span class="pre">config.yml</span></code> refer to those files. We implemented a glob: <em>all_samples</em>, which will have the effect of concatenating all <code class="docutils literal notranslate"><span class="pre">*.txt</span></code> files in <code class="docutils literal notranslate"><span class="pre">/metadata/samplesets/</span></code> into an additional set comprising all samples across all sets. The intention is to enable easy addition or removal of samples to/from an existing analysis.</p>
 </div>
 <div class="section" id="sample-definitions">
 <h4>Sample Definitions<a class="headerlink" href="#sample-definitions" title="Permalink to this headline">¶</a></h4>
-<p>In praxis, the unit of interest oftentimes is the individual (plant). DNA is extracted from an individual, turned into one or several sequencing libraries that are then sequenced in one or several sequencing runs. Obviously, if those individuals are to be compared, all respective fastq files need to be assigned to the same <em>sample</em>. For use of our workflow the run - library - sample - relationships need to be defined in <code class="docutils literal notranslate"><span class="pre">/metadata/sample2runlib.csv</span></code> making explicit, which fastq files constitute the samples.
+<p>In praxis, the unit of interest oftentimes is the individual (plant). DNA is extracted from an individual, turned into one or several sequencing libraries that are then sequenced in one or several sequencing runs. In order to compare individuals, all respective fastq files need to be assigned to the same <em>sample</em>. For our workflow, the run - library - sample relationships need to be defined in <code class="docutils literal notranslate"><span class="pre">/metadata/sample2runlib.csv</span></code> making explicit, which fastq files constitute the samples.
 The entries in columns <em>run</em> and <em>library</em> are together used as the primary key for the <strong>sequencing run</strong> and thus the fastq file(s). The user must make sure that any <em>run</em> - <em>library</em> combination is unique.
 <strong>Sequencing runs</strong> are assigned to the same <em>sample</em> through an identical entry in the <em>sample</em> column. fastq files can be provided either as separate forward and reverse read files (<em>fq1</em>, <em>fq2</em>) or as interleaved fastq (<em>il_fq</em>), with the respective other column(s) empty. Within one <code class="docutils literal notranslate"><span class="pre">sample2runlib.csv</span></code> file interleaved and two-file input can be mixed.</p>
 <p>Example sample2runlib.csv file:</p>
@@ -523,7 +539,9 @@ The entries in columns <em>run</em> and <em>library</em> are together used as th
 </div>
 <div class="section" id="regions-of-interest-for-variant-calling">
 <h4>Regions of Interest for Variant Calling<a class="headerlink" href="#regions-of-interest-for-variant-calling" title="Permalink to this headline">¶</a></h4>
-<p>Variant calling can be restricted to particular regions of interest through <code class="docutils literal notranslate"><span class="pre">metadata/contigs_of_interest.bed</span></code>: A file in bed file format listing identifier, start-, and end-positions (tab delimited, no header). This is helpful for exome capture data but also to restrict the analysis to specific chromosomes. Genome assemblies often contain the main chromosomes and in addition many orphan fragments that often are not of interest. Below example will restrict variant calling to the 11 chromosomes plus the chloroplast of cowpea. The hundreds of additional contigs in the cowpea reference genome are available for read mapping but variants will not be called in them and they will subsequently not be present in the bcf/vcf files. Note that lines starting with ‘#’ will be disregarded.</p>
+<p>Variant calling can be restricted to particular regions of interest through <code class="docutils literal notranslate"><span class="pre">metadata/contigs_of_interest.bed</span></code>: A file in bed file format listing identifier, start-, and end-positions (tab delimited, no header). This is helpful for exome capture data but also to restrict the analysis to specific chromosomes. Genome assemblies often contain the main chromosomes and in addition many orphan fragments that often are not of interest.
+Below example will restrict variant calling to the 11 chromosomes plus the chloroplast of cowpea. The hundreds of additional contigs in the cowpea reference genome are available for read mapping, but variants will not be called for them and their variants will subsequently not be present in the bcf/vcf files. Note that lines starting with ‘#’ will be disregarded.</p>
+<p>Example contigs_of_interest.bed file:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">NC_040279</span><span class="o">.</span><span class="mi">1</span> <span class="mi">0</span> <span class="mi">42129361</span>
 <span class="n">NC_040280</span><span class="o">.</span><span class="mi">1</span> <span class="mi">0</span> <span class="mi">33908088</span>
 <span class="n">NC_040281</span><span class="o">.</span><span class="mi">1</span> <span class="mi">0</span> <span class="mi">65292630</span>
@@ -544,9 +562,9 @@ The entries in columns <em>run</em> and <em>library</em> are together used as th
 <h3>Workflow Configuration<a class="headerlink" href="#workflow-configuration" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="config-yml">
 <h4>config.yml<a class="headerlink" href="#config-yml" title="Permalink to this headline">¶</a></h4>
-<p>Central place for the configuration of workflow behaviour and software parameters by the user is <code class="docutils literal notranslate"><span class="pre">config.yml</span></code>. There are comments in the file that explain the configuration parameters and options.</p>
-<p>In snakemake, calling a rule will trigger run of the upstream rules. When editing <code class="docutils literal notranslate"><span class="pre">(/config.yml)</span></code> it is important to only configure the intended most downstream rule. (varcall:, annotate:, or denovo:). These settings will be propagated upstream. qc: is independent and will require editing; particularly the _DEFAULT_ adaptors used. The standard adaptors for Truseq- and Nextera-Libraries are given for reference, paste under _DEFAULT_ as required.</p>
-<p>An important configuration parameter is the location of a suitable <code class="docutils literal notranslate"><span class="pre">tmp/</span></code> directory. Several rules make extensive use of the tmp/ directory to temporarily store large files. Oftentimes standard home directories on compute servers or cluster nodes are too small. Central place for the configuration of the /tmp file is currently under abra2 (abra2:temp:).</p>
+<p>Central place for the user to configure the workflow behaviour and software parameters is <code class="docutils literal notranslate"><span class="pre">config.yml</span></code>. There are comments in the file that explain the configuration parameters and options.</p>
+<p>In snakemake, calling a rule will trigger run of the upstream rules. When editing <code class="docutils literal notranslate"><span class="pre">(/config.yml)</span></code> it is important to only configure the intended most downstream rule. (<code class="docutils literal notranslate"><span class="pre">varcall:</span></code>, <code class="docutils literal notranslate"><span class="pre">annotate:</span></code>, or <code class="docutils literal notranslate"><span class="pre">denovo:</span></code>). These settings will be propagated upstream. <code class="docutils literal notranslate"><span class="pre">qc:</span></code> is independent and will require editing; particularly the _DEFAULT_ adaptors used. The standard adaptors for Truseq- and Nextera-Libraries are given for reference, paste under _DEFAULT_ as required.</p>
+<p>An important configuration parameter is the location of a suitable <code class="docutils literal notranslate"><span class="pre">tmp/</span></code> directory. Several rules make extensive use of the tmp/ directory to temporarily store large files. Oftentimes, standard home directories on compute servers or cluster nodes are too small. Central place for the configuration of the tmp/ directory is currently under abra2 (<code class="docutils literal notranslate"><span class="pre">abra2:temp:</span></code>).</p>
 </div>
 <div class="section" id="additional-configuration">
 <h4>Additional Configuration<a class="headerlink" href="#additional-configuration" title="Permalink to this headline">¶</a></h4>
@@ -566,9 +584,9 @@ $ snakemake –j 6 --no-temp -kpr
 <span class="c1">#     rules.annotate.input,</span>
 </pre></div>
 </div>
-<p>A rule that encounters missing input files will invoke the respective upstream rule(s). E.g., when “<code class="docutils literal notranslate"><span class="pre">rules.annotate.input</span></code>” is uncommented and snakemake is run for the first time, the entire workflow from readqc (= adapter and quality clipping), alignment (= read alignments, duplicate marking, indel realignment), varcall (= variant calling), and <code class="docutils literal notranslate"><span class="pre">annotate</span> <span class="pre">``</span> <span class="pre">(=</span> <span class="pre">variant</span> <span class="pre">functional</span> <span class="pre">annotation)</span> <span class="pre">will</span> <span class="pre">run</span> <span class="pre">in</span> <span class="pre">one</span> <span class="pre">go.</span>
-<span class="pre">In</span> <span class="pre">case</span> <span class="pre">no</span> <span class="pre">``snpeff</span></code> database is supplied, then rule <code class="docutils literal notranslate"><span class="pre">rules.annotate.input</span></code> cannot be run. Use <code class="docutils literal notranslate"><span class="pre">rules.varcall.input</span></code> instead.</p>
-<p>When configuring <code class="docutils literal notranslate"><span class="pre">config.yml</span></code>, keep in mind that configuration parameters of a downstream rule take precedence because parameters have to propagate upstream. I.e., When running <em>varcall</em>, you must set your alignment parameters in the <code class="docutils literal notranslate"><span class="pre">varcall:</span></code> section; same for <em>annotate</em>: parameters must be set under <code class="docutils literal notranslate"><span class="pre">snpeff:</span></code>
+<p>A rule that encounters missing input files will invoke the respective upstream rule(s). E.g., when <code class="docutils literal notranslate"><span class="pre">rules.annotate.input</span></code> is uncommented and snakemake is run for the first time, the entire workflow from readqc (= adapter and quality clipping), alignment (= read alignments, duplicate marking, indel realignment), varcall (= variant calling), and <code class="docutils literal notranslate"><span class="pre">annotate</span></code> (= variant functional annotation) will run in one go.
+In case no <code class="docutils literal notranslate"><span class="pre">snpeff</span></code> database is supplied, then rule <code class="docutils literal notranslate"><span class="pre">rules.annotate.input</span></code> cannot be run. Use <code class="docutils literal notranslate"><span class="pre">rules.varcall.input</span></code> instead.</p>
+<p>When configuring <code class="docutils literal notranslate"><span class="pre">config.yml</span></code>, keep in mind that configuration parameters of a downstream rule take precedence because parameters have to propagate upstream. I.e., When running <em>varcall</em>, you must set your alignment parameters in the <code class="docutils literal notranslate"><span class="pre">varcall:</span></code> section; same for <code class="docutils literal notranslate"><span class="pre">annotate:</span></code> parameters. They must be set under <code class="docutils literal notranslate"><span class="pre">snpeff:</span></code>
 Adjusting presumed upstream parameters e.g., under <code class="docutils literal notranslate"><span class="pre">align:</span></code> will not have the intended effect. Only in special circumstances will the “rules.align.input” be run by itself and only then will you have to adjust parameters in the <code class="docutils literal notranslate"><span class="pre">align:</span></code> section.</p>
 <p>The workflow runs on <em>samples</em> in <em>sets</em> as listed in <code class="docutils literal notranslate"><span class="pre">samplesets/*.txt</span></code> and defined in <code class="docutils literal notranslate"><span class="pre">/metadata/sample2runlib.csv</span></code>. Sample names listed in <code class="docutils literal notranslate"><span class="pre">samplesets/*.txt</span></code> must correspond to the entries in the sample column in <code class="docutils literal notranslate"><span class="pre">/metadata/sample2runlib.csv</span></code>.</p>
 </div>
@@ -577,7 +595,7 @@ Adjusting presumed upstream parameters e.g., under <code class="docutils literal
 <h3>Configuring the different Workflow Use Cases<a class="headerlink" href="#configuring-the-different-workflow-use-cases" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="de-novo-analysis">
 <h4>De-Novo Analysis<a class="headerlink" href="#de-novo-analysis" title="Permalink to this headline">¶</a></h4>
-<p><strong>denovo</strong> can be used to check the relatedness of <em>sequencing runs</em> and/or <em>samples</em> without the use of any reference genome. It will perform a comparative analysis based on kmers on the raw data and output distance matrices. We recommend performing a de-novo analysis at the very start of every project at the “sequencing run”-level prior to any merging of runs into samples. This can help to detect mix-ups and mislabels and is achieved by providing unique names for each sequencing run in the sample column of <code class="docutils literal notranslate"><span class="pre">metadata/sample2runlib.csv</span></code>. De-novo analysis is invoked by calling “<code class="docutils literal notranslate"><span class="pre">rules.denovo.input</span></code>” by uncommenting the respective line in the Snakefile (and only this line). Pay attention to maintain the indentation.</p>
+<p><strong>denovo</strong> can be used to check the relatedness of <em>sequencing runs</em> and/or <em>samples</em> without the use of any reference genome. It will perform a comparative analysis based on kmers on the raw data and output distance matrices. We recommend performing a de-novo analysis at the very start of every project at the “sequencing run”-level prior to any merging of runs into samples. This can help to detect mix-ups and mislabels. Run-level clustering is achieved by providing unique names for each sequencing run in the sample column of <code class="docutils literal notranslate"><span class="pre">metadata/sample2runlib.csv</span></code>. De-novo analysis is invoked by calling <code class="docutils literal notranslate"><span class="pre">rules.denovo.input</span></code> (Uncomment the respective line in the Snakefile, and only this line). Pay attention to maintain the indentation.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rule</span> <span class="nb">all</span><span class="p">:</span>
     <span class="nb">input</span><span class="p">:</span>
 <span class="c1"># USER OPTIONS</span>
@@ -609,7 +627,7 @@ Adjusting presumed upstream parameters e.g., under <code class="docutils literal
 </div>
 <div class="section" id="variant-annotation-the-effects-of-variants-on-gene-function">
 <h4>Variant Annotation - The Effects of Variants on Gene Function<a class="headerlink" href="#variant-annotation-the-effects-of-variants-on-gene-function" title="Permalink to this headline">¶</a></h4>
-<p>If a snpEff library based on this exact reference genome is provided then the entire workflow can in principle be invoke by uncommenting <code class="docutils literal notranslate"><span class="pre">rules.annotate.input</span></code> (and only this line). Pay attention to maintain the correct indentation.</p>
+<p>If a snpEff library for this (exact) reference genome is provided then the entire workflow can in principle be invoke by uncommenting <code class="docutils literal notranslate"><span class="pre">rules.annotate.input</span></code> (and only this line). Pay attention to maintain the correct indentation.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rule</span> <span class="nb">all</span><span class="p">:</span>
     <span class="nb">input</span><span class="p">:</span>
 <span class="c1"># USER OPTIONS</span>
@@ -622,7 +640,7 @@ Adjusting presumed upstream parameters e.g., under <code class="docutils literal
 <span class="c1">#       rules.stats.input,</span>
 </pre></div>
 </div>
-<p>Currently, <code class="docutils literal notranslate"><span class="pre">rules.annotate.input</span></code> will operate only on one reference genome at at time. The rule will hence propagate upstream as requirement only one reference genome. If variants detected against several different reference genomes need annotating, then it is advantageous to first run the <code class="docutils literal notranslate"><span class="pre">varcall</span></code> rule specifying all reference genomes and subsequently invoke the <code class="docutils literal notranslate"><span class="pre">annotate</span></code> rule separately for each genome.</p>
+<p>Currently, <code class="docutils literal notranslate"><span class="pre">rules.annotate.input</span></code> will operate only on one reference genome at a time. The rule will hence propagate upstream as requirement only one reference genome. If variants detected against several different reference genomes need annotating, then first run the <code class="docutils literal notranslate"><span class="pre">varcall</span></code> rule specifying all reference genomes and subsequently invoke the <code class="docutils literal notranslate"><span class="pre">annotate</span></code> rule separately for each reference genome annotation.</p>
 </div>
 </div>
 </div>
@@ -645,7 +663,11 @@ Adjusting presumed upstream parameters e.g., under <code class="docutils literal
 </div>
 <div class="section" id="contributors">
 <h3>Contributors<a class="headerlink" href="#contributors" title="Permalink to this headline">¶</a></h3>
-<p>This workflow was developed by Norman Warthmann, PBGL, with important contributions from Kevin D Murray (Australian National University) and Marcos Conde, PBGL. The documentation was written by Norman Warthmann with contribution from Anibal Morales, PBGL.</p>
+<p>This workflow was developed by Norman Warthmann of the Plant Breeding and Genetics Laboratory of the FAO/IAEA Joint Division (PBGL), with important contributions from Kevin D Murray (Australian National University) and Marcos Conde, PBGL. The documentation was written by Norman Warthmann with contributions from Anibal Morales, PBGL.</p>
+</div>
+<div class="section" id="citing">
+<h3>Citing<a class="headerlink" href="#citing" title="Permalink to this headline">¶</a></h3>
+<p>When publishing results obtained using this workflow please cite the link to the original github repository specifying the release.</p>
 </div>
 <div class="section" id="reproducibility">
 <h3>Reproducibility<a class="headerlink" href="#reproducibility" title="Permalink to this headline">¶</a></h3>
