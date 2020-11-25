@@ -6,8 +6,9 @@ channels:
   - conda-forge
   - r
 dependencies:
+  - freetype
   - qualimap
   - r-devtools
   - r-vcfr
-  - r-extrafont 
+  - r-extrafont
   - r-rgl

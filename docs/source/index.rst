@@ -57,6 +57,16 @@ Choosing this option will conduct a reference-free comparison of *samples* based
 +---+----------------------------+--------+------------------+
 
 
+.. figure:: ../images/de-novo-02.png
+   :alt: dna-proto-workflow flowchart
+   :width: 450px
+   :height: 600px
+   :align: center
+   :figclass: align-center
+
+   **Figure 1.** flowchart for "denovo" (click to expand)
+
+
 * Invoke this option by running the rule: ``rules.denovo.input``
 
 Required input for ``rules.denovo.input`` are fastq files and the workflow will return distance matrices between *samples*, produced by kWIP and/or mash.
@@ -83,6 +93,17 @@ The full workflow for this use case consists of the following steps:
 6     Filter variants                         varcall  bcftools view
 7     Annotate variants                       annotate snpEff
 ===== ======================================= ======== ========================
+
+
+.. figure:: ../images/dna-proto-workflow-varcall-11.png
+   :alt: dna-proto-workflow flowchart
+   :width: 450px
+   :height: 600px
+   :align: center
+   :figclass: align-center
+
+   **Figure 2.** flowchart for "varcall" (click to expand)
+
 
 This option can be invoked in 2 ways:
 
