@@ -19,7 +19,7 @@ $ ngm -r <reference-genome.fa>
 (reference assemblies suffix .fna can also be used)
 
 
-# directory tree of the reference genome directory when prepared
+# example directory tree of the reference genome directory when prepared
 
 ~/genomes/
 ├── GCF_004118075.1_ASM411807v1

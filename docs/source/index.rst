@@ -59,10 +59,8 @@ Choosing this option will conduct a reference-free comparison of *samples* based
 
 .. figure:: ../images/de-novo-02.png
    :alt: dna-proto-workflow flowchart
-   :width: 450px
    :height: 600px
    :align: center
-   :figclass: align-center
 
    **Figure 1.** flowchart for "denovo" (click to expand)
 
@@ -97,10 +95,8 @@ The full workflow for this use case consists of the following steps:
 
 .. figure:: ../images/dna-proto-workflow-varcall-11.png
    :alt: dna-proto-workflow flowchart
-   :width: 450px
    :height: 600px
    :align: center
-   :figclass: align-center
 
    **Figure 2.** flowchart for "varcall" (click to expand)
 
