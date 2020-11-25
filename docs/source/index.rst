@@ -344,8 +344,8 @@ The workflow runs on *samples* in *sets* as listed in ``samplesets/*.txt`` and d
 Configuring the different Workflow Use Cases
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-De-Novo Analysis
-~~~~~~~~~~~~~~~~
+1-De-Novo Analysis
+~~~~~~~~~~~~~~~~~~
 
 **denovo** can be used to check the relatedness of *sequencing runs* and/or *samples* without the use of any reference genome. It will perform a comparative analysis based on kmers on the raw data and output distance matrices. We recommend performing a de-novo analysis at the very start of every project at the “sequencing run”-level prior to any merging of runs into samples. This can help to detect mix-ups and mislabels. Run-level clustering is achieved by providing unique names for each sequencing run in the sample column of ``metadata/sample2runlib.csv``. De-novo analysis is invoked by calling ``rules.denovo.input`` (Uncomment the respective line in the Snakefile, and only this line). Pay attention to maintain the indentation.
 
@@ -363,8 +363,8 @@ De-Novo Analysis
    #            rules.stats.input,
 
 
-Variant Calling - Standard Re-Sequencing Analysis
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+2-Variant Calling - Standard Re-Sequencing Analysis
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Running ``rules.varcall.input`` will call variants and genotype *samples* with respect to one or several reference genomes. **varcall** will compare *samples* listed in ``metadata/samplesets/`` with one another, as defined in the sample column. Invoke this analysis by uncommenting ``rules.varcall.input`` (and only this line). Pay attention to maintain the indentation.
 
@@ -382,8 +382,8 @@ Running ``rules.varcall.input`` will call variants and genotype *samples* with r
    #        rules.stats.input,
 
 
-Variant Annotation - The Effects of Variants on Gene Function
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+3-Variant Annotation - The Effects of Variants on Gene Function
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If a snpEff library for this (exact) reference genome is provided then the entire workflow can in principle be invoke by uncommenting ``rules.annotate.input`` (and only this line). Pay attention to maintain the correct indentation.
 
@@ -401,6 +401,13 @@ If a snpEff library for this (exact) reference genome is provided then the entir
    #       rules.stats.input,
 
 Currently, ``rules.annotate.input`` will operate only on one reference genome at a time. The rule will hence propagate upstream as requirement only one reference genome. If variants detected against several different reference genomes need annotating, then first run the ``varcall`` rule specifying all reference genomes and subsequently invoke the ``annotate`` rule separately for each reference genome annotation.
+
+Expert Options
+~~~~~~~~~~~~~~
+
+In cases where only adapter clipping or read alignment is desired, those processes can be invoked separately by the respective rules,  ``rules.readqc.input`` or ``rules.align.input``. There are separate configurations sections for those in ``config.yml`` which must be used. Alignment will trigger prior adaptor clipping.
+Invoking ``rules.stats.input`` will produce summary statistics. They will require read alignments and are meaningful for generic **varcall** runs.
+
 
 
 Workflow Outputs

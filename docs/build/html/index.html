@@ -114,9 +114,10 @@
 </ul>
 </li>
 <li><a class="reference internal" href="#configuring-the-different-workflow-use-cases">Configuring the different Workflow Use Cases</a><ul>
-<li><a class="reference internal" href="#de-novo-analysis">De-Novo Analysis</a></li>
-<li><a class="reference internal" href="#variant-calling-standard-re-sequencing-analysis">Variant Calling - Standard Re-Sequencing Analysis</a></li>
-<li><a class="reference internal" href="#variant-annotation-the-effects-of-variants-on-gene-function">Variant Annotation - The Effects of Variants on Gene Function</a></li>
+<li><a class="reference internal" href="#de-novo-analysis">1-De-Novo Analysis</a></li>
+<li><a class="reference internal" href="#variant-calling-standard-re-sequencing-analysis">2-Variant Calling - Standard Re-Sequencing Analysis</a></li>
+<li><a class="reference internal" href="#variant-annotation-the-effects-of-variants-on-gene-function">3-Variant Annotation - The Effects of Variants on Gene Function</a></li>
+<li><a class="reference internal" href="#expert-options">Expert Options</a></li>
 </ul>
 </li>
 </ul>
@@ -594,7 +595,7 @@ Adjusting presumed upstream parameters e.g., under <code class="docutils literal
 <div class="section" id="configuring-the-different-workflow-use-cases">
 <h3>Configuring the different Workflow Use Cases<a class="headerlink" href="#configuring-the-different-workflow-use-cases" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="de-novo-analysis">
-<h4>De-Novo Analysis<a class="headerlink" href="#de-novo-analysis" title="Permalink to this headline">¶</a></h4>
+<h4>1-De-Novo Analysis<a class="headerlink" href="#de-novo-analysis" title="Permalink to this headline">¶</a></h4>
 <p><strong>denovo</strong> can be used to check the relatedness of <em>sequencing runs</em> and/or <em>samples</em> without the use of any reference genome. It will perform a comparative analysis based on kmers on the raw data and output distance matrices. We recommend performing a de-novo analysis at the very start of every project at the “sequencing run”-level prior to any merging of runs into samples. This can help to detect mix-ups and mislabels. Run-level clustering is achieved by providing unique names for each sequencing run in the sample column of <code class="docutils literal notranslate"><span class="pre">metadata/sample2runlib.csv</span></code>. De-novo analysis is invoked by calling <code class="docutils literal notranslate"><span class="pre">rules.denovo.input</span></code> (Uncomment the respective line in the Snakefile, and only this line). Pay attention to maintain the indentation.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rule</span> <span class="nb">all</span><span class="p">:</span>
     <span class="nb">input</span><span class="p">:</span>
@@ -610,7 +611,7 @@ Adjusting presumed upstream parameters e.g., under <code class="docutils literal
 </div>
 </div>
 <div class="section" id="variant-calling-standard-re-sequencing-analysis">
-<h4>Variant Calling - Standard Re-Sequencing Analysis<a class="headerlink" href="#variant-calling-standard-re-sequencing-analysis" title="Permalink to this headline">¶</a></h4>
+<h4>2-Variant Calling - Standard Re-Sequencing Analysis<a class="headerlink" href="#variant-calling-standard-re-sequencing-analysis" title="Permalink to this headline">¶</a></h4>
 <p>Running <code class="docutils literal notranslate"><span class="pre">rules.varcall.input</span></code> will call variants and genotype <em>samples</em> with respect to one or several reference genomes. <strong>varcall</strong> will compare <em>samples</em> listed in <code class="docutils literal notranslate"><span class="pre">metadata/samplesets/</span></code> with one another, as defined in the sample column. Invoke this analysis by uncommenting <code class="docutils literal notranslate"><span class="pre">rules.varcall.input</span></code> (and only this line). Pay attention to maintain the indentation.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rule</span> <span class="nb">all</span><span class="p">:</span>
     <span class="nb">input</span><span class="p">:</span>
@@ -626,7 +627,7 @@ Adjusting presumed upstream parameters e.g., under <code class="docutils literal
 </div>
 </div>
 <div class="section" id="variant-annotation-the-effects-of-variants-on-gene-function">
-<h4>Variant Annotation - The Effects of Variants on Gene Function<a class="headerlink" href="#variant-annotation-the-effects-of-variants-on-gene-function" title="Permalink to this headline">¶</a></h4>
+<h4>3-Variant Annotation - The Effects of Variants on Gene Function<a class="headerlink" href="#variant-annotation-the-effects-of-variants-on-gene-function" title="Permalink to this headline">¶</a></h4>
 <p>If a snpEff library for this (exact) reference genome is provided then the entire workflow can in principle be invoke by uncommenting <code class="docutils literal notranslate"><span class="pre">rules.annotate.input</span></code> (and only this line). Pay attention to maintain the correct indentation.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rule</span> <span class="nb">all</span><span class="p">:</span>
     <span class="nb">input</span><span class="p">:</span>
@@ -641,6 +642,11 @@ Adjusting presumed upstream parameters e.g., under <code class="docutils literal
 </pre></div>
 </div>
 <p>Currently, <code class="docutils literal notranslate"><span class="pre">rules.annotate.input</span></code> will operate only on one reference genome at a time. The rule will hence propagate upstream as requirement only one reference genome. If variants detected against several different reference genomes need annotating, then first run the <code class="docutils literal notranslate"><span class="pre">varcall</span></code> rule specifying all reference genomes and subsequently invoke the <code class="docutils literal notranslate"><span class="pre">annotate</span></code> rule separately for each reference genome annotation.</p>
+</div>
+<div class="section" id="expert-options">
+<h4>Expert Options<a class="headerlink" href="#expert-options" title="Permalink to this headline">¶</a></h4>
+<p>In cases where only adapter clipping or read alignment is desired, those processes can be invoked separately by the respective rules,  <code class="docutils literal notranslate"><span class="pre">rules.readqc.input</span></code> or <code class="docutils literal notranslate"><span class="pre">rules.align.input</span></code>. There are separate configurations sections for those in <code class="docutils literal notranslate"><span class="pre">config.yml</span></code> which must be used. Alignment will trigger prior adaptor clipping.
+Invoking <code class="docutils literal notranslate"><span class="pre">rules.stats.input</span></code> will produce summary statistics. They will require read alignments and are meaningful for generic <strong>varcall</strong> runs.</p>
 </div>
 </div>
 </div>
