@@ -49,7 +49,7 @@ rule freebayes:
         #sset="output/samplelists/cohort.txt",
         ref=lambda wc: config['refs'][wc.ref],
     output:
-        bcf=temp("output/variants/raw_split/freebayes~{aligner}~{ref}~{sampleset}/{region}.bcf"),
+        bcf="output/variants/raw_split/freebayes~{aligner}~{ref}~{sampleset}/{region}.bcf",
     log:
         "output/log/varcall/freebayes/{aligner}~{ref}~{sampleset}/{region}.log"
     benchmark:
@@ -90,7 +90,7 @@ rule mpileup:
         sset="output/samplelists/{sampleset}.txt",
         ref=lambda wc: config['refs'][wc.ref],
     output:
-        bcf=temp("output/variants/raw_split/mpileup~{aligner}~{ref}~{sampleset}/{region}.bcf"),
+        bcf="output/variants/raw_split/mpileup~{aligner}~{ref}~{sampleset}/{region}.bcf",
     log:
         "output/log/varcall/mpileup/{aligner}~{ref}~{sampleset}/{region}.log"
     benchmark:
@@ -128,7 +128,7 @@ rule bcffilter:
         ref=lambda wc: config['refs'][wc.ref],
     output:
         # Not a pipe! can't run all regions separately if this is a pipe into merge
-        bcf=temp()"output/variants/filter_split/{caller}~{aligner}~{ref}~{sampleset}_filtered~{filter}/{region}.bcf"),
+        bcf=temp("output/variants/filter_split/{caller}~{aligner}~{ref}~{sampleset}_filtered~{filter}/{region}.bcf"),
     log:
         "output/log/varcall/bcffilter/{caller}~{aligner}~{ref}~{sampleset}/{filter}/{region}.log"
     params:

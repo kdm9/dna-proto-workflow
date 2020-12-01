@@ -28,11 +28,11 @@ The (brief) principle of Snakemake
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 In Snakemake, analysis workflows are defined as a series of rules. In our case, rules define the analysis steps. Each rule has input and output files. Calling a rule will invoke all necessary upstream rules. It is hence generally sufficient to request the desired output file(s) of the downstream most rule and the entire workflow will be executed.
-In practice, users will provide input files, configure project meta information, adjust configuration parameters, and execute 'snakemake'. The workflow will then automatically perform all the (necessary) analysis steps to produce the defined output.
+In practice, users will provide input files, configure project meta information, adjust configuration parameters, and execute ``snakemake``. The workflow will then automatically perform all the (necessary) analysis steps to produce the defined output.
 
 In general, a rule will be run if:
 
-* Snakemake realizes that the expected ``output`` files of a rule are not (yet) present or,
+* Snakemake realizes that the expected output files of a rule are not (yet) present, or
 * Snakemake realizes that the expected input files or configuration parameters of a rule have changed since the last run.
 
 Hence, when analyses are re-run, existing and valid intermediate output files from a previous run are re-used, saving precious time and resources.
@@ -44,7 +44,7 @@ Mutant-Analysis-workflow Use Cases
 
 1-"denovo"
 ~~~~~~~~~~
-Choosing this option will conduct a reference-free comparison of *samples* based on the raw sequencing reads using k-mers. The workflow invokes the software tools kWIP and/or mash and outputs distance matrices and PCA plots. The workflow for this use case consists of the following steps:
+Choosing this option will conduct a reference-free comparison of *samples* based on the raw sequencing reads using k-mers. The workflow invokes the software tools kWIP and/or mash and outputs distance matrices and PCA plots. A flowchart illustrating the summarised workflow is depicted in **Figure 1**. The workflow for this use case consists of the following steps:
 
 +---+----------------------------+--------+------------------+
 |#  |            Task            |  Rule  |    Software      |
@@ -67,13 +67,14 @@ Choosing this option will conduct a reference-free comparison of *samples* based
 
 * Invoke this option by running the rule: ``rules.denovo.input``
 
-Required input for ``rules.denovo.input`` are fastq files and the workflow will return distance matrices between *samples*, produced by kWIP and/or mash.
+Required input for ``rules.denovo.input`` are fastq files and the workflow will return distance matrices between *samples* produced by kWIP and/or mash.
+
 > NOTE: We recommend performing such denovo analysis for every project. Clustering at the level of sequencing runs can be used to confirm metadata and detect mixups.
 
 
 2-"varcall"
 ~~~~~~~~~~~
-Choosing this option will run a full re-sequencing analysis ending in filtered bcf/vcf files. It detects variants and genotypes in *sets* of *samples* based on the alignments of the sequencing reads against one or several user-defined reference genome(s). Reads can be aligned with bwa and/or NextGenMap (ngm), and variants can be called with freebayes and/or mpileup. Between read alignments and variant calling, PCR duplicates are marked (with samtools markdup) and indels are realigned (using abra2). If reference genome annotation is provided, the effects of variants on gene integrity can also be predicted using the software `snpEff <https://pcingola.github.io/SnpEff/se_introduction/>`_.
+Choosing this option will run a full re-sequencing analysis ending in filtered bcf/vcf files. It detects variants and genotypes in *sets* of *samples* based on the alignments of the sequencing reads against one or several user-defined reference genome(s). Reads can be aligned with bwa and/or NextGenMap (ngm), and variants can be called with freebayes and/or mpileup. Between read alignments and variant calling, PCR duplicates are marked (with samtools markdup) and indels are realigned (using abra2). If reference genome annotation is provided, the effects of variants on gene integrity can also be predicted using the software `snpEff <https://pcingola.github.io/SnpEff/se_introduction/>`_. A flowchart illustrating the summarised workflow is depicted in **Figure 2**
 
 The full workflow for this use case consists of the following steps:
 
@@ -119,12 +120,12 @@ Choosing the option ``rules.annotate.input`` will annotate bcf/vcf files found i
 | 1 | Annotate variants | annotate | snpEff   |
 +---+-------------------+----------+----------+
 
-Typically, ``rules.annotate.input`` is run after a completed run of ``rules.varcall.input``. A snpEff run will complete within a matter of minutes. It will run on all files specified by entries in the *snpeff:* section of the ``config.yml`` file.
+Typically, ``rules.annotate.input`` is run after a completed run of ``rules.varcall.input``. A snpEff run will complete within a matter of minutes. It will run on all files specified by entries in the ``snpeff:`` section of the ``config.yml`` file:
 
-* ``config['snpeff']['ref']`` one chosen reference genome,
-* ``config['snpeff']['database']`` one corresponding snpEff database,
+* ``config[snpeff:][ref:]`` one chosen reference genome,
+* ``config[snpeff:][database:]`` one corresponding snpEff database,
 
-and all combinations of specified sample-sets, read aligners, variant callers, and variant filter settings.
+and all combinations of specified ``samplesets``, read ``aligners``, variant ``callers``, and variant ``filter`` settings.
 
 
 Hardware Requirements
@@ -144,8 +145,8 @@ Workflow Use in a Nutshell
 
 Steps
 ^^^^^
-1. Create a new github repository in your github account using this workflow `as a template <https://help.github.com/en/articles/creating-a-repository-from-a-template>`_.
-2. `Clone <https://help.github.com/en/articles/cloning-a-repository>`_ your newly created repository to your local system where you want to perform the analysis.
+1. Create a new github repository in your github account using this workflow `as a template <https://help.github.com/en/articles/creating-a-repository-from-a-template>`_
+2. `Clone <https://help.github.com/en/articles/cloning-a-repository>`_ your newly created repository to your local system where you want to perform the analysis
 3. Create and activate the conda environment
 4. Provide reference genome(s) and annotation(s) in ``/genomes and annotation/``
 5. Specify the locations of input files and their meta data in ``/metadata/sample2runlib.csv``
@@ -153,7 +154,7 @@ Steps
 7. Uncomment the respective workflow option for your use case in the ``Snakefile``
 8. Configure software parameters in ``config.yml``
 9. Adapt ``snpeff.config`` (Optional in case the ``snpeff`` rule will be called)
-10. Run snakemake
+10. Run ``snakemake``
 
 For standard applications no additional edits are necessary. The rules reside in ``rules/*.smk``. Most rules have explicit shell commands with transparent flag settings. Expert users can change these for additional control.
 
@@ -161,8 +162,8 @@ For standard applications no additional edits are necessary. The rules reside in
 Workflow Use in Detail
 ----------------------
 
-Creating the Conda Environment
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Creating the Virtual Environment (conda)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 We recommend running the workflow in its own conda environment on a Linux machine. The files ``envs/condaenv.yml`` and ``envs/additional.yml`` can directly be used to create the environment and install dependencies like so ("dna-proto" is an example, feel free to chose your own):
 
 ::
@@ -198,7 +199,7 @@ The required channels are listed in the respective ``*.yml`` files. Configuring 
 
 Reference Genome(s)
 ^^^^^^^^^^^^^^^^^^^
-The workflow will look for the reference genome(s) and associated files in ``genomes_and_annotations/``. We provide an example directory tree in ``genomes_annotations/readme``. We recommend creating a separate directory for each reference genome. They can be softlinks. Each reference genome directory must contain the necessary assembly file (.fa or .fna) and the associated files required by the aligners. Generate those files in this directory from the assembly file (fasta: .fa or .fna) like so:
+The workflow will look for the reference genome(s) and associated files in ``genomes_and_annotations/``. We provide an example directory tree in ``genomes_annotations/readme``. We recommend creating a separate directory for each reference genome. They can be soft links. Each reference genome directory must contain the necessary assembly file (.fa or .fna) and the associated files required by the aligners. Generate those files in this directory from the assembly file (fasta: .fa or .fna) like so:
 
 ::
 
@@ -226,7 +227,7 @@ The workflow will look for the reference genome(s) and associated files in ``gen
 
 Reference Genome Annotation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-In order to annotate variant effects using snpEff you will need a snpEff database (``snpEffectPredictor.bin``) for the relevant reference genome. The location of the ``snpeff`` database is configured in ``snpeff.config``. It is currently set to ``genomes_and_annotations/snpeffdata/`` and again, we recommend separate subdirectories for the reference genomes also in this directory. Appending ``_snpeff`` to these directory names will help avoid confusion. In order to create a ``snpeff`` database, this ``<reference_genome>_snpeff`` directory must contain the reference genome and the annotation in files named ``sequences.fa`` and ``genes.gff``; they again can be softlinks. (See ``genomes_and_annotations/snpeffdata/readme``.)
+In order to annotate variant effects using snpEff you will need a snpEff database (``snpEffectPredictor.bin``) for the relevant reference genome. The location of the ``snpeff`` database is configured in ``snpeff.config``. It is currently set to ``genomes_and_annotations/snpeffdata/`` and again, we recommend separate subdirectories for the reference genomes also in this directory. Appending "_snpeff" to these directory names will help avoid confusion. In order to create a ``snpeff`` database, this ``<reference_genome>_snpeff`` directory must contain the reference genome and the annotation in files named ``sequences.fa`` and ``genes.gff``; they again can be soft links. (See ``genomes_and_annotations/snpeffdata/readme``.)
 For building the database you will need to add the respective entry in ``snpeff.config`` and then, from the root directory of the workflow (the directory that contains the ``snpeff.config`` file), execute:
 
 ::
@@ -257,18 +258,18 @@ Providing Required Meta information
 Samplesets
 ~~~~~~~~~~
 
-We use the term *sample* as the entity of interest. Our workflows call variants on *samples* within one set. Lists of sample names must be provided as text files (``.txt``) in ``/metadata/samplesets/`` and “samplesets” in ``config.yml`` refer to those files. We implemented a glob: *all_samples*, which will have the effect of concatenating all ``*.txt`` files in ``/metadata/samplesets/`` into an additional set comprising all samples across all sets. The intention is to enable easy addition or removal of samples to/from an existing analysis.
+We use the term *sample* as the entity of interest. Our workflows call variants on *samples* within one *set*. Lists of sample names must be provided as text files (``.txt``) in ``/metadata/samplesets/``. Each file defines a set. The ``samplesets`` in ``config.yml`` refer to those files and must match the filenames. We implemented a glob: *all_samples*, which will have the effect of concatenating all ``*.txt`` files in ``/metadata/samplesets/`` into an additional set comprising all samples across all sets. The intention is to enable easy addition or removal of samples to/from an existing analysis.
 
 
 Sample Definitions
 ~~~~~~~~~~~~~~~~~~
 
-In praxis, the unit of interest oftentimes is the individual (plant). DNA is extracted from an individual, turned into one or several sequencing libraries that are then sequenced in one or several sequencing runs. In order to compare individuals, all respective fastq files need to be assigned to the same *sample*. For our workflow, the run - library - sample relationships need to be defined in ``/metadata/sample2runlib.csv`` making explicit, which fastq files constitute the samples.
+In practice, the unit of interest oftentimes is the individual (plant). DNA is extracted from an individual and turned into one or several sequencing libraries that are then sequenced in one or several sequencing runs. In order to compare individuals, all respective fastq files need to be assigned to the same *sample*. For our workflow, the run - library - sample relationships need to be defined in ``/metadata/sample2runlib.csv`` making explicit which fastq files constitute the samples.
 The entries in columns *run* and *library* are together used as the primary key for the **sequencing run** and thus the fastq file(s). The user must make sure that any *run* - *library* combination is unique.
 **Sequencing runs** are assigned to the same *sample* through an identical entry in the *sample* column. fastq files can be provided either as separate forward and reverse read files (*fq1*, *fq2*) or as interleaved fastq (*il_fq*), with the respective other column(s) empty. Within one ``sample2runlib.csv`` file interleaved and two-file input can be mixed.
 
 
-Example sample2runlib.csv file:
+Example ``sample2runlib.csv`` file:
 
 +------+---------+--------+----------------+----------------+----------------+
 | run  | library | sample |      fq1       |     fq2        |     il_fq      |
@@ -293,7 +294,7 @@ Regions of Interest for Variant Calling
 Variant calling can be restricted to particular regions of interest through ``metadata/contigs_of_interest.bed``: A file in bed file format listing identifier, start-, and end-positions (tab delimited, no header). This is helpful for exome capture data but also to restrict the analysis to specific chromosomes. Genome assemblies often contain the main chromosomes and in addition many orphan fragments that often are not of interest.
 Below example will restrict variant calling to the 11 chromosomes plus the chloroplast of cowpea. The hundreds of additional contigs in the cowpea reference genome are available for read mapping, but variants will not be called for them and their variants will subsequently not be present in the bcf/vcf files. Note that lines starting with ‘#’ will be disregarded.
 
-Example contigs_of_interest.bed file:
+Example ``contigs_of_interest.bed`` file:
 
 ::
 
@@ -319,15 +320,15 @@ config.yml
 
 Central place for the user to configure the workflow behaviour and software parameters is ``config.yml``. There are comments in the file that explain the configuration parameters and options.
 
-In snakemake, calling a rule will trigger run of the upstream rules. When editing ``(/config.yml)`` it is important to only configure the intended most downstream rule. (``varcall:``, ``annotate:``, or ``denovo:``). These settings will be propagated upstream. ``qc:`` is independent and will require editing; particularly the _DEFAULT_ adaptors used. The standard adaptors for Truseq- and Nextera-Libraries are given for reference, paste under _DEFAULT_ as required.
+In Snakemake, calling a rule will trigger running of the upstream rules. When editing ``(/config.yml)`` it is important to only configure the intended most downstream rule (``varcall:``, ``annotate:``, or ``denovo:``). These settings will be propagated upstream. ``qc:`` is independent and will require editing: particularly the ``_DEFAULT_`` adaptors used. The standard adaptors for Truseq- and Nextera-Libraries are given for reference, paste under ``_DEFAULT_`` as required.
 
-An important configuration parameter is the location of a suitable ``tmp/`` directory. Several rules make extensive use of the tmp/ directory to temporarily store large files. Oftentimes, standard home directories on compute servers or cluster nodes are too small. Central place for the configuration of the tmp/ directory is currently under abra2 (``abra2:temp:``).
+An important configuration parameter is the location of a suitable temporary directory ("tmp/"). Several rules make extensive use of the "tmp/" directory to temporarily store large files. Oftentimes, standard home directories on compute servers or cluster nodes are too small. Central place for the configuration of the "tmp/" directory is currently under the abra2 configuration options (``abra2:temp:``).
 
 
 Additional Configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-Expert users can change the rules themselves by editing ``rules/*.rules.smk``. Use caution! We have chosen reasonable defaults and recommend modifying rules only when you know what you are doing. When allocating more cores to rules, pay attention that some rules are very memory intensive and some shell commands are piped and are in fact using more than 1 core per process.
+Expert users can change the rules themselves by editing ``rules/*.rules.smk``. Use caution! We have chosen reasonable default settings and recommend modifying rules only when you know what you are doing. When allocating more cores to rules, pay attention that some rules are very memory intensive and some shell commands are piped and are in fact using more than 1 core per process.
 
 
 Running the Workflow
@@ -338,7 +339,7 @@ To run the workflow, un-comment the respective rule for the desired use case in 
 ::
 
    $ snakemake –npr
-   $ snakemake –j 6 --no-temp -kpr
+   $ snakemake –j 6 --notemp -kpr
 
 For details on commandline options for snakemake please consult the `Snakemake <https://snakemake.readthedocs.io/en/stable/index.html#>`_ documentation. Un-comment only the one most downstream rule for your use case. Currently, these use case rules are:
 
@@ -349,11 +350,12 @@ For details on commandline options for snakemake please consult the `Snakemake <
    #     rules.varcall.input,
    #     rules.annotate.input,
 
-A rule that encounters missing input files will invoke the respective upstream rule(s). E.g., when ``rules.annotate.input`` is uncommented and snakemake is run for the first time, the entire workflow from readqc (= adapter and quality clipping), alignment (= read alignments, duplicate marking, indel realignment), varcall (= variant calling), and ``annotate`` (= variant functional annotation) will run in one go.
+A rule that encounters missing input files will invoke the respective upstream rule(s). E.g., when ``rules.annotate.input`` is uncommented and snakemake is run for the first time, the entire workflow from ``readqc`` (= adapter and quality clipping), ``align`` (= read alignments, duplicate marking, indel realignment), ``varcall`` (= variant calling), and ``annotate`` (= variant functional annotation) will run in one go.
 In case no ``snpeff`` database is supplied, then rule ``rules.annotate.input`` cannot be run. Use ``rules.varcall.input`` instead.
 
-When configuring ``config.yml``, keep in mind that configuration parameters of a downstream rule take precedence because parameters have to propagate upstream. I.e., When running *varcall*, you must set your alignment parameters in the ``varcall:`` section; same for ``annotate:`` parameters. They must be set under ``snpeff:``
-Adjusting presumed upstream parameters e.g., under ``align:`` will not have the intended effect. Only in special circumstances will the “rules.align.input” be run by itself and only then will you have to adjust parameters in the ``align:`` section.
+When configuring ``config.yml``, keep in mind that configuration parameters of a downstream rule take precedence because parameters have to propagate upstream. I.e., When running ``varcall``, the user must set alignment parameters in the ``varcall:`` section; same for ``annotate:`` parameters. They must be set under ``snpeff:``.
+
+>NOTE: Adjusting presumed upstream parameters, e.g., under ``align:`` will not have the intended effect. Only in special circumstances will the ``rules.align.input`` be run by itself and only then will you have to adjust parameters in the ``align:`` section.
 
 The workflow runs on *samples* in *sets* as listed in ``samplesets/*.txt`` and defined in ``/metadata/sample2runlib.csv``. Sample names listed in ``samplesets/*.txt`` must correspond to the entries in the sample column in ``/metadata/sample2runlib.csv``.
 
@@ -364,7 +366,7 @@ Configuring the different Workflow Use Cases
 1-De-Novo Analysis
 ~~~~~~~~~~~~~~~~~~
 
-**denovo** can be used to check the relatedness of *sequencing runs* and/or *samples* without the use of any reference genome. It will perform a comparative analysis based on kmers on the raw data and output distance matrices. We recommend performing a de-novo analysis at the very start of every project at the “sequencing run”-level prior to any merging of runs into samples. This can help to detect mix-ups and mislabels. Run-level clustering is achieved by providing unique names for each sequencing run in the sample column of ``metadata/sample2runlib.csv``. De-novo analysis is invoked by calling ``rules.denovo.input`` (Uncomment the respective line in the Snakefile, and only this line). Pay attention to maintain the indentation.
+Option **denovo** can be used to check the relatedness of *sequencing runs* and/or *samples* without the use of any reference genome. It will perform a comparative analysis based on k-mers on the raw data and output distance matrices. We recommend performing a de-novo analysis at the very start of every project at the “sequencing run”-level prior to any merging of runs into samples. This can help to detect mix-ups and mislabels. Run-level clustering is achieved by providing unique names for each sequencing run in the sample column of ``metadata/sample2runlib.csv``. De-novo analysis is invoked by calling ``rules.denovo.input`` (Uncomment the respective line in the ``Snakefile``, and only this line). Pay attention to maintain the indentation.
 
 ::
 
@@ -417,7 +419,7 @@ If a snpEff library for this (exact) reference genome is provided then the entir
    #       rules.align.input,
    #       rules.stats.input,
 
-Currently, ``rules.annotate.input`` will operate only on one reference genome at a time. The rule will hence propagate upstream as requirement only one reference genome. If variants detected against several different reference genomes need annotating, then first run the ``varcall`` rule specifying all reference genomes and subsequently invoke the ``annotate`` rule separately for each reference genome annotation.
+Currently, ``rules.annotate.input`` will operate only on one reference genome at a time. The rule will hence propagate upstream only one reference genome as requirement. If variants detected against several different reference genomes need annotating, then first run the ``varcall`` rule specifying all reference genomes and subsequently invoke the ``annotate`` rule separately for each reference genome annotation.
 
 Expert Options
 ~~~~~~~~~~~~~~
@@ -432,11 +434,12 @@ Workflow Outputs
 
 After completion, all output of the workflow, including logs and stats, will be in ``output/``.
 
-* Clipped reads (in interleaved fastq) format are in ``output/reads/``
+* Clipped reads (in interleaved fastq format) are in ``output/reads/``
 * BAM files with In/Del-realigned alignments are in ``output/abra/``
 * BCF/VCF files of the filtered variants including respective index files are in ``output/variants/final/``
-* The snpEff-annotated variant file is ``output/annotated_variants/snpeff/``
+* The snpEff-annotated variant file is in ``output/annotated_variants/snpeff/``
 
+VCF files in ``output/variants/final/`` have been filtered with *bcftools view* according to the user defined filter settings in ``config.yml``.
 For loading into IGV, use the In/Del realigned BAM file in ``output/abra/`` and the ``*.vcf.gz`` files of the filtered variants. Note that IGV requires the ``vcf.gz.tbi`` index.
 
 
@@ -462,7 +465,7 @@ When publishing results obtained using this workflow please cite the link to the
 Reproducibility
 ^^^^^^^^^^^^^^^
 
-Workflows help addressing reproducibility issues. Consider making your version of the workflow, configured for your data, available upon publication of your results. Check out the `archive <https://snakemake.readthedocs.io/en/stable/snakefiles/deployment.html#sustainable-and-reproducible-archiving>`_ options of snakemake.
+Workflows help addressing reproducibility issues. Consider making your version of the workflow, configured for your data, available upon publication of your results. Check out the `archive <https://snakemake.readthedocs.io/en/stable/snakefiles/deployment.html#sustainable-and-reproducible-archiving>`_ options of Snakemake.
 
 Getting Help
 ^^^^^^^^^^^^
