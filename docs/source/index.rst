@@ -451,11 +451,11 @@ For loading into IGV, use the In/Del realigned BAM file in ``output/abra/`` and 
 
 Support
 -------
+..
+  License (this is commented out due to the indentation)
+  ^^^^^^^
 
-License
-^^^^^^^
-
-Mutant-Analysis-workflow is released under the GNU General Public License version 3 (or any later version).
+  Mutant-Analysis-workflow is released under the GNU General Public License version 3 (or any later version).
 
 Contributors
 ^^^^^^^^^^^^
