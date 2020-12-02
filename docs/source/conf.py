@@ -18,7 +18,7 @@
 # -- Project information -----------------------------------------------------
 
 project = 'dna-proto-workflow'
-copyright = '2020, Norman Warthmann'
+#copyright = '2020, PBGL'
 author = 'Norman Warthmann'
 
 
