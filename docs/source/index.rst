@@ -42,8 +42,8 @@ For details, please consult the `Snakemake <https://snakemake.readthedocs.io/en/
 Mutant-Analysis-workflow Use Cases
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-"denovo"
-~~~~~~~~
+De-Novo Analysis of sample relatedness ("denovo")
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Choosing this option will conduct a reference-free comparison of *samples* based on the raw sequencing reads using k-mers. The workflow invokes the software tools kWIP and/or mash and outputs distance matrices and PCA plots. A flowchart illustrating the summarised workflow is depicted in **Figure 1**. The workflow for this use case consists of the following steps:
 
 +---+----------------------------+--------+------------------+
@@ -72,8 +72,8 @@ Required input for ``rules.denovo.input`` are fastq files and the workflow will 
 > NOTE: We recommend performing such denovo analysis for every project. Clustering at the level of sequencing runs can be used to confirm metadata and detect mixups.
 
 
-"varcall"
-~~~~~~~~~
+Variant Calling - Standard Re-Sequencing Analysis ("varcall")
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Choosing this option will run a full re-sequencing analysis ending in filtered bcf/vcf files. It detects variants and genotypes in *sets* of *samples* based on the alignments of the sequencing reads against one or several user-defined reference genome(s). Reads can be aligned with bwa and/or NextGenMap (ngm), and variants can be called with freebayes and/or mpileup. Between read alignments and variant calling, PCR duplicates are marked (with samtools markdup) and indels are realigned (using abra2). If reference genome annotation is provided, the effects of variants on gene integrity can also be predicted using the software `snpEff <https://pcingola.github.io/SnpEff/se_introduction/>`_. A flowchart illustrating the summarised workflow is depicted in **Figure 2**
 
 The full workflow for this use case consists of the following steps:
@@ -110,8 +110,8 @@ This option can be invoked in 2 ways:
 Required input files are fastq files and a genome reference sequence(s) (fasta). The rule ``snpeff`` in addition depends on a genome annotation in form of a snpEff database matching the reference genome. For maximum flexibility and ease of troubleshooting we recommend to first run the re-sequencing analysis by invoking ``rules.varcall.input``, and upon successful completion invoke the workflow again, this time selecting/uncommenting ``rules.annotate.input``.
 
 
-"annotate"
-~~~~~~~~~~
+Variant Annotation - The Effects of Variants on Gene Function ("annotate")
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Choosing the option ``rules.annotate.input`` will annotate bcf/vcf files found in **output/variants/final/** and write annotated vcf.gz files to **output/variants_annotated/**. This analysis has only one step:
 
 +---+-------------------+----------+----------+
@@ -369,8 +369,8 @@ The workflow runs on *samples* in *sets* as listed in ``samplesets/*.txt`` and d
 Configuring the different Workflow Use Cases
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-1-De-Novo Analysis
-~~~~~~~~~~~~~~~~~~
+De-Novo Analysis of sample relatedness ("denovo")
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Option **denovo** can be used to check the relatedness of *sequencing runs* and/or *samples* without the use of any reference genome. It will perform a comparative analysis based on k-mers on the raw data and output distance matrices. We recommend performing a de-novo analysis at the very start of every project at the “sequencing run”-level prior to any merging of runs into samples. This can help to detect mix-ups and mislabels. Run-level clustering is achieved by providing unique names for each sequencing run in the sample column of ``metadata/sample2runlib.csv``. De-novo analysis is invoked by calling ``rules.denovo.input`` (Uncomment the respective line in the ``Snakefile``, and only this line). Pay attention to maintain the indentation.
 
@@ -388,8 +388,8 @@ Option **denovo** can be used to check the relatedness of *sequencing runs* and/
    #            rules.stats.input,
 
 
-2-Variant Calling - Standard Re-Sequencing Analysis
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Variant Calling - Standard Re-Sequencing Analysis ("varcall")
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Running ``rules.varcall.input`` will call variants and genotype *samples* with respect to one or several reference genomes. **varcall** will compare *samples* listed in ``metadata/samplesets/`` with one another, as defined in the sample column. Invoke this analysis by uncommenting ``rules.varcall.input`` (and only this line). Pay attention to maintain the indentation.
 
@@ -407,8 +407,8 @@ Running ``rules.varcall.input`` will call variants and genotype *samples* with r
    #        rules.stats.input,
 
 
-3-Variant Annotation - The Effects of Variants on Gene Function
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Variant Annotation - The Effects of Variants on Gene Function ("annotate")
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If a snpEff library for this (exact) reference genome is provided then the entire workflow can in principle be invoke by uncommenting ``rules.annotate.input`` (and only this line). Pay attention to maintain the correct indentation.
 
