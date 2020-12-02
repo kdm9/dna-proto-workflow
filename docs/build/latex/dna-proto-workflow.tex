@@ -119,8 +119,8 @@ For details, please consult the \sphinxhref{https://snakemake.readthedocs.io/en/
 \section{Mutant\sphinxhyphen{}Analysis\sphinxhyphen{}workflow Use Cases}
 \label{\detokenize{index:mutant-analysis-workflow-use-cases}}
 
-\subsection{“denovo”}
-\label{\detokenize{index:denovo}}
+\subsection{De\sphinxhyphen{}Novo Analysis of sample relatedness (“denovo”)}
+\label{\detokenize{index:de-novo-analysis-of-sample-relatedness-denovo}}
 Choosing this option will conduct a reference\sphinxhyphen{}free comparison of \sphinxstyleemphasis{samples} based on the raw sequencing reads using k\sphinxhyphen{}mers. The workflow invokes the software tools kWIP and/or mash and outputs distance matrices and PCA plots. A flowchart illustrating the summarised workflow is depicted in \sphinxstylestrong{Figure 1}. The workflow for this use case consists of the following steps:
 
 
@@ -174,7 +174,7 @@ Utils/R\sphinxhyphen{}Scripts
 \capstart
 
 \noindent\sphinxincludegraphics[height=600\sphinxpxdimen]{{de-novo-02}.png}
-\caption{\sphinxstylestrong{Figure 1.} flowchart for “denovo” (click to expand)}\label{\detokenize{index:id6}}\end{figure}
+\caption{\sphinxstylestrong{Figure 1.} flowchart for “denovo” (click to expand)}\label{\detokenize{index:id9}}\end{figure}
 \begin{itemize}
 \item {} 
 Invoke this option by running the rule: \sphinxcode{\sphinxupquote{rules.denovo.input}}
@@ -186,8 +186,8 @@ Required input for \sphinxcode{\sphinxupquote{rules.denovo.input}} are fastq fil
 \textgreater{} NOTE: We recommend performing such denovo analysis for every project. Clustering at the level of sequencing runs can be used to confirm metadata and detect mixups.
 
 
-\subsection{“varcall”}
-\label{\detokenize{index:varcall}}
+\subsection{Variant Calling \sphinxhyphen{} Standard Re\sphinxhyphen{}Sequencing Analysis (“varcall”)}
+\label{\detokenize{index:variant-calling-standard-re-sequencing-analysis-varcall}}
 Choosing this option will run a full re\sphinxhyphen{}sequencing analysis ending in filtered bcf/vcf files. It detects variants and genotypes in \sphinxstyleemphasis{sets} of \sphinxstyleemphasis{samples} based on the alignments of the sequencing reads against one or several user\sphinxhyphen{}defined reference genome(s). Reads can be aligned with bwa and/or NextGenMap (ngm), and variants can be called with freebayes and/or mpileup. Between read alignments and variant calling, PCR duplicates are marked (with samtools markdup) and indels are realigned (using abra2). If reference genome annotation is provided, the effects of variants on gene integrity can also be predicted using the software \sphinxhref{https://pcingola.github.io/SnpEff/se\_introduction/}{snpEff}. A flowchart illustrating the summarised workflow is depicted in \sphinxstylestrong{Figure 2}
 
 The full workflow for this use case consists of the following steps:
@@ -282,7 +282,7 @@ snpEff
 \capstart
 
 \noindent\sphinxincludegraphics[height=600\sphinxpxdimen]{{dna-proto-workflow-varcall-11}.png}
-\caption{\sphinxstylestrong{Figure 2.} flowchart for “varcall” (click to expand)}\label{\detokenize{index:id7}}\end{figure}
+\caption{\sphinxstylestrong{Figure 2.} flowchart for “varcall” (click to expand)}\label{\detokenize{index:id10}}\end{figure}
 
 This option can be invoked in 2 ways:
 \begin{itemize}
@@ -297,8 +297,8 @@ selecting the rule \sphinxcode{\sphinxupquote{rules.annotate.input}} will result
 Required input files are fastq files and a genome reference sequence(s) (fasta). The rule \sphinxcode{\sphinxupquote{snpeff}} in addition depends on a genome annotation in form of a snpEff database matching the reference genome. For maximum flexibility and ease of troubleshooting we recommend to first run the re\sphinxhyphen{}sequencing analysis by invoking \sphinxcode{\sphinxupquote{rules.varcall.input}}, and upon successful completion invoke the workflow again, this time selecting/uncommenting \sphinxcode{\sphinxupquote{rules.annotate.input}}.
 
 
-\subsection{“annotate”}
-\label{\detokenize{index:annotate}}
+\subsection{Variant Annotation \sphinxhyphen{} The Effects of Variants on Gene Function (“annotate”)}
+\label{\detokenize{index:variant-annotation-the-effects-of-variants-on-gene-function-annotate}}
 Choosing the option \sphinxcode{\sphinxupquote{rules.annotate.input}} will annotate bcf/vcf files found in \sphinxstylestrong{output/variants/final/} and write annotated vcf.gz files to \sphinxstylestrong{output/variants\_annotated/}. This analysis has only one step:
 
 
@@ -662,8 +662,8 @@ The workflow runs on \sphinxstyleemphasis{samples} in \sphinxstyleemphasis{sets}
 \section{Configuring the different Workflow Use Cases}
 \label{\detokenize{index:configuring-the-different-workflow-use-cases}}
 
-\subsection{1\sphinxhyphen{}De\sphinxhyphen{}Novo Analysis}
-\label{\detokenize{index:de-novo-analysis}}
+\subsection{De\sphinxhyphen{}Novo Analysis of sample relatedness (“denovo”)}
+\label{\detokenize{index:id6}}
 Option \sphinxstylestrong{denovo} can be used to check the relatedness of \sphinxstyleemphasis{sequencing runs} and/or \sphinxstyleemphasis{samples} without the use of any reference genome. It will perform a comparative analysis based on k\sphinxhyphen{}mers on the raw data and output distance matrices. We recommend performing a de\sphinxhyphen{}novo analysis at the very start of every project at the “sequencing run”\sphinxhyphen{}level prior to any merging of runs into samples. This can help to detect mix\sphinxhyphen{}ups and mislabels. Run\sphinxhyphen{}level clustering is achieved by providing unique names for each sequencing run in the sample column of \sphinxcode{\sphinxupquote{metadata/sample2runlib.csv}}. De\sphinxhyphen{}novo analysis is invoked by calling \sphinxcode{\sphinxupquote{rules.denovo.input}} (Uncomment the respective line in the \sphinxcode{\sphinxupquote{Snakefile}}, and only this line). Pay attention to maintain the indentation.
 
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
@@ -680,8 +680,8 @@ Option \sphinxstylestrong{denovo} can be used to check the relatedness of \sphin
 \end{sphinxVerbatim}
 
 
-\subsection{2\sphinxhyphen{}Variant Calling \sphinxhyphen{} Standard Re\sphinxhyphen{}Sequencing Analysis}
-\label{\detokenize{index:variant-calling-standard-re-sequencing-analysis}}
+\subsection{Variant Calling \sphinxhyphen{} Standard Re\sphinxhyphen{}Sequencing Analysis (“varcall”)}
+\label{\detokenize{index:id7}}
 Running \sphinxcode{\sphinxupquote{rules.varcall.input}} will call variants and genotype \sphinxstyleemphasis{samples} with respect to one or several reference genomes. \sphinxstylestrong{varcall} will compare \sphinxstyleemphasis{samples} listed in \sphinxcode{\sphinxupquote{metadata/samplesets/}} with one another, as defined in the sample column. Invoke this analysis by uncommenting \sphinxcode{\sphinxupquote{rules.varcall.input}} (and only this line). Pay attention to maintain the indentation.
 
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
@@ -698,8 +698,8 @@ Running \sphinxcode{\sphinxupquote{rules.varcall.input}} will call variants and 
 \end{sphinxVerbatim}
 
 
-\subsection{3\sphinxhyphen{}Variant Annotation \sphinxhyphen{} The Effects of Variants on Gene Function}
-\label{\detokenize{index:variant-annotation-the-effects-of-variants-on-gene-function}}
+\subsection{Variant Annotation \sphinxhyphen{} The Effects of Variants on Gene Function (“annotate”)}
+\label{\detokenize{index:id8}}
 If a snpEff library for this (exact) reference genome is provided then the entire workflow can in principle be invoke by uncommenting \sphinxcode{\sphinxupquote{rules.annotate.input}} (and only this line). Pay attention to maintain the correct indentation.
 
 \begin{sphinxVerbatim}[commandchars=\\\{\}]

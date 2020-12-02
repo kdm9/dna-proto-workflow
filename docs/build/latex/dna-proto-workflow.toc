@@ -2,9 +2,9 @@
 \contentsline {chapter}{\numberline {1}Overview PBGL\IeC {\textquoteright }s Mutant\sphinxhyphen {}Analysis\sphinxhyphen {}workflow}{1}{chapter.1}
 \contentsline {section}{\numberline {1.1}The (brief) principle of Snakemake}{1}{section.1.1}
 \contentsline {section}{\numberline {1.2}Mutant\sphinxhyphen {}Analysis\sphinxhyphen {}workflow Use Cases}{1}{section.1.2}
-\contentsline {subsection}{\numberline {1.2.1}\IeC {\textquotedblleft }denovo\IeC {\textquotedblright }}{1}{subsection.1.2.1}
-\contentsline {subsection}{\numberline {1.2.2}\IeC {\textquotedblleft }varcall\IeC {\textquotedblright }}{3}{subsection.1.2.2}
-\contentsline {subsection}{\numberline {1.2.3}\IeC {\textquotedblleft }annotate\IeC {\textquotedblright }}{5}{subsection.1.2.3}
+\contentsline {subsection}{\numberline {1.2.1}De\sphinxhyphen {}Novo Analysis of sample relatedness (\IeC {\textquotedblleft }denovo\IeC {\textquotedblright })}{1}{subsection.1.2.1}
+\contentsline {subsection}{\numberline {1.2.2}Variant Calling \sphinxhyphen {} Standard Re\sphinxhyphen {}Sequencing Analysis (\IeC {\textquotedblleft }varcall\IeC {\textquotedblright })}{3}{subsection.1.2.2}
+\contentsline {subsection}{\numberline {1.2.3}Variant Annotation \sphinxhyphen {} The Effects of Variants on Gene Function (\IeC {\textquotedblleft }annotate\IeC {\textquotedblright })}{5}{subsection.1.2.3}
 \contentsline {section}{\numberline {1.3}Hardware Requirements}{5}{section.1.3}
 \contentsline {section}{\numberline {1.4}Software Dependencies}{5}{section.1.4}
 \contentsline {chapter}{\numberline {2}Workflow Use in a Nutshell}{7}{chapter.2}
@@ -22,9 +22,9 @@
 \contentsline {subsection}{\numberline {3.5.2}Additional Configuration}{12}{subsection.3.5.2}
 \contentsline {subsection}{\numberline {3.5.3}Running the Workflow}{13}{subsection.3.5.3}
 \contentsline {section}{\numberline {3.6}Configuring the different Workflow Use Cases}{13}{section.3.6}
-\contentsline {subsection}{\numberline {3.6.1}1\sphinxhyphen {}De\sphinxhyphen {}Novo Analysis}{13}{subsection.3.6.1}
-\contentsline {subsection}{\numberline {3.6.2}2\sphinxhyphen {}Variant Calling \sphinxhyphen {} Standard Re\sphinxhyphen {}Sequencing Analysis}{14}{subsection.3.6.2}
-\contentsline {subsection}{\numberline {3.6.3}3\sphinxhyphen {}Variant Annotation \sphinxhyphen {} The Effects of Variants on Gene Function}{14}{subsection.3.6.3}
+\contentsline {subsection}{\numberline {3.6.1}De\sphinxhyphen {}Novo Analysis of sample relatedness (\IeC {\textquotedblleft }denovo\IeC {\textquotedblright })}{13}{subsection.3.6.1}
+\contentsline {subsection}{\numberline {3.6.2}Variant Calling \sphinxhyphen {} Standard Re\sphinxhyphen {}Sequencing Analysis (\IeC {\textquotedblleft }varcall\IeC {\textquotedblright })}{14}{subsection.3.6.2}
+\contentsline {subsection}{\numberline {3.6.3}Variant Annotation \sphinxhyphen {} The Effects of Variants on Gene Function (\IeC {\textquotedblleft }annotate\IeC {\textquotedblright })}{14}{subsection.3.6.3}
 \contentsline {subsection}{\numberline {3.6.4}Expert Options}{14}{subsection.3.6.4}
 \contentsline {chapter}{\numberline {4}Workflow Outputs}{15}{chapter.4}
 \contentsline {chapter}{\numberline {5}Support}{17}{chapter.5}

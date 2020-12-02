@@ -1,10 +1,10 @@
 # Fdb version 3
-["makeindex dna-proto-workflow.idx"] 1606935951 "dna-proto-workflow.idx" "dna-proto-workflow.ind" "dna-proto-workflow" 1606940018
-  "dna-proto-workflow.idx" 1606940016 0 d41d8cd98f00b204e9800998ecf8427e ""
+["makeindex dna-proto-workflow.idx"] 1606935951 "dna-proto-workflow.idx" "dna-proto-workflow.ind" "dna-proto-workflow" 1606946369
+  "dna-proto-workflow.idx" 1606946367 0 d41d8cd98f00b204e9800998ecf8427e ""
   (generated)
   "dna-proto-workflow.ind"
   "dna-proto-workflow.ilg"
-["pdflatex"] 1606940016 "dna-proto-workflow.tex" "dna-proto-workflow.pdf" "dna-proto-workflow" 1606940018
+["pdflatex"] 1606946367 "dna-proto-workflow.tex" "dna-proto-workflow.pdf" "dna-proto-workflow" 1606946369
   "/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/local/texlive/2016/texmf-dist/fonts/map/fontname/texfonts.map" 1272929888 3287 e6b82fe08f5336d4d5ebc73fb1152e87 ""
   "/usr/local/texlive/2016/texmf-dist/fonts/tfm/adobe/courier/pcrr8r.tfm" 1136768653 1292 bd42be2f344128bff6d35d98474adfe3 ""
@@ -148,21 +148,21 @@
   "/usr/local/texlive/2016/texmf.cnf" 1463979140 577 2938757e76f31531e65cc647e3507693 ""
   "de-novo-02.png" 1606298226 172918 6b1ec91143f658d5936ac43e7160f47c ""
   "dna-proto-workflow-varcall-11.png" 1606298226 425357 046bb16c252ec2cd643b780efe2686bf ""
-  "dna-proto-workflow.aux" 1606940018 8902 0070d3b23f3f42a4a19aec8215dd47e7 ""
+  "dna-proto-workflow.aux" 1606946369 9544 7ed19f441d5a155b74670f650d29a63c ""
   "dna-proto-workflow.ind" 1606935951 0 d41d8cd98f00b204e9800998ecf8427e "makeindex dna-proto-workflow.idx"
-  "dna-proto-workflow.out" 1606940018 5821 1b98a9b458a73ac5e51171bc7523149c ""
-  "dna-proto-workflow.tex" 1606940013 41055 2d0c2556438424d5b05accae5fa58ae6 ""
-  "dna-proto-workflow.toc" 1606940018 3191 36379f392f1af10feb4f26310bdc3ca6 ""
+  "dna-proto-workflow.out" 1606946369 7001 9d63dbe9fe57629860c5f41c8200a2d7 ""
+  "dna-proto-workflow.tex" 1606946364 41325 5bd63fba5c7865054cf7734389b52bc2 ""
+  "dna-proto-workflow.toc" 1606946369 3562 233a45b74227879fe1e1ecae4a22ac47 ""
   "footnotehyper-sphinx.sty" 1605196316 8888 1bbd7bdeae8c8bed1d10d551bddb1cc9 ""
   "sphinx.sty" 1605196316 82250 00bd36f302b7cc8960761f445d02b13e ""
-  "sphinxhighlight.sty" 1606940012 8137 38a433148fcb7611515a989ff1750dd5 ""
+  "sphinxhighlight.sty" 1606946364 8137 38a433148fcb7611515a989ff1750dd5 ""
   "sphinxmanual.cls" 1605196316 4236 124cd90deb92742b5d3922bfc2cd70c0 ""
-  "sphinxmessages.sty" 1606940013 745 3f5fcd6cdd7964ed608767954a8ced6f ""
+  "sphinxmessages.sty" 1606946364 745 3f5fcd6cdd7964ed608767954a8ced6f ""
   "sphinxmulticell.sty" 1605196316 14606 0b6edc2b1a83546ed92026d1f6a311b5 ""
   (generated)
-  "dna-proto-workflow.toc"
-  "dna-proto-workflow.out"
   "dna-proto-workflow.aux"
-  "dna-proto-workflow.pdf"
+  "dna-proto-workflow.toc"
   "dna-proto-workflow.idx"
+  "dna-proto-workflow.out"
+  "dna-proto-workflow.pdf"
   "dna-proto-workflow.log"
