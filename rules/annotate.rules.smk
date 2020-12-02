@@ -14,6 +14,14 @@ rule annotate:
                sampleset=config["snpeff"]["samplesets"],
                filter = config['snpeff']['filters']),
 
+## experimental for several snpeff libraries
+#expand("output/annotated_variants/snpeff/{genome[database]}/#{caller}~{aligner}~{genome[ref]}~{sampleset}~filtered-{filter}~snpEff.vcf.gz",
+#                genome=config["snpeff"]["genomes"].values(),
+#                caller=config["snpeff"]["callers"],
+#                aligner=config["snpeff"]["aligners"],
+#                sampleset=config["snpeff"]["samplesets"],
+#                filter = config['snpeff']['filters']),
+
 
 ############### Actual Rules #################
 
@@ -42,11 +50,3 @@ rule snpeff:
         " ) >'{log}' 2>&1"
 
 ############################################
-
-#rule prepare_database:
-#    input:
-#        name= config['snpeff']['database'],
-#    output:
-#        dir(expand("genomes_and_annotations/snpeffdata/{name}", name= config['snpeff']['name']))
-#    shell:
-#        "mkdir genomes_and_annotations/snpeffdata/{input.name}"

@@ -84,9 +84,9 @@
 <li><a class="reference internal" href="#overview-pbgl-s-mutant-analysis-workflow">Overview PBGL’s Mutant-Analysis-workflow</a><ul>
 <li><a class="reference internal" href="#the-brief-principle-of-snakemake">The (brief) principle of Snakemake</a></li>
 <li><a class="reference internal" href="#mutant-analysis-workflow-use-cases">Mutant-Analysis-workflow Use Cases</a><ul>
-<li><a class="reference internal" href="#denovo">1-“denovo”</a></li>
-<li><a class="reference internal" href="#varcall">2-“varcall”</a></li>
-<li><a class="reference internal" href="#annotate">3-“annotate”</a></li>
+<li><a class="reference internal" href="#denovo">“denovo”</a></li>
+<li><a class="reference internal" href="#varcall">“varcall”</a></li>
+<li><a class="reference internal" href="#annotate">“annotate”</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#hardware-requirements">Hardware Requirements</a></li>
@@ -219,7 +219,7 @@ For details, please consult the <a class="reference external" href="https://snak
 <div class="section" id="mutant-analysis-workflow-use-cases">
 <h3>Mutant-Analysis-workflow Use Cases<a class="headerlink" href="#mutant-analysis-workflow-use-cases" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="denovo">
-<h4>1-“denovo”<a class="headerlink" href="#denovo" title="Permalink to this headline">¶</a></h4>
+<h4>“denovo”<a class="headerlink" href="#denovo" title="Permalink to this headline">¶</a></h4>
 <p>Choosing this option will conduct a reference-free comparison of <em>samples</em> based on the raw sequencing reads using k-mers. The workflow invokes the software tools kWIP and/or mash and outputs distance matrices and PCA plots. A flowchart illustrating the summarised workflow is depicted in <strong>Figure 1</strong>. The workflow for this use case consists of the following steps:</p>
 <table class="docutils align-default">
 <colgroup>
@@ -264,7 +264,7 @@ For details, please consult the <a class="reference external" href="https://snak
 <p>&gt; NOTE: We recommend performing such denovo analysis for every project. Clustering at the level of sequencing runs can be used to confirm metadata and detect mixups.</p>
 </div>
 <div class="section" id="varcall">
-<h4>2-“varcall”<a class="headerlink" href="#varcall" title="Permalink to this headline">¶</a></h4>
+<h4>“varcall”<a class="headerlink" href="#varcall" title="Permalink to this headline">¶</a></h4>
 <p>Choosing this option will run a full re-sequencing analysis ending in filtered bcf/vcf files. It detects variants and genotypes in <em>sets</em> of <em>samples</em> based on the alignments of the sequencing reads against one or several user-defined reference genome(s). Reads can be aligned with bwa and/or NextGenMap (ngm), and variants can be called with freebayes and/or mpileup. Between read alignments and variant calling, PCR duplicates are marked (with samtools markdup) and indels are realigned (using abra2). If reference genome annotation is provided, the effects of variants on gene integrity can also be predicted using the software <a class="reference external" href="https://pcingola.github.io/SnpEff/se_introduction/">snpEff</a>. A flowchart illustrating the summarised workflow is depicted in <strong>Figure 2</strong></p>
 <p>The full workflow for this use case consists of the following steps:</p>
 <table class="docutils align-default">
@@ -334,7 +334,7 @@ abra2</p></td>
 <p>Required input files are fastq files and a genome reference sequence(s) (fasta). The rule <code class="docutils literal notranslate"><span class="pre">snpeff</span></code> in addition depends on a genome annotation in form of a snpEff database matching the reference genome. For maximum flexibility and ease of troubleshooting we recommend to first run the re-sequencing analysis by invoking <code class="docutils literal notranslate"><span class="pre">rules.varcall.input</span></code>, and upon successful completion invoke the workflow again, this time selecting/uncommenting <code class="docutils literal notranslate"><span class="pre">rules.annotate.input</span></code>.</p>
 </div>
 <div class="section" id="annotate">
-<h4>3-“annotate”<a class="headerlink" href="#annotate" title="Permalink to this headline">¶</a></h4>
+<h4>“annotate”<a class="headerlink" href="#annotate" title="Permalink to this headline">¶</a></h4>
 <p>Choosing the option <code class="docutils literal notranslate"><span class="pre">rules.annotate.input</span></code> will annotate bcf/vcf files found in <strong>output/variants/final/</strong> and write annotated vcf.gz files to <strong>output/variants_annotated/</strong>. This analysis has only one step:</p>
 <table class="docutils align-default">
 <colgroup>
@@ -463,11 +463,11 @@ $ ngm -r &lt;reference-genome.fa&gt;
         └── snpEffectPredictor.bin
 </pre></div>
 </div>
-<p>For building the database you will need to add the respective entry in <code class="docutils literal notranslate"><span class="pre">snpeff.config</span></code> and then, from the root directory of the workflow (the directory that contains the <code class="docutils literal notranslate"><span class="pre">snpeff.config</span></code> file), execute:</p>
+<p>For building the database you will need to add the respective entry in <code class="docutils literal notranslate"><span class="pre">snpeff.config</span></code> and execute:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ snpEff build -c &lt;path to snpEff.config&gt; –gff3 &lt;reference-genome&gt;_snpeff
 </pre></div>
 </div>
-<p>The target for snpEff build is the directory name only. The path to this directory (genomes_and_annotations/snpeffdata/) is specified in <code class="docutils literal notranslate"><span class="pre">snpEff.config</span></code>. If executed from the top level workflow directory, specifying the location of snpeff.config (-c) is not necessary.
+<p>The target for snpEff build is the directory name only. The path to this directory (genomes_and_annotations/snpeffdata/) is specified in <code class="docutils literal notranslate"><span class="pre">snpEff.config</span></code>. If executed from the top level workflow directory (the directory that contains the <code class="docutils literal notranslate"><span class="pre">snpeff.config</span></code> file), specifying the location of <code class="docutils literal notranslate"><span class="pre">snpEff.config</span></code> (-c) is not necessary.
 While a <code class="docutils literal notranslate"><span class="pre">.gtf</span></code> file can also be used (-gtf 22), we have better experience building databases from <code class="docutils literal notranslate"><span class="pre">.gff</span></code> files. For a detailed explanation of the <code class="docutils literal notranslate"><span class="pre">snpeff</span></code> build process please consult the <a class="reference external" href="https://pcingola.github.io/SnpEff/se_introduction/">snpEff</a> documentation.</p>
 </div>
 <div class="section" id="providing-required-meta-information">

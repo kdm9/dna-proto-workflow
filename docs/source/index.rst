@@ -42,8 +42,8 @@ For details, please consult the `Snakemake <https://snakemake.readthedocs.io/en/
 Mutant-Analysis-workflow Use Cases
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-1-"denovo"
-~~~~~~~~~~
+"denovo"
+~~~~~~~~
 Choosing this option will conduct a reference-free comparison of *samples* based on the raw sequencing reads using k-mers. The workflow invokes the software tools kWIP and/or mash and outputs distance matrices and PCA plots. A flowchart illustrating the summarised workflow is depicted in **Figure 1**. The workflow for this use case consists of the following steps:
 
 +---+----------------------------+--------+------------------+
@@ -72,8 +72,8 @@ Required input for ``rules.denovo.input`` are fastq files and the workflow will 
 > NOTE: We recommend performing such denovo analysis for every project. Clustering at the level of sequencing runs can be used to confirm metadata and detect mixups.
 
 
-2-"varcall"
-~~~~~~~~~~~
+"varcall"
+~~~~~~~~~
 Choosing this option will run a full re-sequencing analysis ending in filtered bcf/vcf files. It detects variants and genotypes in *sets* of *samples* based on the alignments of the sequencing reads against one or several user-defined reference genome(s). Reads can be aligned with bwa and/or NextGenMap (ngm), and variants can be called with freebayes and/or mpileup. Between read alignments and variant calling, PCR duplicates are marked (with samtools markdup) and indels are realigned (using abra2). If reference genome annotation is provided, the effects of variants on gene integrity can also be predicted using the software `snpEff <https://pcingola.github.io/SnpEff/se_introduction/>`_. A flowchart illustrating the summarised workflow is depicted in **Figure 2**
 
 The full workflow for this use case consists of the following steps:
@@ -110,8 +110,8 @@ This option can be invoked in 2 ways:
 Required input files are fastq files and a genome reference sequence(s) (fasta). The rule ``snpeff`` in addition depends on a genome annotation in form of a snpEff database matching the reference genome. For maximum flexibility and ease of troubleshooting we recommend to first run the re-sequencing analysis by invoking ``rules.varcall.input``, and upon successful completion invoke the workflow again, this time selecting/uncommenting ``rules.annotate.input``.
 
 
-3-"annotate"
-~~~~~~~~~~~~
+"annotate"
+~~~~~~~~~~
 Choosing the option ``rules.annotate.input`` will annotate bcf/vcf files found in **output/variants/final/** and write annotated vcf.gz files to **output/variants_annotated/**. This analysis has only one step:
 
 +---+-------------------+----------+----------+
@@ -246,14 +246,14 @@ Below is an example directory tree of ``genomes_and_annotations/`` for a cowpea 
 
 
 
-For building the database you will need to add the respective entry in ``snpeff.config`` and then, from the root directory of the workflow (the directory that contains the ``snpeff.config`` file), execute:
+For building the database you will need to add the respective entry in ``snpeff.config`` and execute:
 
 ::
 
    $ snpEff build -c <path to snpEff.config> –gff3 <reference-genome>_snpeff
 
 
-The target for snpEff build is the directory name only. The path to this directory (genomes_and_annotations/snpeffdata/) is specified in ``snpEff.config``. If executed from the top level workflow directory, specifying the location of snpeff.config (-c) is not necessary.
+The target for snpEff build is the directory name only. The path to this directory (genomes_and_annotations/snpeffdata/) is specified in ``snpEff.config``. If executed from the top level workflow directory (the directory that contains the ``snpeff.config`` file), specifying the location of ``snpEff.config`` (-c) is not necessary.
 While a ``.gtf`` file can also be used (-gtf 22), we have better experience building databases from ``.gff`` files. For a detailed explanation of the ``snpeff`` build process please consult the `snpEff <https://pcingola.github.io/SnpEff/se_introduction/>`_ documentation.
 
 
@@ -452,10 +452,10 @@ For loading into IGV, use the In/Del realigned BAM file in ``output/abra/`` and 
 Support
 -------
 ..
-  License (this is commented out due to the indentation)
+  License (this block is currently commented out (by indentation))
   ^^^^^^^
 
-  Mutant-Analysis-workflow is released under the GNU General Public License version 3 (or any later version).
+  Mutant-Analysis-workflow is copyright Norman Warthmann and released under the GNU General Public License version 3 (or any later version).
 
 Contributors
 ^^^^^^^^^^^^

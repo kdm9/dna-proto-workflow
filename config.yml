@@ -1,6 +1,6 @@
 
 # This is the configuration file for the workfow with sections for the individual rules. Adjust to your needs.
-# Note that the tmp/ directory is used extensively. On many servers the user's home directory is too small to be suitable for hosting the tmp/ directory .
+# Note that the tmp/ directory is used extensively. On many servers the user's home directory, and hence the standard temp/ directory is too small to be suitable.
 # Specify the tmp/ directory in the abra2 options below. (This tmp/ directory will be used by all other rules as well)
 
 
@@ -111,6 +111,14 @@ varcall:
 snpeff:
   ref: GCF_004118075.1_ASM411807v1
   database: GCF_004118075.1_ASM411807v1_snpeff
+## experimental for more than one snpeff library
+#  genomes:
+#    - genome_1
+#      ref: genome_1.fa
+#      database: genome_1_snpeff_annotation
+#    - genome_2
+#      ref: genome_2.fa
+#      database: genome_2_snpeff_annotation
   samplesets:
 #    - mutants
 #    - wild_type
@@ -124,7 +132,7 @@ snpeff:
   filters:
     - strict
 
-#TODO: change so that more than one reference genome can be used (will require to jointly specify ref, database, contigs of interest)
+#TODO: change so that more than one reference genome annotation can be used (will require to jointly specify ref, database, contigs of interest)
 #TODO: add rule that prepares the reference genome and annotation for SNPEFF
 
 
@@ -145,8 +153,8 @@ denovodist:
 ##############################################################################
 #EXPERT options below
 ##############################################################################
-# configuration options for hte mapping rule. using those will only have an effect when runnign the mapping rule separately, which is not a recommended use case.
-#When invoking the mapping rules through the varcall rule, the parameter specified in the varcall rule above take precedence.
+# configuration options for the mapping rule. Using those will only have an effect when runnign the mapping rule separately, which is not a recommended use case.
+#When the mapping rules is invoked through the varcall rule, the parameters specified in the varcall section above take precedence/are used.
 mapping:
   aligners:
     - bwa
@@ -177,7 +185,7 @@ known_variants:
   # Optional: Path to a VCF file of known variants. Variant IDs from this file will be transferred to the new VCF file
   # known-variants: genomes_and_annotations/my_reference_genome_1/known_variants.vcf.gz
   #this feature is currently not yet implemented
-  # TODO implement "vcf annotate rule", ideally for more than one reference genome
+  # TODO implement "vcf annotate rule", obviously only meaningful for the exact reference genome of the known_variants file (i.e., implementation for more than one reference genome requires thought, -> do similar to snpeff!)
 
 LB-impute:
   mem: Xmx3g
