@@ -455,7 +455,7 @@ Support
 License
 ^^^^^^^
 
-Mutant-Analysis-workflow is Copyright 2020 Norman Warthmann, and released under the GNU General Public License version 3 (or any later version).
+Mutant-Analysis-workflow is released under the GNU General Public License version 3 (or any later version).
 
 Contributors
 ^^^^^^^^^^^^
