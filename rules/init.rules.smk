@@ -26,6 +26,7 @@ SAMPLESETS = snkmk.make_samplesets(s2rl_file=config['samples'], setfile_glob="me
 VARCALL_REGIONS = snkmk.make_regions(config["refs"], window=config["varcall"]["chunksize"])
 
 units = pd.read_csv(config['samples'], dtype=str).set_index(["run", "library"], drop=False)
+#units = units[units['include'] == 'Y']
 units.index = units.index.set_levels([i.astype(str) for i in units.index.levels])  # enforce str in index
 #print (units)
 

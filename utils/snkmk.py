@@ -112,7 +112,7 @@ def make_runlib2samp(s2rl_file):
         if not run["library"] or run["library"].lower().startswith("blank"):
             # Skip blanks
             continue
-        if run.get("Include", "Y") != "Y":
+        if run.get("include", "Y") != "Y":
             # Remove non-sequenced ones
             continue
         rl = (run["run"], run["library"])
