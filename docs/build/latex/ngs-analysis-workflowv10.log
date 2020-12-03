@@ -2,8 +2,8 @@ This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**dna-proto-workflow.tex
-(./dna-proto-workflow.tex
+**ngs-analysis-workflowv10.tex
+(./ngs-analysis-workflowv10.tex
 LaTeX2e <2016/03/31>
 Babel <3.9r> and hyphenation patterns for 83 language(s) loaded.
 (./sphinxhowto.cls
@@ -979,12 +979,12 @@ Package: hypcap 2016/05/16 v1.12 Adjusting the anchors of captions (HO)
 Package: sphinxmessages 2019/01/04 v2.0 Localized LaTeX macros (Sphinx team)
 )
 \@indexfile=\write4
-\openout4 = `dna-proto-workflow.idx'.
+\openout4 = `ngs-analysis-workflowv10.idx'.
 
 
-Writing index file dna-proto-workflow.idx
-(./dna-proto-workflow.aux)
-\openout1 = `dna-proto-workflow.aux'.
+Writing index file ngs-analysis-workflowv10.idx
+(./ngs-analysis-workflowv10.aux)
+\openout1 = `ngs-analysis-workflowv10.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 83.
 LaTeX Font Info:    ... okay on input line 83.
@@ -1090,9 +1090,9 @@ LaTeX Info: Redefining \ref on input line 83.
 LaTeX Info: Redefining \pageref on input line 83.
 LaTeX Info: Redefining \nameref on input line 83.
 
-(./dna-proto-workflow.out) (./dna-proto-workflow.out)
+(./ngs-analysis-workflowv10.out) (./ngs-analysis-workflowv10.out)
 \@outlinefile=\write5
-\openout5 = `dna-proto-workflow.out'.
+\openout5 = `ngs-analysis-workflowv10.out'.
 
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <10> not available
 (Font)              Font shape `T1/ptm/b/n' tried instead on input line 91.
@@ -1113,9 +1113,8 @@ File: t1phv.fd 2001/06/04 scalable font definitions for T1/phv.
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <14.4> not available
 (Font)              Font shape `T1/phv/b/n' tried instead on input line 124.
 
-(./dna-proto-workflow.toc<<ot1.cmap>><<oml.cmap>><<oms.cmap>><<omx.cmap>>
+(./ngs-analysis-workflowv10.toc<<ot1.cmap>><<oml.cmap>><<oms.cmap>><<omx.cmap>>
 LaTeX Font Info:    Try loading font information for U+msa on input line 3.
-
 (/usr/local/texlive/2016/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
@@ -1125,7 +1124,7 @@ LaTeX Font Info:    Try loading font information for U+msb on input line 3.
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ))
 \tf@toc=\write6
-\openout6 = `dna-proto-workflow.toc'.
+\openout6 = `ngs-analysis-workflowv10.toc'.
 
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <10> not available
 (Font)              Font shape `T1/phv/b/n' tried instead on input line 130.
@@ -1180,28 +1179,29 @@ LaTeX Font Info:    Font shape `T1/pcr/m/it' in size <9> not available
 (Font)              Font shape `T1/pcr/m/sl' tried instead on input line 682.
  [11] [12] [13] [14
 
-] (./dna-proto-workflow.ind)
+] (./ngs-analysis-workflowv10.ind)
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 811.
  [15
 
 ]
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 811.
 
-(./dna-proto-workflow.aux)
+(./ngs-analysis-workflowv10.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 811.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 811.
-Package rerunfilecheck Info: File `dna-proto-workflow.out' has not changed.
+Package rerunfilecheck Info: File `ngs-analysis-workflowv10.out' has not change
+d.
 (rerunfilecheck)             Checksum: 55667C710532060145EBAEBF641C0D13;7124.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 811.
  ) 
 Here is how much of TeX's memory you used:
  13662 strings out of 493014
- 190377 string characters out of 6133352
- 303638 words of memory out of 5000000
+ 190479 string characters out of 6133352
+ 303654 words of memory out of 5000000
  16844 multiletter control sequences out of 15000+600000
  50553 words of font info for 60 fonts, out of 8000000 for 9000
  1142 hyphenation exceptions out of 8191
- 37i,12n,45p,1074b,492s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 37i,12n,45p,1080b,492s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
 exlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/local/tex
 live/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/local/texli
@@ -1212,7 +1212,7 @@ ts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/2016/texmf-dist/fonts/type
 1/urw/times/utmb8a.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/urw/time
 s/utmr8a.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/urw/times/utmri8a.
 pfb>
-Output written on dna-proto-workflow.pdf (16 pages, 611758 bytes).
+Output written on ngs-analysis-workflowv10.pdf (16 pages, 611758 bytes).
 PDF statistics:
  329 PDF objects out of 1000 (max. 8388607)
  290 compressed objects within 3 object streams
