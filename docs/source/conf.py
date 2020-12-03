@@ -83,25 +83,28 @@ latex_maketitle = r'''
 
         \begin{titlepage}
             \vspace*{10mm} %%% * is used to give space from top
-            \flushright\textbf{\Huge {Mutant-Analysis-Workflow}}
+            \flushright\textbf{\Huge {PBGL-NGS-Analysis-Workflow v1.0}}
 
             \vspace{0mm} %%% * is used to give space from top
-            \textbf{\Large {A Laboratory Protocol - Version 1.0}}
+            \textbf{\Large {A Laboratory Manual}}
 
             \vspace{50mm}
-            \textbf{\Large {Norman Warthmann, PhD}}
+            \textbf{\Large {Norman Warthmann}}
 
             \vspace{10mm}
             \textbf{\Large {Plant Breeding and Genetics Laboratory}}
+            
+            \vspace{0mm}
+            \textbf{\Large {FAO/IAEA Joint Division}}
 
             \vspace{0mm}
             \textbf{\Large {Seibersdorf, Austria}}
 
-	    %%\vspace{10mm}
-            %%\normalsize Created on : July, 2020
+	    \vspace{10mm}
+            \normalsize Created: July, 2020
 
             \vspace*{0mm}
-            \normalsize  Last updated : 24 November 2020
+            \normalsize  Last updated: 24 November 2020
 
             %% \vfill adds at the bottom
             \vfill
@@ -110,6 +113,7 @@ expressed do not necessarily reflect those of the International Atomic Energy Ag
         \end{titlepage}
 
         \pagenumbering{arabic}
+        \newcommand{\sectionbreak}{\clearpage}
 '''
 latex_elements = {
    'releasename': 'Version 1.0',

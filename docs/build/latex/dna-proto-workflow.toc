@@ -1,34 +1,34 @@
 \babel@toc {english}{}
-\contentsline {section}{\numberline {1}Overview PBGL\IeC {\textquoteright }s Mutant\sphinxhyphen {}Analysis\sphinxhyphen {}workflow}{1}{section.1}
+\contentsline {section}{\numberline {1}Overview PBGL\IeC {\textquoteright }s Mutant\sphinxhyphen {}Analysis\sphinxhyphen {}workflow}{2}{section.1}
 \contentsline {subsection}{\numberline {1.1}The (brief) principle of Snakemake}{2}{subsection.1.1}
 \contentsline {subsection}{\numberline {1.2}Mutant\sphinxhyphen {}Analysis\sphinxhyphen {}workflow Use Cases}{2}{subsection.1.2}
 \contentsline {subsubsection}{\numberline {1.2.1}De\sphinxhyphen {}Novo Analysis of sample relatedness (\IeC {\textquotedblleft }denovo\IeC {\textquotedblright })}{2}{subsubsection.1.2.1}
-\contentsline {subsubsection}{\numberline {1.2.2}Variant Calling \sphinxhyphen {} Standard Re\sphinxhyphen {}Sequencing Analysis (\IeC {\textquotedblleft }varcall\IeC {\textquotedblright })}{2}{subsubsection.1.2.2}
-\contentsline {subsubsection}{\numberline {1.2.3}Variant Annotation \sphinxhyphen {} The Effects of Variants on Gene Function (\IeC {\textquotedblleft }annotate\IeC {\textquotedblright })}{5}{subsubsection.1.2.3}
-\contentsline {subsection}{\numberline {1.3}Hardware Requirements}{5}{subsection.1.3}
+\contentsline {subsubsection}{\numberline {1.2.2}Variant Calling \sphinxhyphen {} Standard Re\sphinxhyphen {}Sequencing Analysis (\IeC {\textquotedblleft }varcall\IeC {\textquotedblright })}{4}{subsubsection.1.2.2}
+\contentsline {subsubsection}{\numberline {1.2.3}Variant Annotation \sphinxhyphen {} The Effects of Variants on Gene Function (\IeC {\textquotedblleft }annotate\IeC {\textquotedblright })}{4}{subsubsection.1.2.3}
+\contentsline {subsection}{\numberline {1.3}Hardware Requirements}{6}{subsection.1.3}
 \contentsline {subsection}{\numberline {1.4}Software Dependencies}{6}{subsection.1.4}
-\contentsline {section}{\numberline {2}Workflow Use in a Nutshell}{6}{section.2}
-\contentsline {subsection}{\numberline {2.1}Steps}{6}{subsection.2.1}
-\contentsline {section}{\numberline {3}Workflow Use in Detail}{6}{section.3}
-\contentsline {subsection}{\numberline {3.1}Creating the Virtual Environment (conda)}{6}{subsection.3.1}
-\contentsline {subsection}{\numberline {3.2}Reference Genome(s)}{7}{subsection.3.2}
-\contentsline {subsection}{\numberline {3.3}Reference Genome Annotation}{7}{subsection.3.3}
-\contentsline {subsection}{\numberline {3.4}Providing Required Meta information}{8}{subsection.3.4}
-\contentsline {subsubsection}{\numberline {3.4.1}Samplesets}{8}{subsubsection.3.4.1}
-\contentsline {subsubsection}{\numberline {3.4.2}Sample Definitions}{8}{subsubsection.3.4.2}
-\contentsline {subsubsection}{\numberline {3.4.3}Regions of Interest for Variant Calling}{9}{subsubsection.3.4.3}
-\contentsline {subsection}{\numberline {3.5}Workflow Configuration}{9}{subsection.3.5}
-\contentsline {subsubsection}{\numberline {3.5.1}config.yml}{9}{subsubsection.3.5.1}
-\contentsline {subsubsection}{\numberline {3.5.2}Additional Configuration}{10}{subsubsection.3.5.2}
-\contentsline {subsubsection}{\numberline {3.5.3}Running the Workflow}{10}{subsubsection.3.5.3}
-\contentsline {subsection}{\numberline {3.6}Configuring the different Workflow Use Cases}{10}{subsection.3.6}
-\contentsline {subsubsection}{\numberline {3.6.1}De\sphinxhyphen {}Novo Analysis of sample relatedness (\IeC {\textquotedblleft }denovo\IeC {\textquotedblright })}{10}{subsubsection.3.6.1}
-\contentsline {subsubsection}{\numberline {3.6.2}Variant Calling \sphinxhyphen {} Standard Re\sphinxhyphen {}Sequencing Analysis (\IeC {\textquotedblleft }varcall\IeC {\textquotedblright })}{11}{subsubsection.3.6.2}
-\contentsline {subsubsection}{\numberline {3.6.3}Variant Annotation \sphinxhyphen {} The Effects of Variants on Gene Function (\IeC {\textquotedblleft }annotate\IeC {\textquotedblright })}{11}{subsubsection.3.6.3}
-\contentsline {subsubsection}{\numberline {3.6.4}Expert Options}{12}{subsubsection.3.6.4}
-\contentsline {section}{\numberline {4}Workflow Outputs}{12}{section.4}
-\contentsline {section}{\numberline {5}Support}{12}{section.5}
-\contentsline {subsection}{\numberline {5.1}Contributors}{12}{subsection.5.1}
-\contentsline {subsection}{\numberline {5.2}Citing}{12}{subsection.5.2}
-\contentsline {subsection}{\numberline {5.3}Reproducibility}{12}{subsection.5.3}
-\contentsline {subsection}{\numberline {5.4}Getting Help}{13}{subsection.5.4}
+\contentsline {section}{\numberline {2}Workflow Use in a Nutshell}{7}{section.2}
+\contentsline {subsection}{\numberline {2.1}Steps}{7}{subsection.2.1}
+\contentsline {section}{\numberline {3}Workflow Use in Detail}{8}{section.3}
+\contentsline {subsection}{\numberline {3.1}Creating the Virtual Environment (conda)}{8}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}Reference Genome(s)}{8}{subsection.3.2}
+\contentsline {subsection}{\numberline {3.3}Reference Genome Annotation}{9}{subsection.3.3}
+\contentsline {subsection}{\numberline {3.4}Providing Required Meta information}{10}{subsection.3.4}
+\contentsline {subsubsection}{\numberline {3.4.1}Samplesets}{10}{subsubsection.3.4.1}
+\contentsline {subsubsection}{\numberline {3.4.2}Sample Definitions}{10}{subsubsection.3.4.2}
+\contentsline {subsubsection}{\numberline {3.4.3}Regions of Interest for Variant Calling}{10}{subsubsection.3.4.3}
+\contentsline {subsection}{\numberline {3.5}Workflow Configuration}{11}{subsection.3.5}
+\contentsline {subsubsection}{\numberline {3.5.1}config.yml}{11}{subsubsection.3.5.1}
+\contentsline {subsubsection}{\numberline {3.5.2}Additional Configuration}{11}{subsubsection.3.5.2}
+\contentsline {subsubsection}{\numberline {3.5.3}Running the Workflow}{11}{subsubsection.3.5.3}
+\contentsline {subsection}{\numberline {3.6}Configuring the different Workflow Use Cases}{12}{subsection.3.6}
+\contentsline {subsubsection}{\numberline {3.6.1}De\sphinxhyphen {}Novo Analysis of sample relatedness (\IeC {\textquotedblleft }denovo\IeC {\textquotedblright })}{12}{subsubsection.3.6.1}
+\contentsline {subsubsection}{\numberline {3.6.2}Variant Calling \sphinxhyphen {} Standard Re\sphinxhyphen {}Sequencing Analysis (\IeC {\textquotedblleft }varcall\IeC {\textquotedblright })}{12}{subsubsection.3.6.2}
+\contentsline {subsubsection}{\numberline {3.6.3}Variant Annotation \sphinxhyphen {} The Effects of Variants on Gene Function (\IeC {\textquotedblleft }annotate\IeC {\textquotedblright })}{13}{subsubsection.3.6.3}
+\contentsline {subsubsection}{\numberline {3.6.4}Expert Options}{13}{subsubsection.3.6.4}
+\contentsline {section}{\numberline {4}Workflow Outputs}{14}{section.4}
+\contentsline {section}{\numberline {5}Support}{15}{section.5}
+\contentsline {subsection}{\numberline {5.1}Contributors}{15}{subsection.5.1}
+\contentsline {subsection}{\numberline {5.2}Citing}{15}{subsection.5.2}
+\contentsline {subsection}{\numberline {5.3}Reproducibility}{15}{subsection.5.3}
+\contentsline {subsection}{\numberline {5.4}Getting Help}{15}{subsection.5.4}

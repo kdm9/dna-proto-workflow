@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2020.12.3)  3 DEC 2020 16:11
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2020.12.3)  3 DEC 2020 16:37
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1111,17 +1111,17 @@ LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <24.88> not available
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <14.4> not available
 (Font)              Font shape `T1/ptm/b/n' tried instead on input line 94.
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <9> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 113.
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 116.
  [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-LaTeX Font Info:    Try loading font information for T1+phv on input line 120.
+LaTeX Font Info:    Try loading font information for T1+phv on input line 124.
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1phv.fd
 File: t1phv.fd 2001/06/04 scalable font definitions for T1/phv.
 )
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <14.4> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 120.
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 124.
 
 (./dna-proto-workflow.toc<<ot1.cmap>><<oml.cmap>><<oms.cmap>><<omx.cmap>>
 LaTeX Font Info:    Try loading font information for U+msa on input line 3.
@@ -1138,16 +1138,18 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 \openout6 = `dna-proto-workflow.toc'.
 
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <10> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 132.
- [1]
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 130.
+ [1
+
+]
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <12> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 132.
-LaTeX Font Info:    Try loading font information for T1+pcr on input line 135.
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 136.
+LaTeX Font Info:    Try loading font information for T1+pcr on input line 139.
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1pcr.fd
 File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
 )
-LaTeX Font Info:    Try loading font information for TS1+ptm on input line 139.
+LaTeX Font Info:    Try loading font information for TS1+ptm on input line 143.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ts1ptm.fd
@@ -1156,44 +1158,58 @@ File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 <de-novo-02.png, id=190, 769.4346pt x 1058.9964pt>
 File: de-novo-02.png Graphic file (type png)
 <use de-novo-02.png>
-Package pdftex.def Info: de-novo-02.png  used on input line 208.
+Package pdftex.def Info: de-novo-02.png  used on input line 212.
 (pdftex.def)             Requested size: 328.1853pt x 451.68457pt.
- [2] [3 <./de-novo-02.png>]
+ [2
+
+] [3 <./de-novo-02.png>]
 <dna-proto-workflow-varcall-11.png, id=205, 1371.2028pt x 1916.6004pt>
 File: dna-proto-workflow-varcall-11.png Graphic file (type png)
 <use dna-proto-workflow-varcall-11.png>
 Package pdftex.def Info: dna-proto-workflow-varcall-11.png  used on input line 
-316.
+320.
 (pdftex.def)             Requested size: 323.13239pt x 451.68457pt.
- [4 <./dna-proto-workflow-varcall-11.png>] [5] [6] [7]
-Underfull \hbox (badness 10000) in paragraph at lines 520--522
+ [4] [5 <./dna-proto-workflow-varcall-11.png>] [6] [7
+
+] [8
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 524--526
 []\T1/ptm/m/n/10 The tar-get for snpEff build is the di-rec-tory name only. The
  path to this di-rec-tory
  []
 
-[8] [9]
+[9]
+Overfull \vbox (0.55469pt too high) detected at line 650
+ []
+
+[10]
 LaTeX Font Info:    Font shape `T1/pcr/m/it' in size <9> not available
-(Font)              Font shape `T1/pcr/m/sl' tried instead on input line 678.
- [10] [11] [12] (./dna-proto-workflow.ind)
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 807.
- [13]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 807.
+(Font)              Font shape `T1/pcr/m/sl' tried instead on input line 682.
+ [11] [12] [13] [14
+
+] (./dna-proto-workflow.ind)
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 811.
+ [15
+
+]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 811.
 
 (./dna-proto-workflow.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 807.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 807.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 811.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 811.
 Package rerunfilecheck Info: File `dna-proto-workflow.out' has not changed.
 (rerunfilecheck)             Checksum: 55667C710532060145EBAEBF641C0D13;7124.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 807.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 811.
  ) 
 Here is how much of TeX's memory you used:
- 13730 strings out of 492982
- 190760 string characters out of 6134896
- 306551 words of memory out of 5000000
+ 13733 strings out of 492982
+ 190780 string characters out of 6134896
+ 304557 words of memory out of 5000000
  16933 multiletter control sequences out of 15000+600000
- 49475 words of font info for 59 fonts, out of 8000000 for 9000
+ 50553 words of font info for 60 fonts, out of 8000000 for 9000
  1142 hyphenation exceptions out of 8191
- 37i,11n,45p,1074b,490s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 37i,12n,45p,1074b,490s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
 e/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texlive/texmf
 -dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/share/texlive/texmf-dist/f
@@ -1203,10 +1219,10 @@ hvb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></
 usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texli
 ve/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/f
 onts/type1/urw/times/utmri8a.pfb>
-Output written on dna-proto-workflow.pdf (14 pages, 595949 bytes).
+Output written on dna-proto-workflow.pdf (16 pages, 597338 bytes).
 PDF statistics:
- 321 PDF objects out of 1000 (max. 8388607)
- 284 compressed objects within 3 object streams
- 61 named destinations out of 1000 (max. 500000)
+ 329 PDF objects out of 1000 (max. 8388607)
+ 290 compressed objects within 3 object streams
+ 63 named destinations out of 1000 (max. 500000)
  295 words of extra memory for PDF output out of 10000 (max. 10000000)
 
