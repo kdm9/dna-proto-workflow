@@ -1,10 +1,10 @@
 # Fdb version 3
-["makeindex dna-proto-workflow.idx"] 0 "dna-proto-workflow.idx" "dna-proto-workflow.ind" "dna-proto-workflow" 1607029458
+["makeindex dna-proto-workflow.idx"] 0 "dna-proto-workflow.idx" "dna-proto-workflow.ind" "dna-proto-workflow" 1607031092
   "dna-proto-workflow.idx" 1607029456 0 d41d8cd98f00b204e9800998ecf8427e ""
   (generated)
   "dna-proto-workflow.ind"
   "dna-proto-workflow.ilg"
-["pdflatex"] 1607029456 "dna-proto-workflow.tex" "dna-proto-workflow.pdf" "dna-proto-workflow" 1607029458
+["pdflatex"] 1607029456 "dna-proto-workflow.tex" "dna-proto-workflow.pdf" "dna-proto-workflow" 1607031092
   "/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/local/texlive/2016/texmf-dist/fonts/map/fontname/texfonts.map" 1272929888 3287 e6b82fe08f5336d4d5ebc73fb1152e87 ""
   "/usr/local/texlive/2016/texmf-dist/fonts/tfm/adobe/courier/pcrr8r.tfm" 1136768653 1292 bd42be2f344128bff6d35d98474adfe3 ""
@@ -142,21 +142,21 @@
   "/usr/local/texlive/2016/texmf.cnf" 1463979140 577 2938757e76f31531e65cc647e3507693 ""
   "de-novo-02.png" 1606298226 172918 6b1ec91143f658d5936ac43e7160f47c ""
   "dna-proto-workflow-varcall-11.png" 1606298226 425357 046bb16c252ec2cd643b780efe2686bf ""
-  "dna-proto-workflow.aux" 1607029458 9404 72bf86f7093d9856700583fef75004a7 ""
+  "dna-proto-workflow.aux" 1607030979 9404 72bf86f7093d9856700583fef75004a7 ""
   "dna-proto-workflow.ind" 1606935951 0 d41d8cd98f00b204e9800998ecf8427e "makeindex dna-proto-workflow.idx"
-  "dna-proto-workflow.out" 1607029458 7124 55667c710532060145ebaebf641c0d13 ""
-  "dna-proto-workflow.tex" 1607029310 43292 d74a0d47da5d69e31142d09dcf8b3288 ""
-  "dna-proto-workflow.toc" 1607029458 3728 ffee61670c39dde06290583af64527df ""
+  "dna-proto-workflow.out" 1607030979 7124 55667c710532060145ebaebf641c0d13 ""
+  "dna-proto-workflow.tex" 1607030979 43292 d74a0d47da5d69e31142d09dcf8b3288 ""
+  "dna-proto-workflow.toc" 1607030979 3728 ffee61670c39dde06290583af64527df ""
   "footnotehyper-sphinx.sty" 1605196316 8888 1bbd7bdeae8c8bed1d10d551bddb1cc9 ""
   "sphinx.sty" 1605196316 82250 00bd36f302b7cc8960761f445d02b13e ""
-  "sphinxhighlight.sty" 1607029455 8137 38a433148fcb7611515a989ff1750dd5 ""
+  "sphinxhighlight.sty" 1607031091 8137 38a433148fcb7611515a989ff1750dd5 ""
   "sphinxhowto.cls" 1605196316 3251 61ceeeffc44f983928ef03a3834a8b58 ""
-  "sphinxmessages.sty" 1607029456 745 3f5fcd6cdd7964ed608767954a8ced6f ""
+  "sphinxmessages.sty" 1607031092 745 3f5fcd6cdd7964ed608767954a8ced6f ""
   "sphinxmulticell.sty" 1605196316 14606 0b6edc2b1a83546ed92026d1f6a311b5 ""
   (generated)
-  "dna-proto-workflow.aux"
   "dna-proto-workflow.log"
+  "dna-proto-workflow.pdf"
   "dna-proto-workflow.toc"
   "dna-proto-workflow.idx"
-  "dna-proto-workflow.pdf"
   "dna-proto-workflow.out"
+  "dna-proto-workflow.aux"

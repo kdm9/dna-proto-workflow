@@ -127,8 +127,8 @@ expressed do not necessarily reflect those of the International Atomic Energy Ag
 
 
 
-\section{Overview PBGL’s Mutant\sphinxhyphen{}Analysis\sphinxhyphen{}workflow}
-\label{\detokenize{index:overview-pbgl-s-mutant-analysis-workflow}}
+\section{PBGL\sphinxhyphen{}NGS\sphinxhyphen{}Analysis\sphinxhyphen{}workflow \sphinxhyphen{} Overview}
+\label{\detokenize{index:pbgl-ngs-analysis-workflow-overview}}
 This collection of Snakemake rules constitutes a workflow for the analysis of high\sphinxhyphen{}throughput sequencing projects. We use it mostly for genome re\sphinxhyphen{}sequencing data produced with Illumina\sphinxhyphen{}type sequencing instruments.
 For this particular workflow we distinguish two different use cases: \sphinxstylestrong{denovo} and \sphinxstylestrong{varcall}. The workflow is designed to run the entire analyses automatically.
 
@@ -390,8 +390,8 @@ Snakemake allows for fine\sphinxhyphen{}tuning resource allocation to the indivi
 We recommend running the workflow in its own \sphinxcode{\sphinxupquote{conda environment}} on a Linux Server. Dependencies are listed in \sphinxcode{\sphinxupquote{envs/condaenv.yml}} and \sphinxcode{\sphinxupquote{envs/additional.yml}}. A brief explanation how to use these files to generate the conda environment is further below. For comprehensive explanation please consult the \sphinxhref{https://docs.conda.io/projects/conda/en/latest/user-guide/getting-started.html}{conda} documentation. For software that is not available through conda on some important platforms we make the specific binaries available in \sphinxcode{\sphinxupquote{envs/}}; currently mainly abra2.jar.
 
 
-\section{Workflow Use in a Nutshell}
-\label{\detokenize{index:workflow-use-in-a-nutshell}}
+\section{Workflow Use in a Nutshell \sphinxhyphen{} Checklist}
+\label{\detokenize{index:workflow-use-in-a-nutshell-checklist}}
 
 \subsection{Steps}
 \label{\detokenize{index:steps}}\begin{enumerate}
@@ -667,8 +667,8 @@ An important configuration parameter is the location of a suitable temporary dir
 Expert users can change the rules themselves by editing \sphinxcode{\sphinxupquote{rules/*.rules.smk}}. Use caution! We have chosen reasonable default settings and recommend modifying rules only when you know what you are doing. When allocating more cores to rules, pay attention that some rules are very memory intensive and some shell commands are piped and are in fact using more than 1 core per process.
 
 
-\subsubsection{Running the Workflow}
-\label{\detokenize{index:running-the-workflow}}
+\subsection{Running the Workflow \sphinxhyphen{} different Workflow Use Cases}
+\label{\detokenize{index:running-the-workflow-different-workflow-use-cases}}
 To run the workflow, un\sphinxhyphen{}comment the respective rule for the desired use case in the \sphinxcode{\sphinxupquote{Snakefile}} and run snakemake.
 
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
@@ -694,9 +694,6 @@ When configuring \sphinxcode{\sphinxupquote{config.yml}}, keep in mind that conf
 
 The workflow runs on \sphinxstyleemphasis{samples} in \sphinxstyleemphasis{sets} as listed in \sphinxcode{\sphinxupquote{samplesets/*.txt}} and defined in \sphinxcode{\sphinxupquote{/metadata/sample2runlib.csv}}. Sample names listed in \sphinxcode{\sphinxupquote{samplesets/*.txt}} must correspond to the entries in the sample column in \sphinxcode{\sphinxupquote{/metadata/sample2runlib.csv}}.
 
-
-\subsection{Configuring the different Workflow Use Cases}
-\label{\detokenize{index:configuring-the-different-workflow-use-cases}}
 
 \subsubsection{De\sphinxhyphen{}Novo Analysis of sample relatedness (“denovo”)}
 \label{\detokenize{index:id6}}
