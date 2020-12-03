@@ -473,6 +473,11 @@ Reproducibility
 
 Workflows help addressing reproducibility issues. Consider making your version of the workflow, configured for your data, available upon publication of your results. Check out the `archive <https://snakemake.readthedocs.io/en/stable/snakefiles/deployment.html#sustainable-and-reproducible-archiving>`_ options of Snakemake.
 
+..
+  Disclaimer
+  ^^^^^^^^^^
+
+
 Getting Help
 ^^^^^^^^^^^^
 

@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.1.9)  3 DEC 2020 09:02
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.1.9)  3 DEC 2020 09:06
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**dna-proto-workflow.tex
-(./dna-proto-workflow.tex
+**pbgl-analysis-workflowv10.tex
+(./pbgl-analysis-workflowv10.tex
 LaTeX2e <2016/03/31>
 Babel <3.9r> and hyphenation patterns for 83 language(s) loaded.
 (./sphinxmanual.cls
@@ -980,12 +980,12 @@ Package: hypcap 2016/05/16 v1.12 Adjusting the anchors of captions (HO)
 Package: sphinxmessages 2019/01/04 v2.0 Localized LaTeX macros (Sphinx team)
 )
 \@indexfile=\write4
-\openout4 = `dna-proto-workflow.idx'.
+\openout4 = `pbgl-analysis-workflowv10.idx'.
 
 
-Writing index file dna-proto-workflow.idx
-(./dna-proto-workflow.aux)
-\openout1 = `dna-proto-workflow.aux'.
+Writing index file pbgl-analysis-workflowv10.idx
+(./pbgl-analysis-workflowv10.aux)
+\openout1 = `pbgl-analysis-workflowv10.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 83.
 LaTeX Font Info:    ... okay on input line 83.
@@ -1091,9 +1091,9 @@ LaTeX Info: Redefining \ref on input line 83.
 LaTeX Info: Redefining \pageref on input line 83.
 LaTeX Info: Redefining \nameref on input line 83.
 
-(./dna-proto-workflow.out) (./dna-proto-workflow.out)
+(./pbgl-analysis-workflowv10.out) (./pbgl-analysis-workflowv10.out)
 \@outlinefile=\write5
-\openout5 = `dna-proto-workflow.out'.
+\openout5 = `pbgl-analysis-workflowv10.out'.
 
 Package hyperref Info: Option `pageanchor' set `false' on input line 86.
 LaTeX Font Info:    Try loading font information for T1+phv on input line 86.
@@ -1137,12 +1137,12 @@ LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <12> not available
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <14.4> not available
 (Font)              Font shape `T1/phv/b/n' tried instead on input line 88.
 
-(./dna-proto-workflow.toc
+(./pbgl-analysis-workflowv10.toc
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <10> not available
 (Font)              Font shape `T1/ptm/b/n' tried instead on input line 2.
 )
 \tf@toc=\write6
-\openout6 = `dna-proto-workflow.toc'.
+\openout6 = `pbgl-analysis-workflowv10.toc'.
 
  [1
 
@@ -1201,25 +1201,26 @@ Chapter 4.
 
 ]
 Chapter 5.
-(./dna-proto-workflow.ind)
+(./pbgl-analysis-workflowv10.ind)
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 775.
  [17]
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 775.
- (./dna-proto-workflow.aux)
+ (./pbgl-analysis-workflowv10.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 775.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 775.
-Package rerunfilecheck Info: File `dna-proto-workflow.out' has not changed.
+Package rerunfilecheck Info: File `pbgl-analysis-workflowv10.out' has not chang
+ed.
 (rerunfilecheck)             Checksum: 9D63DBE9FE57629860C5F41C8200A2D7;7001.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 775.
  ) 
 Here is how much of TeX's memory you used:
  13698 strings out of 493014
- 190707 string characters out of 6133352
- 309318 words of memory out of 5000000
+ 190826 string characters out of 6133352
+ 309335 words of memory out of 5000000
  16866 multiletter control sequences out of 15000+600000
  51239 words of font info for 70 fonts, out of 8000000 for 9000
  1142 hyphenation exceptions out of 8191
- 37i,11n,48p,1074b,492s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 37i,11n,48p,1081b,492s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
 exlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/local/tex
 live/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/local/texli
@@ -1230,7 +1231,7 @@ ts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/2016/texmf-dist/fonts/type
 1/urw/times/utmb8a.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/urw/time
 s/utmr8a.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/urw/times/utmri8a.
 pfb>
-Output written on dna-proto-workflow.pdf (21 pages, 610174 bytes).
+Output written on pbgl-analysis-workflowv10.pdf (21 pages, 610424 bytes).
 PDF statistics:
  351 PDF objects out of 1000 (max. 8388607)
  306 compressed objects within 4 object streams

@@ -17,9 +17,9 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'dna-proto-workflow'
+project = 'NGS-Analysis-workflow v.1.0'
 #copyright = '2020, PBGL'
-author = 'Norman Warthmann'
+author = 'Norman Warthmann (PBGL)'
 
 
 # -- General configuration ---------------------------------------------------
