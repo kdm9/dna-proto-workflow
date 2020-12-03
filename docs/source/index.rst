@@ -17,8 +17,8 @@ Mutant-Analysis-workflow - Documentation
   <br/>
 
 
-Overview PBGL's Mutant-Analysis-workflow
-----------------------------------------
+PBGL-NGS-Analysis-workflow - Overview
+--------------------------------------
 
 This collection of Snakemake rules constitutes a workflow for the analysis of high-throughput sequencing projects. We use it mostly for genome re-sequencing data produced with Illumina-type sequencing instruments.
 For this particular workflow we distinguish two different use cases: **denovo** and **varcall**. The workflow is designed to run the entire analyses automatically.
@@ -140,8 +140,8 @@ Software Dependencies
 We recommend running the workflow in its own ``conda environment`` on a Linux Server. Dependencies are listed in ``envs/condaenv.yml`` and ``envs/additional.yml``. A brief explanation how to use these files to generate the conda environment is further below. For comprehensive explanation please consult the `conda <https://docs.conda.io/projects/conda/en/latest/user-guide/getting-started.html>`_ documentation. For software that is not available through conda on some important platforms we make the specific binaries available in ``envs/``; currently mainly abra2.jar.
 
 
-Workflow Use in a Nutshell
---------------------------
+Workflow Use in a Nutshell - Checklist
+--------------------------------------
 
 Steps
 ^^^^^
@@ -337,8 +337,8 @@ Additional Configuration
 Expert users can change the rules themselves by editing ``rules/*.rules.smk``. Use caution! We have chosen reasonable default settings and recommend modifying rules only when you know what you are doing. When allocating more cores to rules, pay attention that some rules are very memory intensive and some shell commands are piped and are in fact using more than 1 core per process.
 
 
-Running the Workflow
-~~~~~~~~~~~~~~~~~~~~
+Running the Workflow - different Workflow Use Cases
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 To run the workflow, un-comment the respective rule for the desired use case in the ``Snakefile`` and run snakemake.
 
@@ -366,8 +366,6 @@ When configuring ``config.yml``, keep in mind that configuration parameters of a
 The workflow runs on *samples* in *sets* as listed in ``samplesets/*.txt`` and defined in ``/metadata/sample2runlib.csv``. Sample names listed in ``samplesets/*.txt`` must correspond to the entries in the sample column in ``/metadata/sample2runlib.csv``.
 
 
-Configuring the different Workflow Use Cases
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 De-Novo Analysis of sample relatedness ("denovo")
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

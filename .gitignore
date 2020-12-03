@@ -14,6 +14,9 @@ output/*
 #!genomes_and_annotations/readme
 #!genomes_and_annotations/snpeffdata
 
+#documentation builds
+docs/build/*
+
 # Notes and experiments
 todo
 test.R
