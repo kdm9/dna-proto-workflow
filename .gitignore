@@ -16,6 +16,7 @@ output/*
 
 #documentation builds
 docs/build/*
+docs/build/latex/*
 
 # Notes and experiments
 todo

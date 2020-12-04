@@ -24,7 +24,7 @@ author = 'Norman Warthmann (PBGL)'
 
 # -- General configuration ---------------------------------------------------
 
-# First need to install latex: 
+# First need to install latex:
 # sudo apt-get install  texmaker gummi texlive texlive-full texlive-latex-recommended latexdraw intltool-debian lacheck libgtksourceview2.0-0 libgtksourceview2.0-common lmodern luatex po-debconf tex-common texlive-binaries texlive-extra-utils texlive-latex-base texlive-latex-base-doc texlive-luatex texlive-xetex texlive-lang-cyrillic texlive-fonts-extra texlive-science texlive-latex-extra texlive-pstricks
 
 
@@ -79,7 +79,7 @@ latex_toplevel_sectioning = 'section'
 
 # Configuration of Title Page
 latex_maketitle = r'''
-        \pagenumbering{Roman} %%% to avoid page 1 conflict with actual page 
+        \pagenumbering{Roman} %%% to avoid page 1 conflict with actual page
 
         \begin{titlepage}
             \vspace*{10mm} %%% * is used to give space from top
@@ -93,7 +93,7 @@ latex_maketitle = r'''
 
             \vspace{10mm}
             \textbf{\Large {Plant Breeding and Genetics Laboratory}}
-            
+
             \vspace{0mm}
             \textbf{\Large {FAO/IAEA Joint Division}}
 
