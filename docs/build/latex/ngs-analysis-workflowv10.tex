@@ -74,7 +74,7 @@
 
 
 \title{NGS\sphinxhyphen{}Analysis\sphinxhyphen{}workflow v.1.0}
-\date{Dec 03, 2020}
+\date{Dec 07, 2020}
 \release{}
 \author{Norman Warthmann (PBGL)}
 \newcommand{\sphinxlogo}{\vbox{}}
@@ -94,7 +94,7 @@
             \textbf{\Large {A Laboratory Manual}}
 
             \vspace{50mm}
-            \textbf{\Large {Norman Warthmann}}
+            %%% * \textbf{\Large {Norman Warthmann}}
 
             \vspace{10mm}
             \textbf{\Large {Plant Breeding and Genetics Laboratory}}
@@ -210,7 +210,7 @@ Utils/R\sphinxhyphen{}Scripts
 \capstart
 
 \noindent\sphinxincludegraphics[height=600\sphinxpxdimen]{{de-novo-02}.png}
-\caption{\sphinxstylestrong{Figure 1.} flowchart for “denovo” (click to expand)}\label{\detokenize{index:id9}}\end{figure}
+\caption{Flowchart for “denovo” (click to expand)}\label{\detokenize{index:id9}}\end{figure}
 \begin{itemize}
 \item {} 
 Invoke this option by running the rule: \sphinxcode{\sphinxupquote{rules.denovo.input}}
@@ -317,8 +317,8 @@ snpEff
 \centering
 \capstart
 
-\noindent\sphinxincludegraphics[height=600\sphinxpxdimen]{{dna-proto-workflow-varcall-11}.png}
-\caption{\sphinxstylestrong{Figure 2.} flowchart for “varcall” (click to expand)}\label{\detokenize{index:id10}}\end{figure}
+\noindent\sphinxincludegraphics[height=800\sphinxpxdimen]{{dna-proto-workflow-varcall-11}.png}
+\caption{Flowchart for “varcall” (click to expand)}\label{\detokenize{index:id10}}\end{figure}
 
 This option can be invoked in 2 ways:
 \begin{itemize}
@@ -629,7 +629,7 @@ C
 
 \subsubsection{Regions of Interest for Variant Calling}
 \label{\detokenize{index:regions-of-interest-for-variant-calling}}
-Variant calling can be restricted to particular regions of interest through \sphinxcode{\sphinxupquote{metadata/contigs\_of\_interest.bed}}: A file in bed file format listing identifier, start\sphinxhyphen{}, and end\sphinxhyphen{}positions (tab delimited, no header). This is helpful for exome capture data but also to restrict the analysis to specific chromosomes. Genome assemblies often contain the main chromosomes and in addition many orphan fragments that often are not of interest.
+Variant calling can be restricted to particular regions of interest through \sphinxcode{\sphinxupquote{metadata/contigs\_of\_interest.bed}}: A file in bed file format listing identifier, start\sphinxhyphen{}, and end\sphinxhyphen{}positions (tab delimited, no header) for all chromosomes/contigs for all provided reference genomes. This is helpful for exome capture data but also to restrict the analysis to specific chromosomes. Genome assemblies often contain the main chromosomes and in addition many orphan fragments that often are not of interest. We recommend to always have a \sphinxcode{\sphinxupquote{contigs\_of\_interest.bed}} file. It will need to contain \sphinxstylestrong{all} chromosome/contig names for \sphinxstylestrong{all} reference genomes in use! Use the chromosome/contig names from the corresponding .fai file for the reference genome assemblies.
 Below example will restrict variant calling to the 11 chromosomes plus the chloroplast of cowpea. The hundreds of additional contigs in the cowpea reference genome are available for read mapping, but variants will not be called for them and their variants will subsequently not be present in the bcf/vcf files. Note that lines starting with ‘\#’ will be disregarded.
 
 Example \sphinxcode{\sphinxupquote{contigs\_of\_interest.bed}} file:
@@ -785,11 +785,6 @@ For loading into IGV, use the In/Del realigned BAM file in \sphinxcode{\sphinxup
 \subsection{Contributors}
 \label{\detokenize{index:contributors}}
 This workflow was developed by Norman Warthmann of the Plant Breeding and Genetics Laboratory of the FAO/IAEA Joint Division (PBGL), with important contributions from Kevin D Murray (Australian National University) and Marcos Conde, PBGL. The documentation was written by Norman Warthmann with contributions from Anibal Morales, PBGL.
-
-
-\subsection{Citing}
-\label{\detokenize{index:citing}}
-When publishing results obtained using this workflow please cite the link to the original github repository specifying the release.
 
 
 \subsection{Reproducibility}

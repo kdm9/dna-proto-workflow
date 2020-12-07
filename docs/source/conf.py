@@ -89,7 +89,7 @@ latex_maketitle = r'''
             \textbf{\Large {A Laboratory Manual}}
 
             \vspace{50mm}
-            \textbf{\Large {Norman Warthmann}}
+            %%% * \textbf{\Large {Norman Warthmann}}
 
             \vspace{10mm}
             \textbf{\Large {Plant Breeding and Genetics Laboratory}}

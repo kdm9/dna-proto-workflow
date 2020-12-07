@@ -62,7 +62,7 @@ Choosing this option will conduct a reference-free comparison of *samples* based
    :height: 600px
    :align: center
 
-   **Figure 1.** flowchart for "denovo" (click to expand)
+   Flowchart for "denovo" (click to expand)
 
 
 * Invoke this option by running the rule: ``rules.denovo.input``
@@ -96,10 +96,10 @@ The full workflow for this use case consists of the following steps:
 
 .. figure:: ../images/dna-proto-workflow-varcall-11.png
    :alt: dna-proto-workflow flowchart
-   :height: 600px
+   :height: 800px
    :align: center
 
-   **Figure 2.** flowchart for "varcall" (click to expand)
+   Flowchart for "varcall" (click to expand)
 
 
 This option can be invoked in 2 ways:
@@ -297,7 +297,7 @@ Example ``sample2runlib.csv`` file:
 Regions of Interest for Variant Calling
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Variant calling can be restricted to particular regions of interest through ``metadata/contigs_of_interest.bed``: A file in bed file format listing identifier, start-, and end-positions (tab delimited, no header). This is helpful for exome capture data but also to restrict the analysis to specific chromosomes. Genome assemblies often contain the main chromosomes and in addition many orphan fragments that often are not of interest.
+Variant calling can be restricted to particular regions of interest through ``metadata/contigs_of_interest.bed``: A file in bed file format listing identifier, start-, and end-positions (tab delimited, no header) for all chromosomes/contigs for all provided reference genomes. This is helpful for exome capture data but also to restrict the analysis to specific chromosomes. Genome assemblies often contain the main chromosomes and in addition many orphan fragments that often are not of interest. We recommend to always have a ``contigs_of_interest.bed`` file. It will need to contain **all** chromosome/contig names for **all** reference genomes in use! Use the chromosome/contig names from the corresponding .fai file for the reference genome assemblies.  
 Below example will restrict variant calling to the 11 chromosomes plus the chloroplast of cowpea. The hundreds of additional contigs in the cowpea reference genome are available for read mapping, but variants will not be called for them and their variants will subsequently not be present in the bcf/vcf files. Note that lines starting with ‘#’ will be disregarded.
 
 Example ``contigs_of_interest.bed`` file:
@@ -460,10 +460,11 @@ Contributors
 
 This workflow was developed by Norman Warthmann of the Plant Breeding and Genetics Laboratory of the FAO/IAEA Joint Division (PBGL), with important contributions from Kevin D Murray (Australian National University) and Marcos Conde, PBGL. The documentation was written by Norman Warthmann with contributions from Anibal Morales, PBGL.
 
-Citing
-^^^^^^
+..
+  Citing
+  ^^^^^^
 
-When publishing results obtained using this workflow please cite the link to the original github repository specifying the release.
+  When publishing results obtained using this workflow please cite the link to the original github repository specifying the release.
 
 
 Reproducibility

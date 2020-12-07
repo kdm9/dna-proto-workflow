@@ -17,8 +17,8 @@ Mutant-Analysis-workflow - Documentation
   <br/>
 
 
-Overview PBGL's Mutant-Analysis-workflow
-----------------------------------------
+PBGL-NGS-Analysis-workflow - Overview
+--------------------------------------
 
 This collection of Snakemake rules constitutes a workflow for the analysis of high-throughput sequencing projects. We use it mostly for genome re-sequencing data produced with Illumina-type sequencing instruments.
 For this particular workflow we distinguish two different use cases: **denovo** and **varcall**. The workflow is designed to run the entire analyses automatically.
@@ -62,7 +62,7 @@ Choosing this option will conduct a reference-free comparison of *samples* based
    :height: 600px
    :align: center
 
-   **Figure 1.** flowchart for "denovo" (click to expand)
+   Flowchart for "denovo" (click to expand)
 
 
 * Invoke this option by running the rule: ``rules.denovo.input``
@@ -96,10 +96,10 @@ The full workflow for this use case consists of the following steps:
 
 .. figure:: ../images/dna-proto-workflow-varcall-11.png
    :alt: dna-proto-workflow flowchart
-   :height: 600px
+   :height: 800px
    :align: center
 
-   **Figure 2.** flowchart for "varcall" (click to expand)
+   Flowchart for "varcall" (click to expand)
 
 
 This option can be invoked in 2 ways:
@@ -140,8 +140,8 @@ Software Dependencies
 We recommend running the workflow in its own ``conda environment`` on a Linux Server. Dependencies are listed in ``envs/condaenv.yml`` and ``envs/additional.yml``. A brief explanation how to use these files to generate the conda environment is further below. For comprehensive explanation please consult the `conda <https://docs.conda.io/projects/conda/en/latest/user-guide/getting-started.html>`_ documentation. For software that is not available through conda on some important platforms we make the specific binaries available in ``envs/``; currently mainly abra2.jar.
 
 
-Workflow Use in a Nutshell
---------------------------
+Workflow Use in a Nutshell - Checklist
+--------------------------------------
 
 Steps
 ^^^^^
@@ -297,7 +297,7 @@ Example ``sample2runlib.csv`` file:
 Regions of Interest for Variant Calling
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Variant calling can be restricted to particular regions of interest through ``metadata/contigs_of_interest.bed``: A file in bed file format listing identifier, start-, and end-positions (tab delimited, no header). This is helpful for exome capture data but also to restrict the analysis to specific chromosomes. Genome assemblies often contain the main chromosomes and in addition many orphan fragments that often are not of interest.
+Variant calling can be restricted to particular regions of interest through ``metadata/contigs_of_interest.bed``: A file in bed file format listing identifier, start-, and end-positions (tab delimited, no header) for all chromosomes/contigs for all provided reference genomes. This is helpful for exome capture data but also to restrict the analysis to specific chromosomes. Genome assemblies often contain the main chromosomes and in addition many orphan fragments that often are not of interest. We recommend to always have a ``contigs_of_interest.bed`` file. It will need to contain **all** chromosome/contig names for **all** reference genomes in use! Use the chromosome/contig names from the corresponding .fai file for the reference genome assemblies.  
 Below example will restrict variant calling to the 11 chromosomes plus the chloroplast of cowpea. The hundreds of additional contigs in the cowpea reference genome are available for read mapping, but variants will not be called for them and their variants will subsequently not be present in the bcf/vcf files. Note that lines starting with ‘#’ will be disregarded.
 
 Example ``contigs_of_interest.bed`` file:
@@ -337,8 +337,8 @@ Additional Configuration
 Expert users can change the rules themselves by editing ``rules/*.rules.smk``. Use caution! We have chosen reasonable default settings and recommend modifying rules only when you know what you are doing. When allocating more cores to rules, pay attention that some rules are very memory intensive and some shell commands are piped and are in fact using more than 1 core per process.
 
 
-Running the Workflow
-~~~~~~~~~~~~~~~~~~~~
+Running the Workflow - different Workflow Use Cases
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 To run the workflow, un-comment the respective rule for the desired use case in the ``Snakefile`` and run snakemake.
 
@@ -366,8 +366,6 @@ When configuring ``config.yml``, keep in mind that configuration parameters of a
 The workflow runs on *samples* in *sets* as listed in ``samplesets/*.txt`` and defined in ``/metadata/sample2runlib.csv``. Sample names listed in ``samplesets/*.txt`` must correspond to the entries in the sample column in ``/metadata/sample2runlib.csv``.
 
 
-Configuring the different Workflow Use Cases
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 De-Novo Analysis of sample relatedness ("denovo")
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -462,16 +460,22 @@ Contributors
 
 This workflow was developed by Norman Warthmann of the Plant Breeding and Genetics Laboratory of the FAO/IAEA Joint Division (PBGL), with important contributions from Kevin D Murray (Australian National University) and Marcos Conde, PBGL. The documentation was written by Norman Warthmann with contributions from Anibal Morales, PBGL.
 
-Citing
-^^^^^^
+..
+  Citing
+  ^^^^^^
 
-When publishing results obtained using this workflow please cite the link to the original github repository specifying the release.
+  When publishing results obtained using this workflow please cite the link to the original github repository specifying the release.
 
 
 Reproducibility
 ^^^^^^^^^^^^^^^
 
 Workflows help addressing reproducibility issues. Consider making your version of the workflow, configured for your data, available upon publication of your results. Check out the `archive <https://snakemake.readthedocs.io/en/stable/snakefiles/deployment.html#sustainable-and-reproducible-archiving>`_ options of Snakemake.
+
+..
+  Disclaimer
+  ^^^^^^^^^^
+
 
 Getting Help
 ^^^^^^^^^^^^
