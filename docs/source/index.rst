@@ -151,10 +151,11 @@ Steps
 4. Provide reference genome(s) and annotation(s) in ``/genomes and annotation/``
 5. Specify the locations of input files and their meta data in ``/metadata/sample2runlib.csv``
 6. Provide lists of samples as sets to analyse in ``metadata/samplesets/``
-7. Uncomment the respective workflow option for your use case in the ``Snakefile``
-8. Configure software parameters in ``config.yml``
-9. Adapt ``snpeff.config`` (Optional in case the ``snpeff`` rule will be called)
-10. Run ``snakemake``
+7. List in ``metadata/contigs_of_interest`` the chromosome/contig regions for which variants should be called (bed format)
+8. Uncomment the respective workflow option for your use case in the ``Snakefile``
+9. Configure software parameters in ``config.yml``
+10. Adapt ``snpeff.config`` (Optional in case the ``snpeff`` rule will be called)
+11. Run ``snakemake``
 
 For standard applications no additional edits are necessary. The rules reside in ``rules/*.smk``. Most rules have explicit shell commands with transparent flag settings. Expert users can change these for additional control.
 
@@ -250,7 +251,7 @@ For building the database you will need to add the respective entry in ``snpeff.
 
 ::
 
-   $ snpEff build -c <path to snpEff.config> –gff3 <reference-genome>_snpeff
+   $ snpEff build -v -c <path to snpEff.config> –gff3 <reference-genome>_snpeff
 
 
 The target for snpEff build is the directory name only. The path to this directory (genomes_and_annotations/snpeffdata/) is specified in ``snpEff.config``. If executed from the top level workflow directory (the directory that contains the ``snpeff.config`` file), specifying the location of ``snpEff.config`` (-c) is not necessary.
@@ -297,7 +298,7 @@ Example ``sample2runlib.csv`` file:
 Regions of Interest for Variant Calling
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Variant calling can be restricted to particular regions of interest through ``metadata/contigs_of_interest.bed``: A file in bed file format listing identifier, start-, and end-positions (tab delimited, no header) for all chromosomes/contigs for all provided reference genomes. This is helpful for exome capture data but also to restrict the analysis to specific chromosomes. Genome assemblies often contain the main chromosomes and in addition many orphan fragments that often are not of interest. We recommend to always have a ``contigs_of_interest.bed`` file. It will need to contain **all** chromosome/contig names for **all** reference genomes in use! Use the chromosome/contig names from the corresponding .fai file for the reference genome assemblies.  
+Variant calling can be restricted to particular regions of interest through ``metadata/contigs_of_interest.bed``: A file in bed file format listing identifier, start-, and end-positions (tab delimited, no header) for all chromosomes/contigs for all provided reference genomes. This is helpful for exome capture data but also to restrict the analysis to specific chromosomes. Genome assemblies often contain the main chromosomes and in addition many orphan fragments that often are not of interest. We recommend to always have a ``contigs_of_interest.bed`` file. It will need to contain **all** chromosome/contig names for **all** reference genomes in use! Use the chromosome/contig names from the corresponding .fai file for the reference genome assemblies.
 Below example will restrict variant calling to the 11 chromosomes plus the chloroplast of cowpea. The hundreds of additional contigs in the cowpea reference genome are available for read mapping, but variants will not be called for them and their variants will subsequently not be present in the bcf/vcf files. Note that lines starting with ‘#’ will be disregarded.
 
 Example ``contigs_of_interest.bed`` file:
