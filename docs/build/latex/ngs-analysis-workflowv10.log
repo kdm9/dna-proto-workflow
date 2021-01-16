@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.1.9)  7 DEC 2020 14:05
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.1.9)  16 JAN 2021 12:09
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1165,39 +1165,39 @@ Package pdftex.def Info: dna-proto-workflow-varcall-11.png used on input line 3
 ] [8
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 524--526
+Underfull \hbox (badness 10000) in paragraph at lines 534--536
 []\T1/ptm/m/n/10 The tar-get for snpEff build is the di-rec-tory name only. The
  path to this di-rec-tory
  []
 
 [9] [10]
 LaTeX Font Info:    Font shape `T1/pcr/m/it' in size <9> not available
-(Font)              Font shape `T1/pcr/m/sl' tried instead on input line 682.
+(Font)              Font shape `T1/pcr/m/sl' tried instead on input line 659.
  [11] [12] [13] [14
 
 ] (./ngs-analysis-workflowv10.ind)
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 803.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 813.
  [15
 
 ]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 803.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 813.
 
 (./ngs-analysis-workflowv10.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 803.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 803.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 813.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 813.
 Package rerunfilecheck Info: File `ngs-analysis-workflowv10.out' has not change
 d.
 (rerunfilecheck)             Checksum: A966E160F668566D4147F649F8BF8944;6951.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 803.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 813.
  ) 
 Here is how much of TeX's memory you used:
- 13656 strings out of 493014
- 190377 string characters out of 6133352
+ 13658 strings out of 493014
+ 190392 string characters out of 6133352
  303555 words of memory out of 5000000
  16840 multiletter control sequences out of 15000+600000
  50553 words of font info for 60 fonts, out of 8000000 for 9000
  1142 hyphenation exceptions out of 8191
- 37i,11n,45p,1080b,492s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 37i,11n,45p,1366b,492s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
 exlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/local/tex
 live/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/local/texli
@@ -1208,10 +1208,10 @@ ts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/2016/texmf-dist/fonts/type
 1/urw/times/utmb8a.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/urw/time
 s/utmr8a.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/urw/times/utmri8a.
 pfb>
-Output written on ngs-analysis-workflowv10.pdf (16 pages, 611346 bytes).
+Output written on ngs-analysis-workflowv10.pdf (16 pages, 613019 bytes).
 PDF statistics:
- 319 PDF objects out of 1000 (max. 8388607)
- 280 compressed objects within 3 object streams
- 61 named destinations out of 1000 (max. 500000)
+ 322 PDF objects out of 1000 (max. 8388607)
+ 283 compressed objects within 3 object streams
+ 63 named destinations out of 1000 (max. 500000)
  279 words of extra memory for PDF output out of 10000 (max. 10000000)
 

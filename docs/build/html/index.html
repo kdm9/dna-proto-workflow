@@ -251,7 +251,7 @@ For details, please consult the <a class="reference external" href="https://snak
 </tr>
 </tbody>
 </table>
-<div class="figure align-center" id="id9">
+<div class="figure align-center" id="id10">
 <a class="reference internal image-reference" href="_images/de-novo-02.png"><img alt="dna-proto-workflow flowchart" src="_images/de-novo-02.png" style="height: 600px;" /></a>
 <p class="caption"><span class="caption-text">Flowchart for “denovo” (click to expand)</span></p>
 </div>
@@ -320,7 +320,7 @@ abra2</p></td>
 </tr>
 </tbody>
 </table>
-<div class="figure align-center" id="id10">
+<div class="figure align-center" id="id11">
 <a class="reference internal image-reference" href="_images/dna-proto-workflow-varcall-11.png"><img alt="dna-proto-workflow flowchart" src="_images/dna-proto-workflow-varcall-11.png" style="height: 800px;" /></a>
 <p class="caption"><span class="caption-text">Flowchart for “varcall” (click to expand)</span></p>
 </div>
@@ -385,12 +385,16 @@ abra2</p></td>
 <li><p>Provide reference genome(s) and annotation(s) in <code class="docutils literal notranslate"><span class="pre">/genomes</span> <span class="pre">and</span> <span class="pre">annotation/</span></code></p></li>
 <li><p>Specify the locations of input files and their meta data in <code class="docutils literal notranslate"><span class="pre">/metadata/sample2runlib.csv</span></code></p></li>
 <li><p>Provide lists of samples as sets to analyse in <code class="docutils literal notranslate"><span class="pre">metadata/samplesets/</span></code></p></li>
+<li><p>List in <code class="docutils literal notranslate"><span class="pre">metadata/contigs_of_interest</span></code> the chromosome/contig regions for which variants should be called (bed format)</p></li>
 <li><p>Uncomment the respective workflow option for your use case in the <code class="docutils literal notranslate"><span class="pre">Snakefile</span></code></p></li>
 <li><p>Configure software parameters in <code class="docutils literal notranslate"><span class="pre">config.yml</span></code></p></li>
 <li><p>Adapt <code class="docutils literal notranslate"><span class="pre">snpeff.config</span></code> (Optional in case the <code class="docutils literal notranslate"><span class="pre">snpeff</span></code> rule will be called)</p></li>
 <li><p>Run <code class="docutils literal notranslate"><span class="pre">snakemake</span></code></p></li>
 </ol>
 <p>For standard applications no additional edits are necessary. The rules reside in <code class="docutils literal notranslate"><span class="pre">rules/*.smk</span></code>. Most rules have explicit shell commands with transparent flag settings. Expert users can change these for additional control.</p>
+<ol class="arabic simple" start="12">
+<li><p>After the successful snakemake run, <a class="reference external" href="https://snakemake.readthedocs.io/en/stable/snakefiles/deployment.html#sustainable-and-reproducible-archiving">archive</a> your workflow and the raw data to enable reproducing your work.</p></li>
+</ol>
 </div>
 </div>
 <div class="section" id="workflow-use-in-detail">
@@ -462,7 +466,7 @@ $ ngm -r &lt;reference-genome.fa&gt;
 </pre></div>
 </div>
 <p>For building the database you will need to add the respective entry in <code class="docutils literal notranslate"><span class="pre">snpeff.config</span></code> and execute:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ snpEff build -c &lt;path to snpEff.config&gt; –gff3 &lt;reference-genome&gt;_snpeff
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ snpEff build -v -c &lt;path to snpEff.config&gt; –gff3 &lt;reference-genome&gt;_snpeff
 </pre></div>
 </div>
 <p>The target for snpEff build is the directory name only. The path to this directory (genomes_and_annotations/snpeffdata/) is specified in <code class="docutils literal notranslate"><span class="pre">snpEff.config</span></code>. If executed from the top level workflow directory (the directory that contains the <code class="docutils literal notranslate"><span class="pre">snpeff.config</span></code> file), specifying the location of <code class="docutils literal notranslate"><span class="pre">snpEff.config</span></code> (-c) is not necessary.
@@ -546,8 +550,8 @@ The entries in columns <em>run</em> and <em>library</em> are together used as th
 </div>
 <div class="section" id="regions-of-interest-for-variant-calling">
 <h4>Regions of Interest for Variant Calling</h4>
-<p>Variant calling can be restricted to particular regions of interest through <code class="docutils literal notranslate"><span class="pre">metadata/contigs_of_interest.bed</span></code>: A file in bed file format listing identifier, start-, and end-positions (tab delimited, no header) for all chromosomes/contigs for all provided reference genomes. This is helpful for exome capture data but also to restrict the analysis to specific chromosomes. Genome assemblies often contain the main chromosomes and in addition many orphan fragments that often are not of interest. We recommend to always have a <code class="docutils literal notranslate"><span class="pre">contigs_of_interest.bed</span></code> file. It will need to contain <strong>all</strong> chromosome/contig names for <strong>all</strong> reference genomes in use! Use the chromosome/contig names from the corresponding .fai file for the reference genome assemblies.
-Below example will restrict variant calling to the 11 chromosomes plus the chloroplast of cowpea. The hundreds of additional contigs in the cowpea reference genome are available for read mapping, but variants will not be called for them and their variants will subsequently not be present in the bcf/vcf files. Note that lines starting with ‘#’ will be disregarded.</p>
+<p>Variant calling can be restricted to particular regions of interest through <code class="docutils literal notranslate"><span class="pre">metadata/contigs_of_interest.bed</span></code>: A file in bed file format listing identifier, start-, and end-positions (tab delimited, no header) for all chromosomes/contigs for all provided reference genomes. This is helpful for exome capture data but also to restrict the analysis to specific chromosomes. In addition to the main chromosomes, genome assemblies often comprise many orphan fragments that often are not of interest or even congest the output. While the workflow will attempt to create the file if not present, we recommend to always define a <code class="docutils literal notranslate"><span class="pre">contigs_of_interest.bed</span></code> file. This one files serves <strong>all</strong> reference genomes in use and hence can/must contain <strong>all</strong> chromosome/contig names of interest. Obviously, it must be the exact names as in the assembly. The correct chromosome/contig names and their lengths can be conveniently extracted from the corresponding .fai file for the reference genome assemblies. Note that the analysis restriction to regions in <code class="docutils literal notranslate"><span class="pre">metadata/contigs_of_interest.bed</span></code> only concerns the variant calling, not the read mapping.
+Below example will restrict variant calling to the 11 chromosomes of cowpea. The hundreds of additional contigs that are present in the cowpea reference genome assembly are available for read mapping, but variants will not be called for them and their variants will subsequently not be present in the bcf/vcf files. Note that lines starting with ‘#’ will be disregarded. So in this case we skip the chloroplast (NC_018051.1).</p>
 <p>Example <code class="docutils literal notranslate"><span class="pre">contigs_of_interest.bed</span></code> file:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">NC_040279</span><span class="o">.</span><span class="mi">1</span> <span class="mi">0</span> <span class="mi">42129361</span>
 <span class="n">NC_040280</span><span class="o">.</span><span class="mi">1</span> <span class="mi">0</span> <span class="mi">33908088</span>
@@ -560,7 +564,7 @@ Below example will restrict variant calling to the 11 chromosomes plus the chlor
 <span class="n">NC_040287</span><span class="o">.</span><span class="mi">1</span> <span class="mi">0</span> <span class="mi">43933251</span>
 <span class="n">NC_040288</span><span class="o">.</span><span class="mi">1</span> <span class="mi">0</span> <span class="mi">41327797</span>
 <span class="n">NC_040289</span><span class="o">.</span><span class="mi">1</span> <span class="mi">0</span> <span class="mi">41684185</span>
-<span class="n">NC_018051</span><span class="o">.</span><span class="mi">1</span> <span class="mi">0</span> <span class="mi">152415</span>
+<span class="c1">#NC_018051.1 0 152415</span>
 </pre></div>
 </div>
 </div>
@@ -673,7 +677,7 @@ For loading into IGV, use the In/Del realigned BAM file in <code class="docutils
 </div>
 <div class="section" id="reproducibility">
 <h3>Reproducibility</h3>
-<p>Workflows help addressing reproducibility issues. Consider making your version of the workflow, configured for your data, available upon publication of your results. Check out the <a class="reference external" href="https://snakemake.readthedocs.io/en/stable/snakefiles/deployment.html#sustainable-and-reproducible-archiving">archive</a> options of Snakemake.</p>
+<p>Workflows help addressing the reproducibility issue. Consider making your version of the workflow, configured for your data, available upon publication of your results. Check out the <a class="reference external" href="https://snakemake.readthedocs.io/en/stable/snakefiles/deployment.html#sustainable-and-reproducible-archiving">archive</a> options of Snakemake.</p>
 </div>
 <div class="section" id="getting-help">
 <h3>Getting Help</h3>

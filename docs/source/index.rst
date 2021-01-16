@@ -159,6 +159,8 @@ Steps
 
 For standard applications no additional edits are necessary. The rules reside in ``rules/*.smk``. Most rules have explicit shell commands with transparent flag settings. Expert users can change these for additional control.
 
+12. After the successful snakemake run, `archive <https://snakemake.readthedocs.io/en/stable/snakefiles/deployment.html#sustainable-and-reproducible-archiving>`_ your workflow and the raw data to enable reproducing your work.
+
 
 Workflow Use in Detail
 ----------------------
@@ -298,8 +300,8 @@ Example ``sample2runlib.csv`` file:
 Regions of Interest for Variant Calling
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Variant calling can be restricted to particular regions of interest through ``metadata/contigs_of_interest.bed``: A file in bed file format listing identifier, start-, and end-positions (tab delimited, no header) for all chromosomes/contigs for all provided reference genomes. This is helpful for exome capture data but also to restrict the analysis to specific chromosomes. Genome assemblies often contain the main chromosomes and in addition many orphan fragments that often are not of interest. We recommend to always have a ``contigs_of_interest.bed`` file. It will need to contain **all** chromosome/contig names for **all** reference genomes in use! Use the chromosome/contig names from the corresponding .fai file for the reference genome assemblies.
-Below example will restrict variant calling to the 11 chromosomes plus the chloroplast of cowpea. The hundreds of additional contigs in the cowpea reference genome are available for read mapping, but variants will not be called for them and their variants will subsequently not be present in the bcf/vcf files. Note that lines starting with ‘#’ will be disregarded.
+Variant calling can be restricted to particular regions of interest through ``metadata/contigs_of_interest.bed``: A file in bed file format listing identifier, start-, and end-positions (tab delimited, no header) for all chromosomes/contigs for all provided reference genomes. This is helpful for exome capture data but also to restrict the analysis to specific chromosomes. In addition to the main chromosomes, genome assemblies often comprise many orphan fragments that often are not of interest or even congest the output. While the workflow will attempt to create the file if not present, we recommend to always define a ``contigs_of_interest.bed`` file. This one files serves **all** reference genomes in use and hence can/must contain **all** chromosome/contig names of interest. Obviously, it must be the exact names as in the assembly. The correct chromosome/contig names and their lengths can be conveniently extracted from the corresponding .fai file for the reference genome assemblies. Note that the analysis restriction to regions in ``metadata/contigs_of_interest.bed`` only concerns the variant calling, not the read mapping.
+Below example will restrict variant calling to the 11 chromosomes of cowpea. The hundreds of additional contigs that are present in the cowpea reference genome assembly are available for read mapping, but variants will not be called for them and their variants will subsequently not be present in the bcf/vcf files. Note that lines starting with ‘#’ will be disregarded. So in this case we skip the chloroplast (NC_018051.1).
 
 Example ``contigs_of_interest.bed`` file:
 
@@ -316,7 +318,7 @@ Example ``contigs_of_interest.bed`` file:
    NC_040287.1 0 43933251
    NC_040288.1 0 41327797
    NC_040289.1 0 41684185
-   NC_018051.1 0 152415
+   #NC_018051.1 0 152415
 
 
 Workflow Configuration
@@ -471,7 +473,7 @@ This workflow was developed by Norman Warthmann of the Plant Breeding and Geneti
 Reproducibility
 ^^^^^^^^^^^^^^^
 
-Workflows help addressing reproducibility issues. Consider making your version of the workflow, configured for your data, available upon publication of your results. Check out the `archive <https://snakemake.readthedocs.io/en/stable/snakefiles/deployment.html#sustainable-and-reproducible-archiving>`_ options of Snakemake.
+Workflows help addressing the reproducibility issue. Consider making your version of the workflow, configured for your data, available upon publication of your results. Check out the `archive <https://snakemake.readthedocs.io/en/stable/snakefiles/deployment.html#sustainable-and-reproducible-archiving>`_ options of Snakemake.
 
 ..
   Disclaimer
