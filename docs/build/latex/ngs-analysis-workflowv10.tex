@@ -74,7 +74,7 @@
 
 
 \title{NGS\sphinxhyphen{}Analysis\sphinxhyphen{}workflow v.1.0}
-\date{Jan 16, 2021}
+\date{Jan 21, 2021}
 \release{}
 \author{Norman Warthmann (PBGL)}
 \newcommand{\sphinxlogo}{\vbox{}}
@@ -406,7 +406,7 @@ Create a new github repository in your github account using this workflow \sphin
 Create and activate the conda environment
 
 \item {} 
-Provide reference genome(s) and annotation(s) in \sphinxcode{\sphinxupquote{/genomes and annotation/}}
+Provide reference genome(s) and annotation(s) in \sphinxcode{\sphinxupquote{/genomes\_and\_annotations/}}
 
 \item {} 
 Specify the locations of input files and their meta data in \sphinxcode{\sphinxupquote{/metadata/sample2runlib.csv}}
@@ -698,7 +698,7 @@ For details on commandline options for snakemake please consult the \sphinxhref{
 A rule that encounters missing input files will invoke the respective upstream rule(s). E.g., when \sphinxcode{\sphinxupquote{rules.annotate.input}} is uncommented and snakemake is run for the first time, the entire workflow from \sphinxcode{\sphinxupquote{readqc}} (= adapter and quality clipping), \sphinxcode{\sphinxupquote{align}} (= read alignments, duplicate marking, indel realignment), \sphinxcode{\sphinxupquote{varcall}} (= variant calling), and \sphinxcode{\sphinxupquote{annotate}} (= variant functional annotation) will run in one go.
 In case no \sphinxcode{\sphinxupquote{snpeff}} database is supplied, then rule \sphinxcode{\sphinxupquote{rules.annotate.input}} cannot be run. Use \sphinxcode{\sphinxupquote{rules.varcall.input}} instead.
 
-When configuring \sphinxcode{\sphinxupquote{config.yml}}, keep in mind that configuration parameters of a downstream rule take precedence because parameters have to propagate upstream. I.e., When running \sphinxcode{\sphinxupquote{varcall}}, the user must set alignment parameters in the \sphinxcode{\sphinxupquote{varcall:}} section; same for \sphinxcode{\sphinxupquote{annotate:}} parameters. They must be set under \sphinxcode{\sphinxupquote{snpeff:}}.
+When configuring \sphinxcode{\sphinxupquote{config.yml}}, keep in mind that configuration parameters of a downstream rule take precedence because parameters have to propagate upstream. I.e., when running \sphinxcode{\sphinxupquote{varcall}}, the user must set alignment parameters in the \sphinxcode{\sphinxupquote{varcall:}} section; same for \sphinxcode{\sphinxupquote{annotate:}} parameters. They must be set under \sphinxcode{\sphinxupquote{snpeff:}}.
 
 \textgreater{}NOTE: Adjusting presumed upstream parameters, e.g., under \sphinxcode{\sphinxupquote{align:}} will not have the intended effect. Only in special circumstances will the \sphinxcode{\sphinxupquote{rules.align.input}} be run by itself and only then will you have to adjust parameters in the \sphinxcode{\sphinxupquote{align:}} section.
 

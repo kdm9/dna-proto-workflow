@@ -148,7 +148,7 @@ Steps
 1. Create a new github repository in your github account using this workflow `as a template <https://help.github.com/en/articles/creating-a-repository-from-a-template>`_
 2. `Clone <https://help.github.com/en/articles/cloning-a-repository>`_ your newly created repository to your local system where you want to perform the analysis
 3. Create and activate the conda environment
-4. Provide reference genome(s) and annotation(s) in ``/genomes and annotation/``
+4. Provide reference genome(s) and annotation(s) in ``/genomes_and_annotations/``
 5. Specify the locations of input files and their meta data in ``/metadata/sample2runlib.csv``
 6. Provide lists of samples as sets to analyse in ``metadata/samplesets/``
 7. List in ``metadata/contigs_of_interest`` the chromosome/contig regions for which variants should be called (bed format)
@@ -362,7 +362,7 @@ For details on commandline options for snakemake please consult the `Snakemake <
 A rule that encounters missing input files will invoke the respective upstream rule(s). E.g., when ``rules.annotate.input`` is uncommented and snakemake is run for the first time, the entire workflow from ``readqc`` (= adapter and quality clipping), ``align`` (= read alignments, duplicate marking, indel realignment), ``varcall`` (= variant calling), and ``annotate`` (= variant functional annotation) will run in one go.
 In case no ``snpeff`` database is supplied, then rule ``rules.annotate.input`` cannot be run. Use ``rules.varcall.input`` instead.
 
-When configuring ``config.yml``, keep in mind that configuration parameters of a downstream rule take precedence because parameters have to propagate upstream. I.e., When running ``varcall``, the user must set alignment parameters in the ``varcall:`` section; same for ``annotate:`` parameters. They must be set under ``snpeff:``.
+When configuring ``config.yml``, keep in mind that configuration parameters of a downstream rule take precedence because parameters have to propagate upstream. I.e., when running ``varcall``, the user must set alignment parameters in the ``varcall:`` section; same for ``annotate:`` parameters. They must be set under ``snpeff:``.
 
 >NOTE: Adjusting presumed upstream parameters, e.g., under ``align:`` will not have the intended effect. Only in special circumstances will the ``rules.align.input`` be run by itself and only then will you have to adjust parameters in the ``align:`` section.
 
