@@ -22,7 +22,7 @@ If a genome annotation is available, variants are annotated with [snpEff](https:
 5.  **Run** the workflow
 6.  [**Archive** your workflow](https://snakemake.readthedocs.io/en/stable/snakefiles/deployment.html#sustainable-and-reproducible-archiving) for documenting your work and easy reproduction.
 
-Some pointers for **setup**, **configuring** and **running** the workflow are below, for details please consult the [technical documentation](https://dna-proto-workflow-master.readthedocs.io/en/latest/).
+Some pointers for **setup**, **configuring**, and **running** the workflow are below, for details please consult the [technical documentation](https://dna-proto-workflow-master.readthedocs.io/en/latest/).
 
 ----
 
