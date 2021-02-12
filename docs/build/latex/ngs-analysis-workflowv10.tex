@@ -317,7 +317,7 @@ snpEff
 \centering
 \capstart
 
-\noindent\sphinxincludegraphics[height=800\sphinxpxdimen]{{dna-proto-workflow-varcall-11}.png}
+\noindent\sphinxincludegraphics[height=800\sphinxpxdimen]{{varcall_05}.png}
 \caption{Flowchart for “varcall” (click to expand)}\label{\detokenize{index:id11}}\end{figure}
 
 This option can be invoked in 2 ways:
@@ -409,7 +409,7 @@ Create and activate the conda environment
 Provide reference genome(s) and annotation(s) in \sphinxcode{\sphinxupquote{/genomes\_and\_annotations/}}
 
 \item {} 
-List in \sphinxcode{\sphinxupquote{metadata/contigs\_of\_interest}} the chromosome/contig regions for which variants should be called (bed format)
+List the chromosome/contig regions for which variants should be called in \sphinxcode{\sphinxupquote{metadata/contigs\_of\_interest.bed}} (bed file format)
 
 \item {} 
 Specify the locations of input files and their meta data in \sphinxcode{\sphinxupquote{/metadata/sample2runlib.csv}}
@@ -443,10 +443,14 @@ After the successful snakemake run, \sphinxhref{https://snakemake.readthedocs.io
 
 \section{Workflow Use in Detail}
 \label{\detokenize{index:workflow-use-in-detail}}
+We recommend using Linux, managing the software dependency trough conda and running the workflow in a dedicated conda virtual environment. The virtual environment is created once and all required software is available in any shell/terminal in which the environment has been “activated”.
+
 
 \subsection{Creating the Virtual Environment (conda)}
-\label{\detokenize{index:creating-the-virtual-environment-conda}}
-We recommend running the workflow in its own conda environment on a Linux machine. The files \sphinxcode{\sphinxupquote{envs/condaenv.yml}} and \sphinxcode{\sphinxupquote{envs/additional.yml}} can directly be used to create the environment and install dependencies like so (“dna\sphinxhyphen{}proto” is an example, feel free to chose your own):
+\label{\detokenize{index:creating-the-virtual-environment-conda}}\begin{quote}
+
+The files \sphinxcode{\sphinxupquote{envs/condaenv.yml}} and \sphinxcode{\sphinxupquote{envs/additional.yml}} can directly be used to create the environment and install dependencies like so (“dna\sphinxhyphen{}proto” is an example, feel free to chose your own environment name):
+\end{quote}
 
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
 \PYGZdl{} conda create \PYGZhy{}\PYGZhy{}name dna\PYGZhy{}proto
@@ -478,10 +482,16 @@ channels:
 
 The required channels are listed in the respective \sphinxcode{\sphinxupquote{*.yml}} files. Configuring channels has the pitfall of rare ambiguities and collisions. Please consult the \sphinxhref{https://docs.conda.io/projects/conda/en/latest/user-guide/getting-started.html}{conda} documentation for “managing channels”.
 
+Once set up, activate your conda environment
+
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} conda activate dna\PYGZhy{}proto
+\end{sphinxVerbatim}
+
 
 \subsection{Reference Genome(s)}
 \label{\detokenize{index:reference-genome-s}}
-The workflow will look for the reference genome(s) and associated files in \sphinxcode{\sphinxupquote{genomes\_and\_annotations/}}. We provide an example directory tree in \sphinxcode{\sphinxupquote{genomes\_annotations/readme}}. We recommend creating a separate directory for each reference genome. They can be soft links. Each reference genome directory must contain the necessary assembly file (.fa or .fna) and the associated files required by the aligners. Generate those files in this directory from the assembly file (fasta: .fa or .fna) like so:
+The workflow will look for the reference genome(s) and associated files in \sphinxcode{\sphinxupquote{genomes\_and\_annotations/}}. We provide an example directory tree in \sphinxcode{\sphinxupquote{genomes\_annotations/readme}}. We recommend creating a separate directory for each reference genome. They can be soft links. Each reference genome directory must contain the necessary assembly file (.fa or .fna) and the associated files required by the aligners. Generate those files in this directory from the assembly file (fasta: .fa or .fna) like so (ensure your conda environment is activated!):
 
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
 \PYGZdl{} samtools faidx \PYGZlt{}reference\PYGZhy{}genome.fa\PYGZgt{}
@@ -639,7 +649,7 @@ C
 
 \subsubsection{Regions of Interest for Variant Calling}
 \label{\detokenize{index:regions-of-interest-for-variant-calling}}
-Variant calling can be restricted to particular regions of interest through \sphinxcode{\sphinxupquote{metadata/contigs\_of\_interest.bed}}: A file in bed file format listing identifier, start\sphinxhyphen{}, and end\sphinxhyphen{}positions (tab delimited, no header) for all chromosomes/contigs for all provided reference genomes. This is helpful for exome capture data but also to restrict the analysis to specific chromosomes. In addition to the main chromosomes, genome assemblies often comprise many orphan fragments that often are not of interest or even congest the output. While the workflow will attempt to create the file if not present, we recommend to always define a \sphinxcode{\sphinxupquote{contigs\_of\_interest.bed}} file. This one files serves \sphinxstylestrong{all} reference genomes in use and hence can/must contain \sphinxstylestrong{all} chromosome/contig names of interest. Obviously, it must be the exact names as in the assembly. The correct chromosome/contig names and their lengths can be conveniently extracted from the corresponding .fai file for the reference genome assemblies. Note that the analysis restriction to regions in \sphinxcode{\sphinxupquote{metadata/contigs\_of\_interest.bed}} only concerns the variant calling, not the read mapping.
+Variant calling can be restricted to particular regions of interest through \sphinxcode{\sphinxupquote{metadata/contigs\_of\_interest.bed}}: A file in bed file format listing identifier, start\sphinxhyphen{}, and end\sphinxhyphen{}positions (tab delimited, no header) for all chromosomes/contigs for all provided reference genomes. This is helpful for exome capture data but also to restrict the analysis to specific chromosomes. In addition to the main chromosomes, genome assemblies often comprise many orphan fragments that often are not of interest or even congest the output. While the workflow will attempt to create the file if not present, we recommend to always define a \sphinxcode{\sphinxupquote{contigs\_of\_interest.bed}} file. This one files serves \sphinxstylestrong{all} reference genomes in use and hence can/must contain \sphinxstylestrong{all} chromosome/contig names of interest. Obviously, it must be the exact names as in the assembly. The correct chromosome/contig names and their lengths can be conveniently extracted from the corresponding \sphinxcode{\sphinxupquote{.fai}} file for the reference genome assemblies. Note that the analysis restriction to regions in \sphinxcode{\sphinxupquote{metadata/contigs\_of\_interest.bed}} only concerns the variant calling, not the read mapping.
 Below example will restrict variant calling to the 11 chromosomes of cowpea. The hundreds of additional contigs that are present in the cowpea reference genome assembly are available for read mapping, but variants will not be called for them and their variants will subsequently not be present in the bcf/vcf files. Note that lines starting with ‘\#’ will be disregarded. So in this case we skip the chloroplast (NC\_018051.1).
 
 Example \sphinxcode{\sphinxupquote{contigs\_of\_interest.bed}} file:

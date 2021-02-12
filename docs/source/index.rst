@@ -94,7 +94,7 @@ The full workflow for this use case consists of the following steps:
 ===== ======================================= ======== ========================
 
 
-.. figure:: ../images/dna-proto-workflow-varcall-11.png
+.. figure:: ../images/varcall_05.png
    :alt: dna-proto-workflow flowchart
    :height: 800px
    :align: center
@@ -149,7 +149,7 @@ Steps
 2. `Clone <https://help.github.com/en/articles/cloning-a-repository>`_ your newly created repository to your local system where you want to perform the analysis
 3. Create and activate the conda environment
 4. Provide reference genome(s) and annotation(s) in ``/genomes_and_annotations/``
-5. List in ``metadata/contigs_of_interest`` the chromosome/contig regions for which variants should be called (bed format)
+5. List the chromosome/contig regions for which variants should be called in ``metadata/contigs_of_interest.bed`` (bed file format)
 6. Specify the locations of input files and their meta data in ``/metadata/sample2runlib.csv``
 7. Provide lists of samples as sets to analyse in ``metadata/samplesets/``
 8. Uncomment the respective workflow option for your use case in the ``Snakefile``
@@ -165,9 +165,12 @@ For standard applications no additional edits are necessary. The rules reside in
 Workflow Use in Detail
 ----------------------
 
+We recommend using Linux, managing the software dependency trough conda and running the workflow in a dedicated conda virtual environment. The virtual environment is created once and all required software is available in any shell/terminal in which the environment has been "activated".
+
+
 Creating the Virtual Environment (conda)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-We recommend running the workflow in its own conda environment on a Linux machine. The files ``envs/condaenv.yml`` and ``envs/additional.yml`` can directly be used to create the environment and install dependencies like so ("dna-proto" is an example, feel free to chose your own):
+ The files ``envs/condaenv.yml`` and ``envs/additional.yml`` can directly be used to create the environment and install dependencies like so ("dna-proto" is an example, feel free to chose your own environment name):
 
 ::
 
@@ -199,10 +202,16 @@ In case of manual installs, it is convenient to add all required channels to the
 
 The required channels are listed in the respective ``*.yml`` files. Configuring channels has the pitfall of rare ambiguities and collisions. Please consult the `conda <https://docs.conda.io/projects/conda/en/latest/user-guide/getting-started.html>`_ documentation for “managing channels”.
 
+Once set up, activate your conda environment
+
+::
+
+   $ conda activate dna-proto
+
 
 Reference Genome(s)
 ^^^^^^^^^^^^^^^^^^^
-The workflow will look for the reference genome(s) and associated files in ``genomes_and_annotations/``. We provide an example directory tree in ``genomes_annotations/readme``. We recommend creating a separate directory for each reference genome. They can be soft links. Each reference genome directory must contain the necessary assembly file (.fa or .fna) and the associated files required by the aligners. Generate those files in this directory from the assembly file (fasta: .fa or .fna) like so:
+The workflow will look for the reference genome(s) and associated files in ``genomes_and_annotations/``. We provide an example directory tree in ``genomes_annotations/readme``. We recommend creating a separate directory for each reference genome. They can be soft links. Each reference genome directory must contain the necessary assembly file (.fa or .fna) and the associated files required by the aligners. Generate those files in this directory from the assembly file (fasta: .fa or .fna) like so (ensure your conda environment is activated!):
 
 ::
 
@@ -300,7 +309,7 @@ Example ``sample2runlib.csv`` file:
 Regions of Interest for Variant Calling
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Variant calling can be restricted to particular regions of interest through ``metadata/contigs_of_interest.bed``: A file in bed file format listing identifier, start-, and end-positions (tab delimited, no header) for all chromosomes/contigs for all provided reference genomes. This is helpful for exome capture data but also to restrict the analysis to specific chromosomes. In addition to the main chromosomes, genome assemblies often comprise many orphan fragments that often are not of interest or even congest the output. While the workflow will attempt to create the file if not present, we recommend to always define a ``contigs_of_interest.bed`` file. This one files serves **all** reference genomes in use and hence can/must contain **all** chromosome/contig names of interest. Obviously, it must be the exact names as in the assembly. The correct chromosome/contig names and their lengths can be conveniently extracted from the corresponding .fai file for the reference genome assemblies. Note that the analysis restriction to regions in ``metadata/contigs_of_interest.bed`` only concerns the variant calling, not the read mapping.
+Variant calling can be restricted to particular regions of interest through ``metadata/contigs_of_interest.bed``: A file in bed file format listing identifier, start-, and end-positions (tab delimited, no header) for all chromosomes/contigs for all provided reference genomes. This is helpful for exome capture data but also to restrict the analysis to specific chromosomes. In addition to the main chromosomes, genome assemblies often comprise many orphan fragments that often are not of interest or even congest the output. While the workflow will attempt to create the file if not present, we recommend to always define a ``contigs_of_interest.bed`` file. This one files serves **all** reference genomes in use and hence can/must contain **all** chromosome/contig names of interest. Obviously, it must be the exact names as in the assembly. The correct chromosome/contig names and their lengths can be conveniently extracted from the corresponding ``.fai`` file for the reference genome assemblies. Note that the analysis restriction to regions in ``metadata/contigs_of_interest.bed`` only concerns the variant calling, not the read mapping.
 Below example will restrict variant calling to the 11 chromosomes of cowpea. The hundreds of additional contigs that are present in the cowpea reference genome assembly are available for read mapping, but variants will not be called for them and their variants will subsequently not be present in the bcf/vcf files. Note that lines starting with ‘#’ will be disregarded. So in this case we skip the chloroplast (NC_018051.1).
 
 Example ``contigs_of_interest.bed`` file:
