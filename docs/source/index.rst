@@ -149,9 +149,9 @@ Steps
 2. `Clone <https://help.github.com/en/articles/cloning-a-repository>`_ your newly created repository to your local system where you want to perform the analysis
 3. Create and activate the conda environment
 4. Provide reference genome(s) and annotation(s) in ``/genomes_and_annotations/``
-5. Specify the locations of input files and their meta data in ``/metadata/sample2runlib.csv``
-6. Provide lists of samples as sets to analyse in ``metadata/samplesets/``
-7. List in ``metadata/contigs_of_interest`` the chromosome/contig regions for which variants should be called (bed format)
+5. List in ``metadata/contigs_of_interest`` the chromosome/contig regions for which variants should be called (bed format)
+6. Specify the locations of input files and their meta data in ``/metadata/sample2runlib.csv``
+7. Provide lists of samples as sets to analyse in ``metadata/samplesets/``
 8. Uncomment the respective workflow option for your use case in the ``Snakefile``
 9. Configure software parameters in ``config.yml``
 10. Adapt ``snpeff.config`` (Optional in case the ``snpeff`` rule will be called)

@@ -74,7 +74,7 @@
 
 
 \title{NGS\sphinxhyphen{}Analysis\sphinxhyphen{}workflow v.1.0}
-\date{Jan 21, 2021}
+\date{Feb 12, 2021}
 \release{}
 \author{Norman Warthmann (PBGL)}
 \newcommand{\sphinxlogo}{\vbox{}}
@@ -409,13 +409,13 @@ Create and activate the conda environment
 Provide reference genome(s) and annotation(s) in \sphinxcode{\sphinxupquote{/genomes\_and\_annotations/}}
 
 \item {} 
+List in \sphinxcode{\sphinxupquote{metadata/contigs\_of\_interest}} the chromosome/contig regions for which variants should be called (bed format)
+
+\item {} 
 Specify the locations of input files and their meta data in \sphinxcode{\sphinxupquote{/metadata/sample2runlib.csv}}
 
 \item {} 
 Provide lists of samples as sets to analyse in \sphinxcode{\sphinxupquote{metadata/samplesets/}}
-
-\item {} 
-List in \sphinxcode{\sphinxupquote{metadata/contigs\_of\_interest}} the chromosome/contig regions for which variants should be called (bed format)
 
 \item {} 
 Uncomment the respective workflow option for your use case in the \sphinxcode{\sphinxupquote{Snakefile}}

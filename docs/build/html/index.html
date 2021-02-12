@@ -383,9 +383,9 @@ abra2</p></td>
 <li><p><a class="reference external" href="https://help.github.com/en/articles/cloning-a-repository">Clone</a> your newly created repository to your local system where you want to perform the analysis</p></li>
 <li><p>Create and activate the conda environment</p></li>
 <li><p>Provide reference genome(s) and annotation(s) in <code class="docutils literal notranslate"><span class="pre">/genomes_and_annotations/</span></code></p></li>
+<li><p>List in <code class="docutils literal notranslate"><span class="pre">metadata/contigs_of_interest</span></code> the chromosome/contig regions for which variants should be called (bed format)</p></li>
 <li><p>Specify the locations of input files and their meta data in <code class="docutils literal notranslate"><span class="pre">/metadata/sample2runlib.csv</span></code></p></li>
 <li><p>Provide lists of samples as sets to analyse in <code class="docutils literal notranslate"><span class="pre">metadata/samplesets/</span></code></p></li>
-<li><p>List in <code class="docutils literal notranslate"><span class="pre">metadata/contigs_of_interest</span></code> the chromosome/contig regions for which variants should be called (bed format)</p></li>
 <li><p>Uncomment the respective workflow option for your use case in the <code class="docutils literal notranslate"><span class="pre">Snakefile</span></code></p></li>
 <li><p>Configure software parameters in <code class="docutils literal notranslate"><span class="pre">config.yml</span></code></p></li>
 <li><p>Adapt <code class="docutils literal notranslate"><span class="pre">snpeff.config</span></code> (Optional in case the <code class="docutils literal notranslate"><span class="pre">snpeff</span></code> rule will be called)</p></li>
