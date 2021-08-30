@@ -90,6 +90,8 @@ rule abra2:
         "output/log/varcall/abra/{aligner}~{ref}~{sampleset}.log"
     benchmark:
         "output/log/varcall/abra/{aligner}~{ref}~{sampleset}.benchmark"
+    resources:
+        mem_mb=config['abra2']['memory']*1024, # config file has it as gigs, we want megs
     params:
         region = config['abra2']['regions'],
         ref = lambda wc: config['refs'][wc.ref],
@@ -99,7 +101,7 @@ rule abra2:
         mem= config['abra2']['memory'],
     shell:
         "( java"
-        "   -{params.mem}"
+        "   -Xmx{params.mem}g"
         "   -jar {params.abra_release}"
         "   --in {input.set}"
         "   --out {output}"
