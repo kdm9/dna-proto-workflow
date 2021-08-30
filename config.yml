@@ -48,8 +48,7 @@ qc:
 # configuration options for the indel realigner abra2. this is also the place to specify the location of the tmp file.
 
 abra2:
-  memory:
-    - Xmx24g
+  memory: 24 ## gigabytes
   release:
     - envs/abra2.jar
   temp:
